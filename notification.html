@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: transparent; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+#notification-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 9999;
+}
+.notification {
+    background: linear-gradient(135deg, rgba(15,15,15,0.95), rgba(25,25,25,0.95));
+    border: 1px solid rgba(220,0,0,0.6);
+    border-left: 3px solid #dc0000;
+    border-radius: 8px;
+    padding: 12px 16px;
+    color: #fff;
+    min-width: 280px;
+    max-width: 380px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5), 0 0 15px rgba(220,0,0,0.2);
+    animation: slideIn 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    opacity: 1;
+    transition: opacity 0.4s ease;
+}
+.notification.fade-out { opacity: 0; }
+.notification .title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #dc0000;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+}
+.notification .message {
+    font-size: 11px;
+    color: #ccc;
+    line-height: 1.4;
+}
+@keyframes slideIn {
+    from { transform: translateX(120%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+</style>
+</head>
+<body>
+<div id="notification-container"></div>
+<script>
+window.addEventListener('message', function(event) {
+    var data = event.data;
+    if (!data || typeof data !== 'object') return;
+    if (data.action === 'showNotification') {
+        showNotification(data.title, data.message);
+    }
+});
+function showNotification(title, message) {
+    var container = document.getElementById('notification-container');
+    var el = document.createElement('div');
+    el.className = 'notification';
+    el.innerHTML = '<div class="title">' + (title||'') + '</div><div class="message">' + (message||'') + '</div>';
+    container.appendChild(el);
+    setTimeout(function() {
+        el.classList.add('fade-out');
+        setTimeout(function() { if (el.parentNode) el.parentNode.removeChild(el); }, 400);
+    }, 5000);
+}
+</script>
+</body>
+</html>

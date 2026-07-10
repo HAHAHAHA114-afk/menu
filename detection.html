@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { background: transparent; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+#monitor-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 320px;
+    background: linear-gradient(135deg, rgba(10,10,10,0.92), rgba(20,20,20,0.92));
+    border: 1px solid rgba(220,0,0,0.5);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 25px rgba(0,0,0,0.6), 0 0 20px rgba(220,0,0,0.15);
+    display: none;
+}
+#monitor-container.visible { display: block; }
+.monitor-header {
+    background: linear-gradient(90deg, rgba(180,0,0,0.8), rgba(120,0,0,0.6));
+    padding: 10px 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid rgba(220,0,0,0.3);
+}
+.monitor-header .dot { width: 8px; height: 8px; border-radius: 50%; background: #ff4444; animation: pulse 1.5s infinite; }
+.monitor-header span { font-size: 11px; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; }
+.monitor-list { max-height: 400px; overflow-y: auto; padding: 8px; display: flex; flex-direction: column; gap: 6px; }
+.monitor-item {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 6px;
+    padding: 8px 12px;
+}
+.monitor-item .player-name { font-size: 11px; font-weight: 600; color: #fff; margin-bottom: 4px; }
+.monitor-item .player-id { font-size: 10px; color: #888; }
+.status-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 5px; }
+.tag {
+    font-size: 9px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.tag.spectating { background: rgba(255,100,0,0.2); color: #ff6400; border: 1px solid rgba(255,100,0,0.4); }
+.tag.noclip { background: rgba(255,0,0,0.2); color: #ff4444; border: 1px solid rgba(255,0,0,0.4); }
+.tag.freecam { background: rgba(150,0,255,0.2); color: #a050ff; border: 1px solid rgba(150,0,255,0.4); }
+.tag.invisible { background: rgba(0,150,255,0.2); color: #0096ff; border: 1px solid rgba(0,150,255,0.4); }
+.tag.airborne { background: rgba(0,200,100,0.2); color: #00c864; border: 1px solid rgba(0,200,100,0.4); }
+.tag.underground { background: rgba(100,50,0,0.3); color: #c88000; border: 1px solid rgba(150,80,0,0.5); }
+.empty-state { padding: 20px; text-align: center; color: #555; font-size: 11px; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+::-webkit-scrollbar{width:3px} ::-webkit-scrollbar-track{background:transparent} ::-webkit-scrollbar-thumb{background:rgba(200,0,0,0.4);border-radius:3px}
+</style>
+</head>
+<body>
+<div id="monitor-container">
+    <div class="monitor-header">
+        <div class="dot"></div>
+        <span>Spectator Monitor</span>
+    </div>
+    <div class="monitor-list" id="monitor-list">
+        <div class="empty-state">No suspicious players detected</div>
+    </div>
+</div>
+<script>
+window.addEventListener('message', function(event) {
+    var data = event.data;
+    if (!data || typeof data !== 'object') return;
+    if (data.action === 'updateMonitors') {
+        updateMonitors(data.monitors || []);
+    }
+});
+function updateMonitors(monitors) {
+    var container = document.getElementById('monitor-container');
+    var list = document.getElementById('monitor-list');
+    if (!monitors || monitors.length === 0) {
+        container.classList.remove('visible');
+        list.innerHTML = '<div class="empty-state">No suspicious players detected</div>';
+        return;
+    }
+    container.classList.add('visible');
+    list.innerHTML = '';
+    monitors.forEach(function(m) {
+        var tags = '';
+        var s = m.status || {};
+        if (s.spectating) tags += '<span class="tag spectating">👁 Spectating</span>';
+        if (s.noclip) tags += '<span class="tag noclip">🚀 NoClip</span>';
+        if (s.freecam) tags += '<span class="tag freecam">📷 Freecam</span>';
+        if (s.invisible) tags += '<span class="tag invisible">👻 Invisible</span>';
+        if (s.airborne) tags += '<span class="tag airborne">✈ Airborne</span>';
+        if (s.underground) tags += '<span class="tag underground">⛏ Underground</span>';
+        var el = document.createElement('div');
+        el.className = 'monitor-item';
+        el.innerHTML = '<div class="player-name">' + (m.name||'Unknown') + '</div><div class="player-id">ID: ' + (m.id||'?') + ' | Ping: ' + (m.ping||0) + 'ms | Dist: ' + (s.distance||0) + 'm</div><div class="status-tags">' + tags + '</div>';
+        list.appendChild(el);
+    });
+}
+</script>
+</body>
+</html>
