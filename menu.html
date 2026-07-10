@@ -1335,45 +1335,57 @@
         
         
         
-        @font-face {
-            font-family: "ProggyTiny";
-            src: local("ProggyTiny"), local("ProggyTinyTT"), local("Proggy Tiny");
-            font-weight: 400;
-            font-style: normal;
-            font-display: swap;
-        }
-        :root {
-            --bg: #000000;
-            --fg: #f5f5f5;
-            --muted: #b0b0b0;
-            --accent: #ff3b3b;
-            --accent-soft: rgba(255, 59, 59, 0.15);
-            --accent-border: rgba(255, 59, 59, 0.7);
-            --card-bg: #111111;
-            --border-soft: rgba(255, 255, 255, 0.08);
-        }
-        :root {
-            --menu-color: 150, 0, 0;
-            --menu-x: 20%;
-            --menu-y: 50%;
-        }
-        .Desc {
-            position: absolute;
-            display: flex;
-            left: 50%;
-            bottom: 4vw;
-            transform: translate(-50%);
-            width: auto;
-            height: 1vw;
-            background-color: #000c;
-            padding: 14px;
-            font-weight: 400;
-            font-size: .651vw;
-            color: #fff;
-            justify-content: center;
-            align-items: center;
-            font-family: "Montserrat", sans-serif;
-        }
+       @font-face {
+  font-family: "ProggyTiny";
+  src: local("ProggyTiny"), local("ProggyTinyTT"), local("Proggy Tiny");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}:root {
+  /* خلفية رمادية داكنة ومطفأة (Dark Charcoal) مريحة جداً للعين */
+  --bg: #1c1c1e;
+  /* لون نص أبيض ناصع ونقي لتباين مثالي وقراءة مريحة فوق الخلفية الداكنة */
+  --fg: #ffffff;
+  /* لون رمادي فاتح متوسط للنصوص الثانوية والعناصر المكتومة */
+  --muted: #a1a1aa;
+  /* لون خلفية للكروت - رمادي أفتح قليلاً ليبرز بوضوح فوق الخلفية الأساسية */
+  --card-bg: #2c2c2e;
+  /* لون حدود ناعم وخافت يتناسب مع الثيم الداكن */
+  --border-soft: rgba(255, 255, 255, 0.08);
+
+  /* لون تمييز محايد (رمادي فاتح) للتباين */
+  --accent: #3a3a3c;
+  /* لون تمييز ناعم بلون الوهج الأبيض الخفيف */
+  --accent-soft: rgba(255, 255, 255, 0.05);
+  /* لون حدود تمييز واضح وبارز باللون الأبيض الساطع */
+  --accent-border: rgba(255, 255, 255, 0.9);
+}:root {
+  /* ألوان القائمة تم تحويلها لدرجات داكنة متناسقة */
+  --menu-color: 28, 28, 30;
+  --menu-x: 20%;
+  --menu-y: 50%;
+}.Desc {
+  position: absolute;
+  display: flex;
+  left: 50%;
+  bottom: 4vw;
+  transform: translate(-50%);
+  width: auto;
+  height: 1vw;
+  /* خلفية الوصف متناسقة مع الكروت الداكنة وشبه شفافة بنسبة بسيطة */
+  background-color: rgba(44, 44, 46, 0.95);
+  padding: 14px;
+  font-weight: 400;
+  font-size: 0.651vw;
+  /* لون النص أصبح أبيض ليكون بارزاً وحاداً */
+  color: #ffffff;
+  justify-content: center;
+  align-items: center;
+  font-family: "Montserrat", sans-serif;
+  /* توهج ناعم وخفيف بلون داكن لإعطاء عمق بدون تشتيت */
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
         .Desc span {
             margin-bottom: .0521vw;
         }
@@ -16180,7 +16192,7 @@ const Vg = () => {
       , [a,h] = L.useState(null)
       , [m,d] = L.useState(0)
       , [y,g] = L.useState({
-        link: "https://files.catbox.moe/fbaak8.png",
+        link: "https://files.catbox.moe/g682vq.png",
         color: "200, 0, 0"
     })
       , [v,P] = L.useState("0vw")
@@ -16564,17 +16576,17 @@ const Vg = () => {
                                     className: "PBuild",
                                     children: [x("span", {
                                         className: "PBuildText1",
-                                        children: "Native.wtf"
+                                        children: "ELmaystro Modz"
                                     }), x("span", {
                                         className: "PBuildText2",
-                                        children: "discord.gg/nativelol"
+                                        children: "discord.gg/elmaystro"
                                     }), x("span", {
                                         className: "PBuildText3",
-                                        children: "native"
+                                        children: "ELmaystro Modz"
                                     })]
                                 }), x("img", {
                                     className: "PFooterLogo",
-                                    src: "https://files.catbox.moe/tv1xeh.png"
+                                    src: "	"
                                 }), U("span", {
                                     className: "PIndicator",
                                     children: [r.filter(S => S.type !== "divider").indexOf(r[i]) + 1, " / ", r.filter(S => S.type !== "divider").length]
