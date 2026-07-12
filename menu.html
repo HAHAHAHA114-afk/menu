@@ -15759,28 +15759,67 @@ const bg = () => {
     })
 }
 ;
-const Qg = ["WEAPON_APPISTOL", "WEAPON_PISTOL", "WEAPON_SMG", "WEAPON_ASSAULTRIFLE", "WEAPON_RPG", "WEAPON_PERMKILL", "WEAPON_AIRSTRIKE_ROCKET"]
-  , Kg = ["Adder", "Zentorno", "Comet", "Banshee", "Trash", "Dump"]
+const Qg = ["WEAPON_PISTOL", "WEAPON_ASSAULTRIFLE", "WEAPON_RPG", "WEAPON_STUNGUN"]
+  , Kg = ["t20", "adder", "zentorno", "nero", "blista", "bmx", "buzzard", "rhino"]
+  , Zg = ["adder", "zentorno", "sultan", "infernus", "t20", "turismor"]
+  , Jg = ["prop_barrier_work05", "prop_container_05a", "prop_gravestones_07a"]
+  , e0 = ["a_m_m_hillbilly_01", "ig_jesus", "a_c_cat_01", "a_c_cow"]
   , Yg = () => {
     const [e,t] = L.useState(!1)
       , [n] = L.useState([{
-        label: "Default"
+        label: "Look Around"
     }, {
         label: "Teleport"
     }, {
-        label: "Shoot Weapon"
+        label: "Player Selector"
     }, {
-        label: "Kick from Vehicle"
+        label: "Launch Player"
     }, {
-        label: "Hijack Vehicle"
+        label: "Delete Entity"
     }, {
-        label: "Delete Vehicle"
+        label: "Shoot Vehicle"
+    }, {
+        label: "Boost Vehicle"
+    }, {
+        label: "Heli Attacker"
+    }, {
+        label: "Explode"
+    }, {
+        label: "Shoot"
+    }, {
+        label: "Kick From Vehicle"
+    }, {
+        label: "Npc Hijack"
+    }, {
+        label: "Bring Vehicle"
+    }, {
+        label: "Black Hole"
+    }, {
+        label: "Physic gun"
+    }, {
+        label: "Vehicle Spawn"
+    }, {
+        label: "Object Spawn"
+    }, {
+        label: "Ped Spawn"
     }])
       , [r,o] = L.useState(0)
       , [i,l] = L.useState(0)
       , [s,u] = L.useState(0)
+      , [fc_vspawn, set_fc_vspawn] = L.useState(0)
+      , [fc_obj, set_fc_obj] = L.useState(0)
+      , [fc_ped, set_fc_ped] = L.useState(0)
       , a = L.useRef([])
-      , h = (d, y) => r === y && d.label === "Shoot Weapon" ? `${d.label}: (${Qg[i]})` : r === y && d.label === "Spawn Car" ? `${d.label}: (${Kg[s]})` : d.label;
+      , h = (d, y) => {
+        const lbl = d.label;
+        if (r !== y) return lbl;
+        if (lbl === "Shoot") return `${lbl}: (${Qg[i]})`;
+        if (lbl === "Shoot Vehicle") return `${lbl}: (${Kg[s]})`;
+        if (lbl === "Vehicle Spawn") return `${lbl}: (${Zg[fc_vspawn]})`;
+        if (lbl === "Object Spawn") return `${lbl}: (${Jg[fc_obj]})`;
+        if (lbl === "Ped Spawn") return `${lbl}: (${e0[fc_ped]})`;
+        return lbl;
+      };
     di() && L.useEffect( () => {
         t(!0)
     }
@@ -15800,12 +15839,23 @@ const Qg = ["WEAPON_APPISTOL", "WEAPON_PISTOL", "WEAPON_SMG", "WEAPON_ASSAULTRIF
     L.useEffect( () => {
         const d = y => {
             const g = y.data;
-            g.action === "displayFreecam" && (t(g.visible),
-            g.weaponIndex !== void 0 && l(g.weaponIndex - 1),
-            g.vehicleIndex !== void 0 && u(g.vehicleIndex - 1)),
-            g.action === "updateWeapon" && l(g.index - 1),
-            g.action === "updateVehicle" && u(g.index - 1),
-            g.action === "scroll" && (g.direction === "up" ? o(v => (v - 1 + n.length) % n.length) : o(v => (v + 1) % n.length))
+            if (g.action === "displayFreecam") {
+                t(g.visible);
+                g.modeIndex !== void 0 && o(g.modeIndex);
+                g.weaponIndex !== void 0 && l(g.weaponIndex);
+                g.vehicleIndex !== void 0 && u(g.vehicleIndex);
+                g.vspawnIndex !== void 0 && set_fc_vspawn(g.vspawnIndex);
+                g.objIndex !== void 0 && set_fc_obj(g.objIndex);
+                g.pedIndex !== void 0 && set_fc_ped(g.pedIndex);
+            }
+            g.action === "fcScroll" && o(v => v === void 0 ? 0 : g.direction === "up" ? (v - 1 + n.length) % n.length : (v + 1) % n.length);
+            g.action === "fcSubOption" && (
+                g.sub === "weapon" && l(g.index),
+                g.sub === "vehicle" && u(g.index),
+                g.sub === "vspawn" && set_fc_vspawn(g.index),
+                g.sub === "object" && set_fc_obj(g.index),
+                g.sub === "ped" && set_fc_ped(g.index)
+            );
         }
         ;
         return window.addEventListener("message", d),
