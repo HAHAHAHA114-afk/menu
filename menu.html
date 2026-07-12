@@ -15759,11 +15759,11 @@ const bg = () => {
     })
 }
 ;
-const Qg = ["WEAPON_PISTOL", "WEAPON_ASSAULTRIFLE", "WEAPON_RPG", "WEAPON_STUNGUN"]
-  , Kg = ["t20", "adder", "zentorno", "nero", "blista", "bmx", "buzzard", "rhino"]
-  , Zg = ["adder", "zentorno", "sultan", "infernus", "t20", "turismor"]
-  , Jg = ["prop_barrier_work05", "prop_container_05a", "prop_gravestones_07a"]
-  , e0 = ["a_m_m_hillbilly_01", "ig_jesus", "a_c_cat_01", "a_c_cow"]
+const fcWeaponsList = ["WEAPON_PISTOL", "WEAPON_ASSAULTRIFLE", "WEAPON_RPG", "WEAPON_STUNGUN"]
+  , fcVehiclesShootList = ["t20", "adder", "zentorno", "nero", "blista", "bmx", "buzzard", "rhino"]
+  , fcVehiclesSpawnList = ["adder", "zentorno", "sultan", "infernus", "t20", "turismor"]
+  , fcObjectsList = ["prop_barrier_work05", "prop_container_05a", "prop_gravestones_07a"]
+  , fcPedsList = ["a_m_m_hillbilly_01", "ig_jesus", "a_c_cat_01", "a_c_cow"]
   , Yg = () => {
     const [e,t] = L.useState(!1)
       , [n] = L.useState([{
@@ -15813,11 +15813,11 @@ const Qg = ["WEAPON_PISTOL", "WEAPON_ASSAULTRIFLE", "WEAPON_RPG", "WEAPON_STUNGU
       , h = (d, y) => {
         const lbl = d.label;
         if (r !== y) return lbl;
-        if (lbl === "Shoot") return `${lbl}: (${Qg[i]})`;
-        if (lbl === "Shoot Vehicle") return `${lbl}: (${Kg[s]})`;
-        if (lbl === "Vehicle Spawn") return `${lbl}: (${Zg[fc_vspawn]})`;
-        if (lbl === "Object Spawn") return `${lbl}: (${Jg[fc_obj]})`;
-        if (lbl === "Ped Spawn") return `${lbl}: (${e0[fc_ped]})`;
+        if (lbl === "Shoot") return `${lbl}: (${fcWeaponsList[i]})`;
+        if (lbl === "Shoot Vehicle") return `${lbl}: (${fcVehiclesShootList[s]})`;
+        if (lbl === "Vehicle Spawn") return `${lbl}: (${fcVehiclesSpawnList[fc_vspawn]})`;
+        if (lbl === "Object Spawn") return `${lbl}: (${fcObjectsList[fc_obj]})`;
+        if (lbl === "Ped Spawn") return `${lbl}: (${fcPedsList[fc_ped]})`;
         return lbl;
       };
     di() && L.useEffect( () => {
