@@ -15405,8 +15405,8 @@ const Vg = () => {
                                         }), x("div", {
                                             className: "Right"
                                         })]
-                                    }), typeof S.vehicle < "u" && x(ep, {
-                                        icon: "mdi:car",
+                                    }), S.vehicleStatus && x(ep, {
+                                        icon: S.vehicleStatus === "driving" ? "mdi:car" : (S.vehicleStatus === "building" ? "mdi:home" : "mdi:walk"),
                                         width: "18",
                                         height: "18",
                                         className: "CarIcon",
@@ -15414,7 +15414,7 @@ const Vg = () => {
                                             position: "absolute",
                                             display: "flex",
                                             right: "2.8vw",
-                                            color: S.isDriver ? "#df2f29ff" : "#298adfff"
+                                            color: "#fff"
                                         }
                                     })]
                                 }, F))]
