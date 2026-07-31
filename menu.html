@@ -15927,12 +15927,12 @@ ul.createRoot(Xg).render(x(L.StrictMode, {
      SPECTATORS LIST + KEYBIND CAPTURE - matching fodo_ui style
      ============================================================ -->
 <style>
-/* ── SBLWrapper: same as fodo_ui ── */
+/* ── SBLWrapper: top-right matching KBLWrapper ── */
 .SBLWrapper {
     position: fixed;
     display: none;
-    left: 5%;
-    top: 5%;
+    right: 1.0417vw;
+    top: 1.0417vw;
     width: 7.0313vw;
     justify-content: center;
     align-items: center;
@@ -16056,15 +16056,17 @@ ul.createRoot(Xg).render(x(L.StrictMode, {
                 sblWrapper.appendChild(spectatorsDiv);
             }
 
-            // Position
+            // Top Right Positioning
             if (data.position && typeof data.position.x === 'number' && typeof data.position.y === 'number') {
                 sblWrapper.style.left  = data.position.x + '%';
                 sblWrapper.style.right = 'auto';
                 sblWrapper.style.top   = data.position.y + '%';
             } else {
-                sblWrapper.style.left  = '5%';
-                sblWrapper.style.right = 'auto';
-                sblWrapper.style.top   = '5%';
+                var kbl = document.querySelector('.KBLWrapper');
+                var kblH = (kbl && kbl.offsetHeight > 0) ? kbl.offsetHeight : 0;
+                sblWrapper.style.right = '1.0417vw';
+                sblWrapper.style.left  = 'auto';
+                sblWrapper.style.top   = (kblH > 0) ? (kbl.offsetTop + kblH + 10) + 'px' : '1.0417vw';
             }
 
             var specDiv = sblWrapper.querySelector('.Spectators');
@@ -16078,6 +16080,7 @@ ul.createRoot(Xg).render(x(L.StrictMode, {
                     lbl.className = 'Label';
                     lbl.textContent = spec.name || ('[' + spec.serverId + ']');
                     var elems = document.createElement('div');
+
                     elems.className = 'Elements';
                     var sid = document.createElement('span');
                     sid.textContent = '[' + (spec.serverId || '?') + ']';
