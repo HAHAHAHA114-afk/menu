@@ -15924,375 +15924,216 @@ ul.createRoot(Xg).render(x(L.StrictMode, {
 </script>
 
 <!-- ============================================================
-     SPECTATORS PANEL + KEYBINDS PANEL + KEYBIND CAPTURE OVERLAY
+     SPECTATORS LIST + KEYBIND CAPTURE - matching fodo_ui style
      ============================================================ -->
 <style>
-/* ── Shared Panel Base ── */
-.ElPanel {
+/* ── SBLWrapper: same as fodo_ui ── */
+.SBLWrapper {
     position: fixed;
-    top: 1vw;
-    right: 1vw;
-    min-width: 12vw;
-    background: rgba(10, 10, 12, 0.82);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 0.4vw;
-    font-family: "Poppins", sans-serif;
-    color: #fff;
-    overflow: hidden;
-    z-index: 99000;
-    pointer-events: none;
-    opacity: 0;
-    transform: translateX(1vw);
-    transition: opacity 0.25s ease, transform 0.25s ease;
-}
-.ElPanel.visible {
-    opacity: 1;
-    transform: translateX(0);
-}
-.ElPanelHeader {
-    display: flex;
-    align-items: center;
-    gap: 0.35vw;
-    padding: 0.35vw 0.6vw;
-    background: rgba(255,255,255,0.07);
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    font-size: 0.58vw;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: rgba(255,255,255,0.75);
-}
-.ElPanelHeader .dot {
-    width: 0.38vw;
-    height: 0.38vw;
-    border-radius: 50%;
-    background: #4caf50;
-    box-shadow: 0 0 0.3vw #4caf50;
-    flex-shrink: 0;
-}
-.ElPanelHeader .dot.red { background: #f44336; box-shadow: 0 0 0.3vw #f44336; }
-.ElPanelBody {
-    padding: 0.3vw 0;
-}
-.ElPanelRow {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.22vw 0.6vw;
-    font-size: 0.57vw;
-    gap: 1vw;
-    border-bottom: 1px solid rgba(255,255,255,0.03);
-}
-.ElPanelRow:last-child { border-bottom: none; }
-.ElPanelRow .row-label { color: rgba(255,255,255,0.85); white-space: nowrap; }
-.ElPanelRow .row-badge {
-    font-size: 0.5vw;
-    font-weight: 700;
-    padding: 0.08vw 0.32vw;
-    border-radius: 0.15vw;
-    letter-spacing: 0.06em;
-    white-space: nowrap;
-}
-.row-badge.on  { background: rgba(76,175,80,0.2);  color: #81c784; border: 1px solid rgba(76,175,80,0.4); }
-.row-badge.off { background: rgba(244,67,54,0.15); color: #e57373; border: 1px solid rgba(244,67,54,0.35); }
-.row-badge.key { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid rgba(255,255,255,0.25); }
-.ElPanelEmpty {
-    padding: 0.5vw 0.6vw;
-    font-size: 0.52vw;
-    color: rgba(255,255,255,0.3);
-    text-align: center;
-}
-
-/* ── Keybinds Panel (top-right) ── */
-#keybinds-panel {
-    top: 1vw;
-    right: 1vw;
-}
-
-/* ── Spectators Panel (below keybinds) ── */
-#spectators-panel {
-    top: 1vw;
-    right: 1vw;
-    /* pushed down by JS dynamically */
-}
-
-/* ── Keybind Capture Overlay ── */
-#keybind-overlay {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
+    display: none;
+    left: 5%;
+    top: 5%;
+    width: 7.0313vw;
     justify-content: center;
-    z-index: 999999;
-    background: rgba(0,0,0,0.55);
-    backdrop-filter: blur(4px);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
+    align-items: center;
+    flex-direction: column;
+    font-family: Inter;
+    border-radius: .1563vw;
+    overflow: hidden;
+    transform: translate(0, 0);
+    z-index: 99001;
 }
-#keybind-overlay.visible {
-    opacity: 1;
-    pointer-events: all;
+.SBLWrapper .Header {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 1.0417vw;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #000c;
+    border-bottom: .0521vw solid rgb(var(--menu-color, 255,255,255))
 }
-#keybind-overlay .kbo-box {
-    background: rgba(14,14,18,0.96);
-    border: 1px solid rgba(255,255,255,0.12);
-    border-radius: 0.5vw;
-    padding: 1.2vw 1.8vw;
-    text-align: center;
-    font-family: "Poppins", sans-serif;
-    min-width: 18vw;
-    box-shadow: 0 0.5vw 2vw rgba(0,0,0,0.6);
+.SBLWrapper .Header .Icon {
+    margin-left: .25vw;
+    color: rgb(var(--menu-color, 255,255,255))
 }
-#keybind-overlay .kbo-title {
-    font-size: 0.6vw;
-    font-weight: 600;
-    color: rgba(255,255,255,0.5);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 0.4vw;
+.SBLWrapper .Header span {
+    margin-left: .1042vw;
+    font-size: .5208vw;
+    font-weight: 350;
+    color: #fff
 }
-#keybind-overlay .kbo-item {
-    font-size: 0.85vw;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 0.8vw;
+.SBLWrapper .Spectators {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: .2083vw;
+    background-color: #00000080;
+    padding: .1042vw
 }
-#keybind-overlay .kbo-hint {
-    font-size: 0.55vw;
-    color: rgba(255,255,255,0.35);
-    margin-bottom: 0.6vw;
+.SBLWrapper .Spectators .Spectator {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: .7813vw;
+    justify-content: flex-start;
+    align-items: center
 }
-#keybind-overlay .kbo-key {
-    display: inline-block;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 0.25vw;
-    padding: 0.3vw 0.7vw;
-    font-size: 0.75vw;
-    font-weight: 700;
-    color: #fff;
-    min-width: 3vw;
-    text-align: center;
-    letter-spacing: 0.05em;
-    transition: background 0.15s;
+.SBLWrapper .Spectators .Spectator .Label {
+    position: absolute;
+    display: flex;
+    left: .25vw;
+    font-size: .5208vw;
+    font-weight: 350;
+    background: linear-gradient(90deg,#ff0000,#ff7f00,#ffff00,#00ff00,#0000ff,#4b0082,#9400d3,#ff0000);
+    background-size: 400% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: sblRainbow 3s linear infinite;
 }
-#keybind-overlay .kbo-key.pressed {
-    background: rgba(76,175,80,0.25);
-    border-color: #4caf50;
-    color: #81c784;
+@keyframes sblRainbow {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 400% 50%; }
 }
-#keybind-overlay .kbo-cancel {
-    margin-top: 0.5vw;
-    font-size: 0.48vw;
-    color: rgba(255,255,255,0.25);
+.SBLWrapper .Spectators .Spectator .Elements {
+    position: absolute;
+    display: flex;
+    right: .25vw;
+    justify-content: flex-end;
+    align-items: center;
+    flex-direction: row;
+    gap: .1042vw
+}
+.SBLWrapper .Spectators .Spectator .Elements span {
+    font-size: .5208vw;
+    font-weight: 350;
+    color: #fff
 }
 </style>
-
-<!-- Keybinds Panel -->
-<div id="keybinds-panel" class="ElPanel">
-    <div class="ElPanelHeader">
-        <div class="dot red" id="kb-dot"></div>
-        <span>Keybinds</span>
-    </div>
-    <div class="ElPanelBody" id="keybinds-body">
-        <div class="ElPanelEmpty">No keybinds set</div>
-    </div>
-</div>
-
-<!-- Spectators Panel -->
-<div id="spectators-panel" class="ElPanel">
-    <div class="ElPanelHeader">
-        <div class="dot" id="spec-dot"></div>
-        <span>Spectators</span>
-    </div>
-    <div class="ElPanelBody" id="spectators-body">
-        <div class="ElPanelEmpty">No spectators detected</div>
-    </div>
-</div>
-
-<!-- Keybind Capture Overlay -->
-<div id="keybind-overlay">
-    <div class="kbo-box">
-        <div class="kbo-title">Assign Keybind</div>
-        <div class="kbo-item" id="kbo-label">—</div>
-        <div class="kbo-hint">Press any key to assign</div>
-        <div class="kbo-key" id="kbo-key">?</div>
-        <div class="kbo-cancel">Press Escape to cancel</div>
-    </div>
-</div>
 
 <script>
 (function() {
     'use strict';
 
-    /* ── State ── */
-    const kbPanel      = document.getElementById('keybinds-panel');
-    const kbBody       = document.getElementById('keybinds-body');
-    const kbDot        = document.getElementById('kb-dot');
-    const specPanel    = document.getElementById('spectators-panel');
-    const specBody     = document.getElementById('spectators-body');
-    const specDot      = document.getElementById('spec-dot');
-    const kboOverlay   = document.getElementById('keybind-overlay');
-    const kboLabel     = document.getElementById('kbo-label');
-    const kboKey       = document.getElementById('kbo-key');
-
-    let keybindPanelVisible   = false;
-    let spectatorPanelVisible = false;
-    let capturingKeybind      = false;
-
-    /* ── Position panels (keybinds on top, spectators below) ── */
-    function positionPanels() {
-        const kbRect = kbPanel.getBoundingClientRect();
-        const gap = window.innerWidth * 0.008;
-        specPanel.style.top = (kbPanel.offsetTop + kbRect.height + gap) + 'px';
-    }
-
-    /* ── Update Keybinds Panel ── */
-    function updateKeybindsPanel(keybinds) {
-        if (!Array.isArray(keybinds) || keybinds.length === 0) {
-            kbBody.innerHTML = '<div class="ElPanelEmpty">No keybinds set</div>';
-            return;
-        }
-        kbBody.innerHTML = keybinds.map(kb => {
-            const badgeClass = kb.active !== undefined
-                ? (kb.active ? 'on' : 'off')
-                : 'key';
-            const badgeText = kb.active !== undefined
-                ? (kb.active ? 'On' : 'Off')
-                : kb.key;
-            return `<div class="ElPanelRow">
-                <span class="row-label">${escHtml(kb.label)}</span>
-                <span class="row-badge key">(${escHtml(kb.key)})</span>
-                ${kb.active !== undefined
-                    ? `<span class="row-badge ${kb.active ? 'on' : 'off'}">${kb.active ? 'On' : 'Off'}</span>`
-                    : ''}
-            </div>`;
-        }).join('');
-        setTimeout(positionPanels, 50);
-    }
-
-    /* ── Update Spectators Panel ── */
-    function updateSpectatorsPanel(spectators) {
-        if (!Array.isArray(spectators) || spectators.length === 0) {
-            specBody.innerHTML = '<div class="ElPanelEmpty">No spectators detected</div>';
-            specDot.classList.remove('red');
-            specDot.classList.add('');
-            specDot.style.background = '#4caf50';
-            specDot.style.boxShadow  = '0 0 0.3vw #4caf50';
-        } else {
-            specDot.style.background = '#f44336';
-            specDot.style.boxShadow  = '0 0 0.3vw #f44336';
-            specBody.innerHTML = spectators.map(s => {
-                const statusColor = s.status === 'Spectating' ? '#ef9a9a'
-                    : s.status === 'Invisible' ? '#ffcc80' : '#fff';
-                return `<div class="ElPanelRow">
-                    <span class="row-label">${escHtml(s.name)}</span>
-                    <span class="row-badge off" style="color:${statusColor}">${escHtml(s.status || 'Unknown')}</span>
-                </div>`;
-            }).join('');
-        }
-        setTimeout(positionPanels, 50);
-    }
-
-    /* ── Show/Hide Keybinds Panel ── */
-    function showKeybindsPanel(show) {
-        keybindPanelVisible = show;
-        kbPanel.classList.toggle('visible', show);
-        // dot color based on has-keybinds
-        setTimeout(positionPanels, 100);
-    }
-
-    /* ── Show/Hide Spectators Panel ── */
-    function showSpectatorsPanel(show) {
-        spectatorPanelVisible = show;
-        specPanel.classList.toggle('visible', show);
-        setTimeout(positionPanels, 100);
-    }
-
-    /* ── Keybind Capture Overlay ── */
-    function showKeybindCapture(label) {
-        capturingKeybind = true;
-        kboLabel.textContent = label || '—';
-        kboKey.textContent = '?';
-        kboKey.classList.remove('pressed');
-        kboOverlay.classList.add('visible');
-    }
-
-    function hideKeybindCapture() {
-        capturingKeybind = false;
-        kboOverlay.classList.remove('visible');
-    }
-
-    document.addEventListener('keydown', function(e) {
-        if (!capturingKeybind) return;
-        e.preventDefault();
-        e.stopPropagation();
-
-        if (e.key === 'Escape') {
-            hideKeybindCapture();
-            fetch('https://monitor/keybindCaptured', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ cancelled: true })
-            }).catch(() => {});
-            return;
-        }
-
-        const keyName = e.key.length === 1 ? e.key.toUpperCase() : e.key;
-        kboKey.textContent = keyName;
-        kboKey.classList.add('pressed');
-
-        setTimeout(() => {
-            hideKeybindCapture();
-            fetch('https://monitor/keybindCaptured', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ key: keyName, cancelled: false })
-            }).catch(() => {});
-        }, 400);
-    }, true);
-
-    /* ── Message Listener (from Lua via MachoSendDuiMessage) ── */
+    // ─── displaySpectators handler (matching fodo_ui) ─────────────────────
     window.addEventListener('message', function(event) {
-        const data = event.data;
+        var data = event.data;
         if (!data || typeof data !== 'object') return;
 
-        if (data.action === 'updateKeybindsPanel') {
-            updateKeybindsPanel(data.keybinds || []);
-        }
+        // ── Spectators panel ──────────────────────────────────────────────
+        if (data.action === 'displaySpectators') {
+            var sblWrapper = document.getElementById('SBLWrapper');
+            if (!sblWrapper) {
+                sblWrapper = document.createElement('div');
+                sblWrapper.id = 'SBLWrapper';
+                sblWrapper.className = 'SBLWrapper';
+                document.body.appendChild(sblWrapper);
 
-        if (data.action === 'showKeybindsPanel') {
-            showKeybindsPanel(!!data.visible);
-            if (data.keybinds) updateKeybindsPanel(data.keybinds);
-        }
+                var header = document.createElement('div');
+                header.className = 'Header';
 
-        if (data.action === 'updateSpectatorsPanel') {
-            updateSpectatorsPanel(data.spectators || []);
-        }
+                var icon = document.createElementNS('http://www.w3.org/2000/svg','svg');
+                icon.setAttribute('class','Icon');
+                icon.setAttribute('width','16');
+                icon.setAttribute('height','16');
+                icon.setAttribute('viewBox','0 0 24 24');
+                icon.innerHTML = '<path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>';
 
-        if (data.action === 'showSpectatorsPanel') {
-            showSpectatorsPanel(!!data.visible);
-            if (data.spectators) updateSpectatorsPanel(data.spectators);
-        }
+                var span = document.createElement('span');
+                span.textContent = 'Spectators';
 
-        if (data.action === 'showKeybindCapture') {
-            if (data.cancelled) {
-                hideKeybindCapture();
+                header.appendChild(icon);
+                header.appendChild(span);
+                sblWrapper.appendChild(header);
+
+                var spectatorsDiv = document.createElement('div');
+                spectatorsDiv.className = 'Spectators';
+                sblWrapper.appendChild(spectatorsDiv);
+            }
+
+            // Position
+            if (data.position && typeof data.position.x === 'number' && typeof data.position.y === 'number') {
+                sblWrapper.style.left  = data.position.x + '%';
+                sblWrapper.style.right = 'auto';
+                sblWrapper.style.top   = data.position.y + '%';
             } else {
-                showKeybindCapture(data.label);
+                sblWrapper.style.left  = '5%';
+                sblWrapper.style.right = 'auto';
+                sblWrapper.style.top   = '5%';
+            }
+
+            var specDiv = sblWrapper.querySelector('.Spectators');
+            if (data.visible && data.spectators && Array.isArray(data.spectators) && data.spectators.length > 0) {
+                sblWrapper.style.display = 'flex';
+                specDiv.innerHTML = '';
+                data.spectators.forEach(function(spec) {
+                    var el    = document.createElement('div');
+                    el.className = 'Spectator';
+                    var lbl   = document.createElement('div');
+                    lbl.className = 'Label';
+                    lbl.textContent = spec.name || ('[' + spec.serverId + ']');
+                    var elems = document.createElement('div');
+                    elems.className = 'Elements';
+                    var sid = document.createElement('span');
+                    sid.textContent = '[' + (spec.serverId || '?') + ']';
+                    if (spec.distance) {
+                        var dst = document.createElement('span');
+                        dst.textContent = spec.distance + 'm';
+                        elems.appendChild(dst);
+                    }
+                    elems.appendChild(sid);
+                    el.appendChild(lbl);
+                    el.appendChild(elems);
+                    specDiv.appendChild(el);
+                });
+            } else {
+                sblWrapper.style.display = 'none';
             }
         }
+
+        // ── Keybind Capture overlay (display-only — Lua does the capture) ──
+        if (data.action === 'showKeybindCapture') {
+            var overlay = document.getElementById('_kbCapture');
+            if (data.cancelled || !data.label) {
+                if (overlay) overlay.style.display = 'none';
+                return;
+            }
+            if (!overlay) {
+                overlay = document.createElement('div');
+                overlay.id = '_kbCapture';
+                overlay.style.cssText = [
+                    'position:fixed','inset:0','display:flex',
+                    'align-items:center','justify-content:center',
+                    'z-index:999999','background:rgba(0,0,0,.6)',
+                    'backdrop-filter:blur(6px)','font-family:Inter',
+                    'pointer-events:none'
+                ].join(';');
+                overlay.innerHTML =
+                    '<div style="background:rgba(14,14,18,.97);border:1px solid rgba(255,255,255,.12);' +
+                    'border-radius:.5vw;padding:1.2vw 2vw;text-align:center;min-width:18vw;' +
+                    'box-shadow:0 .5vw 2vw rgba(0,0,0,.7)">' +
+                    '<div style="font-size:.55vw;font-weight:600;color:rgba(255,255,255,.45);' +
+                    'text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35vw">Assign Keybind</div>' +
+                    '<div id="_kbCapLabel" style="font-size:.8vw;font-weight:600;color:#fff;margin-bottom:.7vw">—</div>' +
+                    '<div style="font-size:.5vw;color:rgba(255,255,255,.3);margin-bottom:.5vw">Press any key to assign • Escape to cancel</div>' +
+                    '<div id="_kbCapKey" style="display:inline-block;background:rgba(255,255,255,.08);' +
+                    'border:1px solid rgba(255,255,255,.22);border-radius:.2vw;padding:.3vw .8vw;' +
+                    'font-size:.75vw;font-weight:700;color:#fff;min-width:3vw;transition:all .15s">?</div>' +
+                    '</div>';
+                document.body.appendChild(overlay);
+            }
+            var capLabel = document.getElementById('_kbCapLabel');
+            var capKey   = document.getElementById('_kbCapKey');
+            if (capLabel) capLabel.textContent = data.label || '—';
+            if (capKey)   { capKey.textContent = data.key || '?'; capKey.style.background = data.key ? 'rgba(76,175,80,.25)' : 'rgba(255,255,255,.08)'; capKey.style.borderColor = data.key ? '#4caf50' : 'rgba(255,255,255,.22)'; capKey.style.color = data.key ? '#81c784' : '#fff'; }
+            overlay.style.display = 'flex';
+        }
     });
-
-    /* ── Helper ── */
-    function escHtml(str) {
-        return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-    }
-
-    /* reposition on resize */
-    window.addEventListener('resize', positionPanels);
 })();
 </script>
 
