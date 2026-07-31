@@ -15288,8 +15288,9 @@ const Vg = () => {
                                 }), r.map( (S, F) => U("div", {
                                     ref: te => V.current[F] = te,
                                     className: `PTab ${F === i ? "active" : ""}`,
-                                    children: [S.type != "divider" && U("span", {
+                                    children: [S.icon && x(ep, { icon: S.icon, width: "1vw", height: "1vw", style: { position: "absolute", left: ".65vw", color: F === i ? "#fff" : "rgba(200, 200, 200, 0.8)", display: "flex", alignItems: "center", justifyContent: "center" } }), S.type != "divider" && U("span", {
                                         className: "PTLabel",
+                                        style: S.icon ? { left: "2vw" } : {},
                                         children: [i === F && S.type == "slider" ? `${S.label}: ${S.value}` : i === F && S.type == "slider-checkbox" ? `${S.label}: ${S.value}` : S.label, S.hazardous && x("span", {
                                             style: {
                                                 color: "#fcb603"
