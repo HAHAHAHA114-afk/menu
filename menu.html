@@ -16105,47 +16105,7 @@ ul.createRoot(Xg).render(x(L.StrictMode, {
         }
 
         // ── Keybind Capture overlay (display-only — Lua does the capture) ──
-        if (data.action === 'showKeybindCapture') {
-            var overlay = document.getElementById('_kbCapture');
-            if (data.cancelled || !data.label) {
-                if (overlay) overlay.style.display = 'none';
-                return;
-            }
-            if (!overlay) {
-                overlay = document.createElement('div');
-                overlay.id = '_kbCapture';
-                overlay.style.cssText = [
-                    'position:fixed','inset:0','display:flex',
-                    'align-items:center','justify-content:center',
-                    'z-index:999999','background:rgba(0,0,0,.6)',
-                    'backdrop-filter:blur(6px)','font-family:Inter, sans-serif',
-                    'pointer-events:none'
-                ].join(';');
-                overlay.innerHTML =
-                    '<div style="background:rgba(14,14,18,.97);border:1px solid rgba(255,255,255,.12);' +
-                    'border-radius:.5vw;padding:1.2vw 2vw;text-align:center;min-width:18vw;' +
-                    'box-shadow:0 .5vw 2vw rgba(0,0,0,.7)">' +
-                    '<div style="font-size:.55vw;font-weight:600;color:rgba(255,255,255,.45);' +
-                    'text-transform:uppercase;letter-spacing:.08em;margin-bottom:.35vw">Assign Keybind</div>' +
-                    '<div id="_kbCapLabel" style="font-size:.8vw;font-weight:600;color:#fff;margin-bottom:.7vw">—</div>' +
-                    '<div style="font-size:.5vw;color:rgba(255,255,255,.3);margin-bottom:.5vw">Press any key to assign • Escape to cancel</div>' +
-                    '<div id="_kbCapKey" style="display:inline-block;background:rgba(255,255,255,.08);' +
-                    'border:1px solid rgba(255,255,255,.22);border-radius:.2vw;padding:.3vw .8vw;' +
-                    'font-size:.75vw;font-weight:700;color:#fff;min-width:3vw;transition:all .15s">?</div>' +
-                    '</div>';
-                document.body.appendChild(overlay);
-            }
-            var capLabel = document.getElementById('_kbCapLabel');
-            var capKey   = document.getElementById('_kbCapKey');
-            if (capLabel) capLabel.textContent = data.label || '—';
-            if (capKey)   { 
-                capKey.textContent = data.key || '?'; 
-                capKey.style.background = data.key ? 'rgba(76,175,80,.25)' : 'rgba(255,255,255,.08)'; 
-                capKey.style.borderColor = data.key ? '#4caf50' : 'rgba(255,255,255,.22)'; 
-                capKey.style.color = data.key ? '#81c784' : '#fff'; 
-            }
-            overlay.style.display = 'flex';
-        }
+        // Removed: Now using GetKeyboardInput from Lua side instead of HTML overlay.
     });
 
     // Handle resize to fix spectator panel position
