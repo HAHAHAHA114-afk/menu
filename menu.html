@@ -1263,9 +1263,11 @@
             font-family: "Poppins", sans-serif;
             border-radius: 6px;
             overflow: hidden;
-            background: rgba(5, 7, 11, 0.78);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+            background: rgba(5, 7, 11, 0.35);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
         }
         .KBLWrapper .Header {
             position: relative;
@@ -1278,7 +1280,7 @@
             gap: 4px;
             padding: 4px 12px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.85);
-            background: rgba(6, 8, 13, 0.96);
+            background: rgba(6, 8, 13, 0.45);
         }
         .KBLWrapper .Header::before {
             content: none;
@@ -1307,7 +1309,7 @@
             align-items: stretch;
             flex-direction: column;
             gap: 0;
-            background: rgba(5, 7, 11, 0.72);
+            background: rgba(5, 7, 11, 0.25);
             padding: 8px 12px 10px;
         }
         .KBLWrapper .Keybinds .Keybind {
@@ -15939,9 +15941,11 @@ ul.createRoot(Xg).render(x(L.StrictMode, {
         font-family: "Poppins", sans-serif;
         border-radius: 6px;
         overflow: hidden;
-        background: rgba(5, 7, 11, 0.78);
-        border: 1px solid rgba(255, 255, 255, 0.06);
-        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.45);
+        background: rgba(5, 7, 11, 0.35);
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
         z-index: 99001;
     }
     .SBLWrapper .Header {
@@ -15954,7 +15958,7 @@ ul.createRoot(Xg).render(x(L.StrictMode, {
         flex-direction: row;
         gap: 4px;
         padding: 4px 12px;
-        background: rgba(6, 8, 13, 0.96);
+        background: rgba(6, 8, 13, 0.45);
         border-bottom: 1px solid rgba(255, 255, 255, 0.85);
     }
     .SBLWrapper .Header .Icon {
@@ -15978,7 +15982,7 @@ ul.createRoot(Xg).render(x(L.StrictMode, {
         align-items: stretch;
         flex-direction: column;
         gap: 0;
-        background: rgba(5, 7, 11, 0.72);
+        background: rgba(5, 7, 11, 0.25);
         padding: 8px 12px 10px;
     }
     .SBLWrapper .Spectators .Spectator {
