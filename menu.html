@@ -1854,7 +1854,188 @@
         .freecam-ghostItem {
             filter: none !important;
         }
+
+        /* Freecam UI Integration Styles from FODO Menu.html */
+        .FCWrapper {
+            position: absolute;
+            display: flex;
+            left: 50%;
+            bottom: 10vw;
+            max-height: 11.2vw; 
+            transform: translate(-50%) scale(0.88); 
+            transform-origin: bottom center;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: column;
+            font-family: Inter, sans-serif;
+            gap: .26vw; 
+            overflow: visible;
+            scroll-behavior: smooth;
+        }
+        @media (min-width: 2560px) {
+            .FCWrapper {
+                transform: translate(-50%) scale(0.65);
+                bottom: 12vw;
+            }
+            .FCWrapper .Option {
+                font-size: 0.65vw;
+            }
+        }
+        @media (min-width: 3840px) {
+            .FCWrapper {
+                transform: translate(-50%) scale(0.5);
+                bottom: 14vw;
+            }
+            .FCWrapper .Option {
+                font-size: 0.5vw;
+            }
+        }
+        .FCWrapper .Option {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            min-width: 22vw;
+            max-width: 22vw;
+            font-size: 0.84vw;
+            font-weight: 750;
+            letter-spacing: .012vw;
+            color: #ffffff;
+            white-space: nowrap;
+            text-shadow:
+                0.5px 0.5px 2px rgba(0, 0, 0, 0.9),
+                0 0 5px rgba(0, 0, 0, 0.85),
+                0 0 8px rgba(0, 0, 0, 0.75),
+                0 0.5px 3px rgba(0, 0, 0, 0.95) !important;
+            transition: transform 0.55s cubic-bezier(0.2, 0, 0.1, 1), color 0.55s cubic-bezier(0.2, 0, 0.1, 1), text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1);
+            opacity: 1 !important;
+            text-rendering: geometricPrecision;
+            -webkit-font-smoothing: subpixel-antialiased;
+            -moz-osx-font-smoothing: auto;
+            font-smooth: always;
+            -webkit-text-stroke: 0.01px transparent;
+            will-change: transform, color;
+        }
+        .FCWrapper .Option.Selected {
+            color: rgb(var(--menu-color)) !important;
+            font-weight: 850;
+            transform: scale(1.05);
+            text-shadow:
+                0.5px 0.5px 3px rgba(0, 0, 0, 0.95),
+                0 0 6px rgba(0, 0, 0, 0.9),
+                0 0 10px rgba(0, 0, 0, 0.85),
+                0 1px 5px rgba(0, 0, 0, 1) !important;
+            text-rendering: geometricPrecision;
+            -webkit-font-smoothing: subpixel-antialiased;
+            -moz-osx-font-smoothing: auto;
+            font-smooth: always;
+            -webkit-text-stroke: 0.01px transparent;
+            transition: transform 0.55s cubic-bezier(0.2, 0, 0.1, 1), color 0.55s cubic-bezier(0.2, 0, 0.1, 1), text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1);
+        }
+        .FCWrapper .Option .CycleHighlight,
+        .FCWrapper .Option.Selected .CycleHighlight,
+        .FCWrapper span.CycleHighlight {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-weight: 750 !important;
+            text-shadow:
+                0.5px 0.5px 2px rgba(0, 0, 0, 0.9),
+                0 0 5px rgba(0, 0, 0, 0.85),
+                0 0 8px rgba(0, 0, 0, 0.75),
+                0 0.5px 3px rgba(0, 0, 0, 0.95) !important;
+            transition: text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1) !important;
+            text-rendering: geometricPrecision !important;
+            -webkit-font-smoothing: subpixel-antialiased !important;
+            -moz-osx-font-smoothing: auto !important;
+            font-smooth: always !important;
+            -webkit-text-stroke: 0.01px transparent !important;
+        }
+        .FCWrapper .Option .FCdash,
+        .FCWrapper .Option.Selected .FCdash {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-weight: 750 !important;
+            text-shadow:
+                0.5px 0.5px 2px rgba(0, 0, 0, 0.9),
+                0 0 5px rgba(0, 0, 0, 0.85),
+                0 0 8px rgba(0, 0, 0, 0.75),
+                0 0.5px 3px rgba(0, 0, 0, 0.95) !important;
+            transition: text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1) !important;
+            text-rendering: geometricPrecision !important;
+            -webkit-font-smoothing: subpixel-antialiased !important;
+            -moz-osx-font-smoothing: auto !important;
+            font-smooth: always !important;
+            -webkit-text-stroke: 0.01px transparent !important;
+        }
     </style>
+    <script>
+    // RESOLUTION DETECTION AND SCALING
+    (function() {
+        function detectResolution() {
+            const width = window.innerWidth;
+            const pixelRatio = window.devicePixelRatio || 1;
+            const effectiveWidth = width * pixelRatio;
+            let scale = 1;
+            if (effectiveWidth >= 3840) scale = 0.5;
+            else if (effectiveWidth >= 2560) scale = 0.75;
+            document.documentElement.style.setProperty('--resolution-scale', scale.toString());
+            const fcWrapper = document.querySelector('.FCWrapper');
+            if (fcWrapper) {
+                if (effectiveWidth >= 3840) {
+                    fcWrapper.style.transform = 'translate(-50%) scale(0.5)';
+                    fcWrapper.style.bottom = '14vw';
+                } else if (effectiveWidth >= 2560) {
+                    fcWrapper.style.transform = 'translate(-50%) scale(0.65)';
+                    fcWrapper.style.bottom = '12vw';
+                } else {
+                    fcWrapper.style.transform = 'translate(-50%) scale(0.88)';
+                    fcWrapper.style.bottom = '10vw';
+                }
+            }
+        }
+        detectResolution();
+        window.addEventListener('resize', detectResolution);
+    })();
+
+    // FORCE FREECAM CYCLE HIGHLIGHT AND DASH COLORS + SELECTED ANIMATION
+    (function() {
+        function forceFreecamStyles() {
+            const cycleHighlights = document.querySelectorAll('.CycleHighlight, .FCWrapper .CycleHighlight, .FCWrapper .Option .CycleHighlight, .FCWrapper .Option.Selected .CycleHighlight');
+            cycleHighlights.forEach(el => {
+                el.style.setProperty('color', '#ffffff', 'important');
+                el.style.setProperty('font-weight', '750', 'important');
+                el.style.setProperty('text-shadow', '0.5px 0.5px 2px rgba(0,0,0,0.9), 0 0 5px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.75), 0 0.5px 3px rgba(0,0,0,0.95)', 'important');
+            });
+            const dashes = document.querySelectorAll('.FCdash, .FCWrapper .FCdash, .FCWrapper .Option .FCdash, .FCWrapper .Option.Selected .FCdash');
+            dashes.forEach(el => {
+                el.style.setProperty('color', '#ffffff', 'important');
+                el.style.setProperty('font-weight', '750', 'important');
+                el.style.setProperty('text-shadow', '0.5px 0.5px 2px rgba(0,0,0,0.9), 0 0 5px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.75), 0 0.5px 3px rgba(0,0,0,0.95)', 'important');
+            });
+            const allOptions = document.querySelectorAll('.FCWrapper .Option');
+            allOptions.forEach(el => {
+                if (el.classList.contains('Selected')) {
+                    el.style.setProperty('font-weight', '850', 'important');
+                    el.style.setProperty('text-shadow', '0.5px 0.5px 3px rgba(0,0,0,0.95), 0 0 6px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.85), 0 1px 5px rgba(0,0,0,1)', 'important');
+                } else {
+                    el.style.setProperty('font-weight', '750', 'important');
+                    el.style.setProperty('text-shadow', '0.5px 0.5px 2px rgba(0,0,0,0.9), 0 0 5px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.75), 0 0.5px 3px rgba(0,0,0,0.95)', 'important');
+                }
+            });
+        }
+        const observer = new MutationObserver(() => { setTimeout(forceFreecamStyles, 10); });
+        if (document.body) {
+            observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+        } else {
+            document.addEventListener('DOMContentLoaded', () => {
+                observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+            });
+        }
+        forceFreecamStyles();
+    })();
+    </script>
 </head>
 
 <body>
@@ -15751,67 +15932,42 @@ Error generating stack: ` + i.message + `
                 })
         }
             ;
-        const fcWeaponsList = ["WEAPON_PISTOL", "WEAPON_ASSAULTRIFLE", "WEAPON_RPG", "WEAPON_STUNGUN"]
-            , fcVehiclesShootList = ["t20", "adder", "zentorno", "nero", "blista", "bmx", "buzzard", "rhino"]
-            , fcVehiclesSpawnList = ["adder", "zentorno", "sultan", "infernus", "t20", "turismor"]
-            , fcObjectsList = ["prop_barrier_work05", "prop_container_05a", "prop_gravestones_07a"]
-            , fcPedsList = ["a_m_m_hillbilly_01", "ig_jesus", "a_c_cat_01", "a_c_cow"]
+        const fcWeaponsList = ["WEAPON_APPISTOL", "WEAPON_PISTOL", "WEAPON_SMG", "WEAPON_ASSAULTRIFLE", "WEAPON_RPG", "WEAPON_PERMKILL", "WEAPON_AIRSTRIKE_ROCKET"]
+            , fcVehiclesShootList = ["tractor", "towtruck2", "towtruck", "mower", "freight", "limo2", "vigilante", "shamal", "cargoplane", "jet", "kosatka", "pbus2", "wastelander", "pbus", "rcbandito", "bus", "police3", "policeold1", "policeold2", "baletrailer"]
             , Yg = () => {
                 const [e, t] = L.useState(!1)
                     , [n] = L.useState([{
-                        label: "Look Around"
+                        label: "Default"
                     }, {
                         label: "Teleport"
                     }, {
-                        label: "Player Selector"
-                    }, {
-                        label: "Launch Player"
-                    }, {
-                        label: "Delete Entity"
+                        label: "Shoot Weapon"
                     }, {
                         label: "Shoot Vehicle"
                     }, {
-                        label: "Boost Vehicle"
+                        label: "Copy Appearance"
                     }, {
-                        label: "Heli Attacker"
+                        label: "Kick from Vehicle"
                     }, {
-                        label: "Explode"
+                        label: "Hijack Vehicle"
                     }, {
-                        label: "Shoot"
+                        label: "Delete Vehicle"
                     }, {
-                        label: "Kick From Vehicle"
-                    }, {
-                        label: "Npc Hijack"
-                    }, {
-                        label: "Bring Vehicle"
+                        label: "Detach Wheels"
                     }, {
                         label: "Black Hole"
                     }, {
-                        label: "Physic gun"
+                        label: "RC Vehicle"
                     }, {
-                        label: "Vehicle Spawn"
+                        label: "Unlock Doors"
                     }, {
-                        label: "Object Spawn"
-                    }, {
-                        label: "Ped Spawn"
+                        label: "Attach Car To Player"
                     }])
                     , [r, o] = L.useState(0)
                     , [i, l] = L.useState(0)
                     , [s, u] = L.useState(0)
-                    , [fc_vspawn, set_fc_vspawn] = L.useState(0)
-                    , [fc_obj, set_fc_obj] = L.useState(0)
-                    , [fc_ped, set_fc_ped] = L.useState(0)
                     , a = L.useRef([])
-                    , h = (d, y) => {
-                        const lbl = d.label;
-                        if (r !== y) return lbl;
-                        if (lbl === "Shoot") return `${lbl}: (${fcWeaponsList[i]})`;
-                        if (lbl === "Shoot Vehicle") return `${lbl}: (${fcVehiclesShootList[s]})`;
-                        if (lbl === "Vehicle Spawn") return `${lbl}: (${fcVehiclesSpawnList[fc_vspawn]})`;
-                        if (lbl === "Object Spawn") return `${lbl}: (${fcObjectsList[fc_obj]})`;
-                        if (lbl === "Ped Spawn") return `${lbl}: (${fcPedsList[fc_ped]})`;
-                        return lbl;
-                    };
+                    , h = (d, y) => r === y ? (d.label === "Shoot Weapon" ? `<span class="FCdash">-</span>&nbsp;&nbsp;${d.label}&nbsp;&nbsp;<span class="CycleHighlight">(${fcWeaponsList[i]})</span>&nbsp;&nbsp;<span class="FCdash">-</span>` : d.label === "Shoot Vehicle" ? `<span class="FCdash">-</span>&nbsp;&nbsp;${d.label}&nbsp;&nbsp;<span class="CycleHighlight">(${fcVehiclesShootList[s]})</span>&nbsp;&nbsp;<span class="FCdash">-</span>` : `<span class="FCdash">-</span>&nbsp;&nbsp;${d.label}&nbsp;&nbsp;<span class="FCdash">-</span>`) : d.label;
                 di() && L.useEffect(() => {
                     t(!0)
                 }
@@ -15822,10 +15978,19 @@ Error generating stack: ` + i.message + `
                     , [e, n.length]);
                 return L.useEffect(() => {
                     const d = a.current[r];
-                    d && d.scrollIntoView({
-                        block: "nearest",
-                        behavior: "instant"
-                    })
+                    if (d) {
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                setTimeout(() => {
+                                    d.scrollIntoView({
+                                        block: "center",
+                                        behavior: "smooth",
+                                        inline: "nearest"
+                                    });
+                                }, 16);
+                            });
+                        });
+                    }
                 }
                     , [r]),
                     L.useEffect(() => {
@@ -15837,17 +16002,11 @@ Error generating stack: ` + i.message + `
                                 g.modeIndex !== void 0 && o(g.modeIndex);
                                 g.weaponIndex !== void 0 && l(g.weaponIndex);
                                 g.vehicleIndex !== void 0 && u(g.vehicleIndex);
-                                g.vspawnIndex !== void 0 && set_fc_vspawn(g.vspawnIndex);
-                                g.objIndex !== void 0 && set_fc_obj(g.objIndex);
-                                g.pedIndex !== void 0 && set_fc_ped(g.pedIndex);
                             }
                             g.action === "fcScroll" && o(v => v === void 0 ? 0 : g.direction === "up" ? (v - 1 + n.length) % n.length : (v + 1) % n.length);
                             g.action === "fcSubOption" && (
                                 g.sub === "weapon" && l(g.index),
-                                g.sub === "vehicle" && u(g.index),
-                                g.sub === "vspawn" && set_fc_vspawn(g.index),
-                                g.sub === "object" && set_fc_obj(g.index),
-                                g.sub === "ped" && set_fc_ped(g.index)
+                                g.sub === "vehicle" && u(g.index)
                             );
                         }
                             ;
@@ -15862,27 +16021,25 @@ Error generating stack: ` + i.message + `
                     U(On, {
                         children: [e && x("img", {
                             className: "Crosshair",
-                            src: "https://www.pngall.com/wp-content/uploads/14/Crosshair-PNG-Image.png",
+                            src: "https://files.catbox.moe/cm9g47.png",
                             draggable: "false"
                         }), x(bt, {
                             mounted: e,
                             transition: "fade",
-                            duration: 300,
-                            timingFunction: "ease",
+                            duration: 150,
+                            timingFunction: "linear",
                             children: d => x("div", {
                                 className: "FCWrapper",
                                 style: d,
                                 children: n.map((y, g) => {
-                                    const v = r === g
-                                        , P = Math.abs(g - r)
-                                        , f = Math.max(1 - P * .1, .4);
+                                    const v = r === g;
                                     return x("div", {
                                         ref: c => a.current[g] = c,
                                         className: `Option ${v ? "Selected" : ""}`,
                                         style: {
-                                            opacity: f
+                                            opacity: 1
                                         },
-                                        children: h(y, g)
+                                        dangerouslySetInnerHTML: { __html: h(y, g) }
                                     }, g)
                                 }
                                 )
