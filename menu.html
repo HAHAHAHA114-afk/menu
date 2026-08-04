@@ -15934,74 +15934,70 @@ Error generating stack: ` + i.message + `
             ;
         const fcWeaponsList = ["WEAPON_APPISTOL", "WEAPON_PISTOL", "WEAPON_SMG", "WEAPON_ASSAULTRIFLE", "WEAPON_RPG", "WEAPON_PERMKILL", "WEAPON_AIRSTRIKE_ROCKET"]
             , fcVehiclesShootList = ["tractor", "towtruck2", "towtruck", "mower", "freight", "limo2", "vigilante", "shamal", "cargoplane", "jet", "kosatka", "pbus2", "wastelander", "pbus", "rcbandito", "bus", "police3", "policeold1", "policeold2", "baletrailer"]
+            , fcSpawnVehiclesList = ["adder", "zentorno", "sultan", "infernus", "t20", "turismor"]
+            , fcSpawnObjectsList = ["prop_barrier_work05", "prop_container_05a", "prop_gravestones_07a"]
+            , fcSpawnPedsList = ["a_m_m_hillbilly_01", "ig_jesus", "a_c_cat_01", "a_c_cow"]
+            , fcKickMethods = ["Method 1", "Method 2"]
+            , defaultFcOptions = [
+                { label: "Look Around" }, { label: "Teleport" }, { label: "Player Selector" },
+                { label: "Launch Player" }, { label: "Delete Entity" }, { label: "Shoot Vehicle" },
+                { label: "Boost Vehicle" }, { label: "Heli Attacker" }, { label: "Explode" },
+                { label: "Shoot" }, { label: "Kick From Vehicle" }, { label: "Npc Hijack" },
+                { label: "Bring Vehicle" }, { label: "Black Hole" }, { label: "Physic gun" },
+                { label: "Vehicle Spawn" }, { label: "Object Spawn" }, { label: "Ped Spawn" }
+            ]
             , Yg = () => {
                 const [e, t] = L.useState(!1)
-                    , [n] = L.useState([{
-                        label: "Default"
-                    }, {
-                        label: "Teleport"
-                    }, {
-                        label: "Shoot Weapon"
-                    }, {
-                        label: "Shoot Vehicle"
-                    }, {
-                        label: "Copy Appearance"
-                    }, {
-                        label: "Kick from Vehicle"
-                    }, {
-                        label: "Hijack Vehicle"
-                    }, {
-                        label: "Delete Vehicle"
-                    }, {
-                        label: "Detach Wheels"
-                    }, {
-                        label: "Black Hole"
-                    }, {
-                        label: "RC Vehicle"
-                    }, {
-                        label: "Unlock Doors"
-                    }, {
-                        label: "Attach Car To Player"
-                    }])
+                    , [n, setN] = L.useState(defaultFcOptions)
                     , [r, o] = L.useState(0)
                     , [i, l] = L.useState(0)
                     , [s, u] = L.useState(0)
+                    , [fcVspawnIdx, setFcVspawnIdx] = L.useState(0)
+                    , [fcObjIdx, setFcObjIdx] = L.useState(0)
+                    , [fcPedIdx, setFcPedIdx] = L.useState(0)
                     , a = L.useRef([])
-                    , h = (d, y) => r === y ? (d.label === "Shoot Weapon" ? `<span class="FCdash">-</span>&nbsp;&nbsp;${d.label}&nbsp;&nbsp;<span class="CycleHighlight">(${fcWeaponsList[i]})</span>&nbsp;&nbsp;<span class="FCdash">-</span>` : d.label === "Shoot Vehicle" ? `<span class="FCdash">-</span>&nbsp;&nbsp;${d.label}&nbsp;&nbsp;<span class="CycleHighlight">(${fcVehiclesShootList[s]})</span>&nbsp;&nbsp;<span class="FCdash">-</span>` : `<span class="FCdash">-</span>&nbsp;&nbsp;${d.label}&nbsp;&nbsp;<span class="FCdash">-</span>`) : d.label;
-                di() && L.useEffect(() => {
-                    t(!0)
-                }
-                    , []);
+                    , h = (d, y) => {
+                        if (r !== y) return d.label;
+                        const dash = `<span class="FCdash">-</span>`;
+                        const wrap = (inner) => `${dash}&nbsp;&nbsp;${inner}&nbsp;&nbsp;${dash}`;
+                        const hl = (sub) => `<span class="CycleHighlight">(${sub})</span>`;
+                        if (d.label === "Shoot") return wrap(`${d.label} ${hl(fcWeaponsList[i] || "?")}`);
+                        if (d.label === "Shoot Vehicle") return wrap(`${d.label} ${hl(fcVehiclesShootList[s] || "?")}`);
+                        if (d.label === "Kick From Vehicle") return wrap(`${d.label} ${hl(fcKickMethods[1] || "Method 1")}`);
+                        if (d.label === "Vehicle Spawn") return wrap(`${d.label} ${hl(fcSpawnVehiclesList[fcVspawnIdx] || "?")}`);
+                        if (d.label === "Object Spawn") return wrap(`${d.label} ${hl(fcSpawnObjectsList[fcObjIdx] || "?")}`);
+                        if (d.label === "Ped Spawn") return wrap(`${d.label} ${hl(fcSpawnPedsList[fcPedIdx] || "?")}`);
+                        return wrap(d.label);
+                    };
+                di() && L.useEffect(() => { t(!0) }, []);
                 const m = L.useCallback(d => {
                     !e || (d.deltaY < 0 ? o(y => (y - 1 + n.length) % n.length) : d.deltaY > 0 && o(y => (y + 1) % n.length))
-                }
-                    , [e, n.length]);
+                }, [e, n.length]);
                 return L.useEffect(() => {
                     const d = a.current[r];
                     if (d) {
                         requestAnimationFrame(() => {
                             requestAnimationFrame(() => {
                                 setTimeout(() => {
-                                    d.scrollIntoView({
-                                        block: "center",
-                                        behavior: "smooth",
-                                        inline: "nearest"
-                                    });
+                                    d.scrollIntoView({ block: "center", behavior: "smooth", inline: "nearest" });
                                 }, 16);
                             });
                         });
                     }
-                }
-                    , [r]),
+                }, [r]),
                     L.useEffect(() => {
                         const d = y => {
                             const g = y.data;
                             if (!g || typeof g !== "object") return;
                             if (g.action === "displayFreecam") {
                                 t(g.visible);
+                                g.options && Array.isArray(g.options) && setN(g.options.map(opt => typeof opt === "string" ? { label: opt } : opt));
                                 g.modeIndex !== void 0 && o(g.modeIndex);
                                 g.weaponIndex !== void 0 && l(g.weaponIndex);
                                 g.vehicleIndex !== void 0 && u(g.vehicleIndex);
+                                g.vspawnIndex !== void 0 && setFcVspawnIdx(g.vspawnIndex);
+                                g.objIndex !== void 0 && setFcObjIdx(g.objIndex);
+                                g.pedIndex !== void 0 && setFcPedIdx(g.pedIndex);
                             }
                             g.action === "fcScroll" && o(v => v === void 0 ? 0 : g.direction === "up" ? (v - 1 + n.length) % n.length : (v + 1) % n.length);
                             g.action === "fcSubOption" && (
