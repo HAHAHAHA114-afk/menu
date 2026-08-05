@@ -1861,35 +1861,40 @@
             display: flex;
             left: 50%;
             bottom: 10vw;
-            max-height: 11.2vw; 
-            transform: translate(-50%) scale(0.88); 
+            max-height: 11.2vw;
+            transform: translate(-50%) scale(0.88);
             transform-origin: bottom center;
             justify-content: flex-start;
             align-items: center;
             flex-direction: column;
             font-family: Inter, sans-serif;
-            gap: .26vw; 
+            gap: .26vw;
             overflow: visible;
             scroll-behavior: smooth;
         }
+
         @media (min-width: 2560px) {
             .FCWrapper {
                 transform: translate(-50%) scale(0.65);
                 bottom: 12vw;
             }
+
             .FCWrapper .Option {
                 font-size: 0.65vw;
             }
         }
+
         @media (min-width: 3840px) {
             .FCWrapper {
                 transform: translate(-50%) scale(0.5);
                 bottom: 14vw;
             }
+
             .FCWrapper .Option {
                 font-size: 0.5vw;
             }
         }
+
         .FCWrapper .Option {
             position: relative;
             display: flex;
@@ -1918,6 +1923,7 @@
             -webkit-text-stroke: 0.01px transparent;
             will-change: transform, color;
         }
+
         .FCWrapper .Option.Selected {
             color: rgb(var(--menu-color)) !important;
             font-weight: 850;
@@ -1934,6 +1940,7 @@
             -webkit-text-stroke: 0.01px transparent;
             transition: transform 0.55s cubic-bezier(0.2, 0, 0.1, 1), color 0.55s cubic-bezier(0.2, 0, 0.1, 1), text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1);
         }
+
         .FCWrapper .Option .CycleHighlight,
         .FCWrapper .Option.Selected .CycleHighlight,
         .FCWrapper span.CycleHighlight {
@@ -1952,6 +1959,7 @@
             font-smooth: always !important;
             -webkit-text-stroke: 0.01px transparent !important;
         }
+
         .FCWrapper .Option .FCdash,
         .FCWrapper .Option.Selected .FCdash {
             color: #ffffff !important;
@@ -1971,70 +1979,70 @@
         }
     </style>
     <script>
-    // RESOLUTION DETECTION AND SCALING
-    (function() {
-        function detectResolution() {
-            const width = window.innerWidth;
-            const pixelRatio = window.devicePixelRatio || 1;
-            const effectiveWidth = width * pixelRatio;
-            let scale = 1;
-            if (effectiveWidth >= 3840) scale = 0.5;
-            else if (effectiveWidth >= 2560) scale = 0.75;
-            document.documentElement.style.setProperty('--resolution-scale', scale.toString());
-            const fcWrapper = document.querySelector('.FCWrapper');
-            if (fcWrapper) {
-                if (effectiveWidth >= 3840) {
-                    fcWrapper.style.transform = 'translate(-50%) scale(0.5)';
-                    fcWrapper.style.bottom = '14vw';
-                } else if (effectiveWidth >= 2560) {
-                    fcWrapper.style.transform = 'translate(-50%) scale(0.65)';
-                    fcWrapper.style.bottom = '12vw';
-                } else {
-                    fcWrapper.style.transform = 'translate(-50%) scale(0.88)';
-                    fcWrapper.style.bottom = '10vw';
+        // RESOLUTION DETECTION AND SCALING
+        (function () {
+            function detectResolution() {
+                const width = window.innerWidth;
+                const pixelRatio = window.devicePixelRatio || 1;
+                const effectiveWidth = width * pixelRatio;
+                let scale = 1;
+                if (effectiveWidth >= 3840) scale = 0.5;
+                else if (effectiveWidth >= 2560) scale = 0.75;
+                document.documentElement.style.setProperty('--resolution-scale', scale.toString());
+                const fcWrapper = document.querySelector('.FCWrapper');
+                if (fcWrapper) {
+                    if (effectiveWidth >= 3840) {
+                        fcWrapper.style.transform = 'translate(-50%) scale(0.5)';
+                        fcWrapper.style.bottom = '14vw';
+                    } else if (effectiveWidth >= 2560) {
+                        fcWrapper.style.transform = 'translate(-50%) scale(0.65)';
+                        fcWrapper.style.bottom = '12vw';
+                    } else {
+                        fcWrapper.style.transform = 'translate(-50%) scale(0.88)';
+                        fcWrapper.style.bottom = '10vw';
+                    }
                 }
             }
-        }
-        detectResolution();
-        window.addEventListener('resize', detectResolution);
-    })();
+            detectResolution();
+            window.addEventListener('resize', detectResolution);
+        })();
 
-    // FORCE FREECAM CYCLE HIGHLIGHT AND DASH COLORS + SELECTED ANIMATION
-    (function() {
-        function forceFreecamStyles() {
-            const cycleHighlights = document.querySelectorAll('.CycleHighlight, .FCWrapper .CycleHighlight, .FCWrapper .Option .CycleHighlight, .FCWrapper .Option.Selected .CycleHighlight');
-            cycleHighlights.forEach(el => {
-                el.style.setProperty('color', '#ffffff', 'important');
-                el.style.setProperty('font-weight', '750', 'important');
-                el.style.setProperty('text-shadow', '0.5px 0.5px 2px rgba(0,0,0,0.9), 0 0 5px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.75), 0 0.5px 3px rgba(0,0,0,0.95)', 'important');
-            });
-            const dashes = document.querySelectorAll('.FCdash, .FCWrapper .FCdash, .FCWrapper .Option .FCdash, .FCWrapper .Option.Selected .FCdash');
-            dashes.forEach(el => {
-                el.style.setProperty('color', '#ffffff', 'important');
-                el.style.setProperty('font-weight', '750', 'important');
-                el.style.setProperty('text-shadow', '0.5px 0.5px 2px rgba(0,0,0,0.9), 0 0 5px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.75), 0 0.5px 3px rgba(0,0,0,0.95)', 'important');
-            });
-            const allOptions = document.querySelectorAll('.FCWrapper .Option');
-            allOptions.forEach(el => {
-                if (el.classList.contains('Selected')) {
-                    el.style.setProperty('font-weight', '850', 'important');
-                    el.style.setProperty('text-shadow', '0.5px 0.5px 3px rgba(0,0,0,0.95), 0 0 6px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.85), 0 1px 5px rgba(0,0,0,1)', 'important');
-                } else {
+        // FORCE FREECAM CYCLE HIGHLIGHT AND DASH COLORS + SELECTED ANIMATION
+        (function () {
+            function forceFreecamStyles() {
+                const cycleHighlights = document.querySelectorAll('.CycleHighlight, .FCWrapper .CycleHighlight, .FCWrapper .Option .CycleHighlight, .FCWrapper .Option.Selected .CycleHighlight');
+                cycleHighlights.forEach(el => {
+                    el.style.setProperty('color', '#ffffff', 'important');
                     el.style.setProperty('font-weight', '750', 'important');
                     el.style.setProperty('text-shadow', '0.5px 0.5px 2px rgba(0,0,0,0.9), 0 0 5px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.75), 0 0.5px 3px rgba(0,0,0,0.95)', 'important');
-                }
-            });
-        }
-        const observer = new MutationObserver(() => { setTimeout(forceFreecamStyles, 10); });
-        if (document.body) {
-            observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
-        } else {
-            document.addEventListener('DOMContentLoaded', () => {
+                });
+                const dashes = document.querySelectorAll('.FCdash, .FCWrapper .FCdash, .FCWrapper .Option .FCdash, .FCWrapper .Option.Selected .FCdash');
+                dashes.forEach(el => {
+                    el.style.setProperty('color', '#ffffff', 'important');
+                    el.style.setProperty('font-weight', '750', 'important');
+                    el.style.setProperty('text-shadow', '0.5px 0.5px 2px rgba(0,0,0,0.9), 0 0 5px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.75), 0 0.5px 3px rgba(0,0,0,0.95)', 'important');
+                });
+                const allOptions = document.querySelectorAll('.FCWrapper .Option');
+                allOptions.forEach(el => {
+                    if (el.classList.contains('Selected')) {
+                        el.style.setProperty('font-weight', '850', 'important');
+                        el.style.setProperty('text-shadow', '0.5px 0.5px 3px rgba(0,0,0,0.95), 0 0 6px rgba(0,0,0,0.9), 0 0 10px rgba(0,0,0,0.85), 0 1px 5px rgba(0,0,0,1)', 'important');
+                    } else {
+                        el.style.setProperty('font-weight', '750', 'important');
+                        el.style.setProperty('text-shadow', '0.5px 0.5px 2px rgba(0,0,0,0.9), 0 0 5px rgba(0,0,0,0.85), 0 0 8px rgba(0,0,0,0.75), 0 0.5px 3px rgba(0,0,0,0.95)', 'important');
+                    }
+                });
+            }
+            const observer = new MutationObserver(() => { setTimeout(forceFreecamStyles, 10); });
+            if (document.body) {
                 observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
-            });
-        }
-        forceFreecamStyles();
-    })();
+            } else {
+                document.addEventListener('DOMContentLoaded', () => {
+                    observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['class'] });
+                });
+            }
+            forceFreecamStyles();
+        })();
     </script>
 </head>
 
@@ -16017,7 +16025,7 @@ Error generating stack: ` + i.message + `
                     U(On, {
                         children: [e && x("img", {
                             className: "Crosshair",
-                            src: "https://files.catbox.moe/4esu6y.png",
+                            src: "4esu6y.png",
                             draggable: "false"
                         }), x(bt, {
                             mounted: e,
