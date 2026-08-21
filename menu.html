@@ -10623,7 +10623,7 @@ Error generating stack: ` + i.message + `
         var Na = wc.exports;
         ul.createRoot = Na.createRoot,
             ul.hydrateRoot = Na.hydrateRoot;
-        const di = () => !window.invokeNative
+        const di = () => false
             , Sm = () => { }
             , km = (e, t) => {
                 const n = $.exports.useRef(Sm);
@@ -15301,15 +15301,9 @@ Error generating stack: ` + i.message + `
                                      lbl === "Object Spawn" ? fcObjectsList[fc_obj] :
                                      lbl === "Ped Spawn" ? fcPedsList[fc_ped] : null);
                         if (r === y) {
-                            if (sub) {
-                                return `<span class="FCdash">-</span>&nbsp;&nbsp;${lbl}&nbsp;&nbsp;<span class="CycleHighlight">(${sub})</span>&nbsp;&nbsp;<span class="FCdash">-</span>`;
-                            }
-                            return `<span class="FCdash">-</span>&nbsp;&nbsp;${lbl}&nbsp;&nbsp;<span class="FCdash">-</span>`;
+                            return sub ? `- ${lbl} (${sub}) -` : `- ${lbl} -`;
                         } else {
-                            if (sub) {
-                                return `${lbl}&nbsp;&nbsp;<span class="CycleHighlight">(${sub})</span>`;
-                            }
-                            return lbl;
+                            return sub ? `${lbl} (${sub})` : lbl;
                         }
                     };
                 di() && L.useEffect(() => {
@@ -15395,13 +15389,7 @@ Error generating stack: ` + i.message + `
                 },
                 children: [x(Vg, {}), x(Wg, {}), x(Bg, {}), x(bg, {}), x(Yg, {})]
             });
-        if (di()) {
-            const e = document.getElementById("root");
-            e.style.backgroundImage = 'url("https://i.ibb.co/9d1d25B/enc.png")',
-                e.style.backgroundSize = "cover",
-                e.style.backgroundRepeat = "no-repeat",
-                e.style.backgroundPosition = "center"
-        }
+        
         const Xg = document.getElementById("root");
         ul.createRoot(Xg).render(x(L.StrictMode, {
             children: x(Om, {
