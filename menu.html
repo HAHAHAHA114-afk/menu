@@ -12,6 +12,18 @@
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
     <style>
+        html,
+body,
+#root {
+    background: transparent !important;
+    background-color: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
         :root {
             /* خلفية رمادية داكنة ومطفأة (Dark Charcoal) مريحة جداً للعين */
             --bg: #0a0a0a;
@@ -1274,16 +1286,20 @@
 
         /* Crosshair — Centered and Scaled Proportionally */
         .Crosshair {
-            position: absolute;
-            display: flex;
-            left: 50%;
-            top: 50%;
-            width: 1.25vw;
-            height: 1.25vw;
-            transform: translate(-50%, -50%);
-            opacity: 0.9;
-            pointer-events: none;
-            z-index: 9998;
+            position: fixed !important;
+            display: block !important;
+            left: 50% !important;
+            top: 50% !important;
+            width: 0.95vw !important;
+            height: 0.95vw !important;
+            max-width: 16px !important;
+            max-height: 16px !important;
+            min-width: 12px !important;
+            min-height: 12px !important;
+            transform: translate(-50%, -50%) !important;
+            opacity: 0.85 !important;
+            pointer-events: none !important;
+            z-index: 99999 !important;
         }
 
         /* FREECAM OPTIONS — Compact Bottom Fjalla One with Dynamic Menu Color */
@@ -14343,8 +14359,7 @@ Error generating stack: ` + i.message + `
             ...e,
             _ref: t
         }));
-        const Vg = () => {
-            const [e, t] = L.useState(!1)
+        const Vg = () => { const [e, t] = L.useState(!1)
                 , n = [{
                     type: "subMenu",
                     label: "Player",
@@ -14508,7 +14523,7 @@ Error generating stack: ` + i.message + `
                     type: "subMenu",
                     label: "Settings"
                 }]
-                , [r, o] = L.useState(n)
+                , [r, o] = L.useState([])
                 , [i, l] = L.useState(0)
                 , [s, u] = L.useState([])
                 , [a, h] = L.useState(null)
@@ -14524,10 +14539,7 @@ Error generating stack: ` + i.message + `
                 , [k, O] = L.useState("0%")
                 , V = L.useRef([])
                 , prevTabIndex = L.useRef(0);
-            return di() && L.useEffect(() => {
-                t(!0)
-            }
-                , []),
+            return /* di() preview disabled */,
                 L.useLayoutEffect(() => {
                     if (!e || r.length === 0)
                         return;
@@ -15178,10 +15190,7 @@ Error generating stack: ` + i.message + `
                     type: "button",
                     label: "Refill Armour"
                 }]);
-            return di() && L.useEffect(() => {
-                t(!0)
-            }
-                , []),
+            return /* di() preview disabled */,
                 L.useEffect(() => {
                     const o = i => {
                         const l = i.data;
@@ -15306,10 +15315,7 @@ Error generating stack: ` + i.message + `
                             return sub ? `${lbl} (${sub})` : lbl;
                         }
                     };
-                di() && L.useEffect(() => {
-                    t(!0)
-                }
-                    , []);
+                /* di() preview disabled */;
                 const m = L.useCallback(d => {
                     !e || (d.deltaY < 0 ? o(y => (y - 1 + n.length) % n.length) : d.deltaY > 0 && o(y => (y + 1) % n.length))
                 }
@@ -15353,7 +15359,21 @@ Error generating stack: ` + i.message + `
                     U(On, {
                         children: [e && x("img", {
                             className: "Crosshair",
-                            src: "https://www.pngall.com/wp-content/uploads/14/Crosshair-PNG-Image.png",
+                            src: "https://files.catbox.moe/cm9g47.png",
+                            style: {
+                                position: "fixed",
+                                left: "50%",
+                                top: "50%",
+                                width: "0.95vw",
+                                height: "0.95vw",
+                                maxWidth: "16px",
+                                maxHeight: "16px",
+                                minWidth: "12px",
+                                minHeight: "12px",
+                                transform: "translate(-50%, -50%)",
+                                pointerEvents: "none",
+                                zIndex: 99999
+                            },
                             draggable: "false"
                         }), x(bt, {
                             mounted: e,
@@ -15382,8 +15402,8 @@ Error generating stack: ` + i.message + `
                     })
             }
             , Gg = () => U(Ud, {
-                withNormalizeCSS: !0,
-                withGlobalStyles: !0,
+                withNormalizeCSS: !1,
+                withGlobalStyles: !1,
                 theme: {
                     ...Ay
                 },
@@ -15403,6 +15423,18 @@ Error generating stack: ` + i.message + `
      SPECTATORS PANEL & KEYBIND CAPTURE (gemini-code style, white theme)
      ============================================================ -->
     <style>
+        html,
+body,
+#root {
+    background: transparent !important;
+    background-color: transparent !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: hidden !important;
+    width: 100% !important;
+    height: 100% !important;
+}
+
         /* SBLWrapper styles merged into main stylesheet */
     </style>
 
