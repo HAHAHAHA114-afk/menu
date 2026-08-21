@@ -1139,32 +1139,35 @@
         .KBLWrapper {
             position: absolute;
             display: flex;
-            right: 1.1vw;
-            top: 2.6vw;
-            width: clamp(200px, 12.5vw, 260px);
+            right: 1.0417vw;
+            top: 1.0417vw;
+            width: 7.0313vw;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            font-family: "Poppins", sans-serif;
-            border-radius: 6px;
+            font-family: inherit;
+            border-radius: .1563vw;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.78);
+            border: .0521vw solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 .2083vw .8333vw rgba(0, 0, 0, 0.55);
+            z-index: 99000;
         }
 
         .KBLWrapper .Header {
             position: relative;
             display: flex;
             width: 100%;
-            min-height: 24px;
+            height: 1.0417vw;
+            min-height: 1.0417vw;
             justify-content: flex-start;
             align-items: center;
             flex-direction: row;
-            gap: 4px;
-            padding: 4px 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.85);
-            background: rgba(0, 0, 0, 0.65);
+            gap: .2604vw;
+            padding: 0 .35vw;
+            box-sizing: border-box;
+            background-color: #000c;
+            border-bottom: .0521vw solid rgb(var(--menu-color));
         }
 
         .KBLWrapper .Header::before {
@@ -1172,20 +1175,24 @@
         }
 
         .KBLWrapper .Header .Icon {
-            color: #fff;
-            margin-right: 4px;
+            color: rgb(var(--menu-color));
+            margin-right: 0;
+            display: flex;
+            align-items: center;
         }
 
         .KBLWrapper .Header .Icon svg {
             display: block !important;
+            width: .72vw;
+            height: .72vw;
         }
 
         .KBLWrapper .Header span {
-            margin-left: 0;
-            font-size: 12px;
+            margin-left: .1042vw;
+            font-size: .5208vw;
             font-weight: 500;
             line-height: 1;
-            color: #f4f7ff;
+            color: #fff;
             letter-spacing: 0;
         }
 
@@ -1194,21 +1201,24 @@
             display: flex;
             width: 100%;
             height: auto;
-            justify-content: flex-start;
-            align-items: stretch;
+            justify-content: center;
+            align-items: center;
             flex-direction: column;
-            gap: 0;
-            background: rgba(0, 0, 0, 0.45) padding: 8px 12px 10px;
+            gap: .2083vw;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: .2083vw .35vw;
+            box-sizing: border-box;
         }
 
         .KBLWrapper .Keybinds .Keybind {
             position: relative;
             display: flex;
             width: 100%;
-            min-height: 27px;
+            height: .7813vw;
+            min-height: .7813vw;
             justify-content: space-between;
             align-items: center;
-            gap: 6px;
+            gap: .2604vw;
             padding: 0;
             border-bottom: 0;
         }
@@ -1218,42 +1228,42 @@
         }
 
         .KBLWrapper .Keybinds .Keybind .Label {
-            position: static;
+            position: relative;
             display: flex;
             min-width: 0;
-            font-size: 11px;
+            font-size: .5208vw;
             font-weight: 400;
             line-height: 1.15;
-            color: rgba(242, 242, 242, 0.95);
+            color: #fff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
         }
 
         .KBLWrapper .Keybinds .Keybind .Elements {
-            position: static;
+            position: relative;
             display: flex;
             justify-content: flex-end;
             align-items: center;
             flex-direction: row;
-            gap: 4px;
+            gap: .1563vw;
             margin-left: auto;
             white-space: nowrap;
         }
 
         .KBLWrapper .Keybinds .Keybind .Elements span {
-            font-size: 11px;
+            font-size: .5208vw;
             font-weight: 400;
             line-height: 1;
-            color: rgba(242, 242, 242, 0.95);
+            color: #fff;
         }
 
         .KBLWrapper .Keybinds .Keybind .Elements .KeyLabel {
-            color: rgba(242, 242, 242, 0.95) !important;
+            color: rgba(255, 255, 255, 0.95) !important;
         }
 
         .KBLWrapper .Keybinds .Keybind .Elements .KeyState {
-            color: rgba(242, 242, 242, 0.78) !important;
+            color: rgba(255, 255, 255, 0.55) !important;
         }
 
         .Crosshair {
@@ -1270,40 +1280,117 @@
             position: absolute;
             display: flex;
             left: 50%;
-            bottom: 4vw;
-            max-height: 13.0208vw;
-            transform: translate(-50%);
+            bottom: 10vw;
+            max-height: 11.2vw;
+            transform: translate(-50%) scale(0.88);
+            transform-origin: bottom center;
             justify-content: flex-start;
             align-items: center;
             flex-direction: column;
-            font-family: "Fjalla One", sans-serif !important;
-            gap: .2083vw;
-            overflow: hidden;
+            font-family: inherit;
+            gap: .26vw;
+            overflow: visible;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
         }
 
-        .FCWrapper .Option {
-            font-family: "Fjalla One", sans-serif !important;
+        @media (min-width: 2560px) {
+            .FCWrapper {
+                transform: translate(-50%) scale(0.65);
+                bottom: 12vw;
+            }
+            .FCWrapper .Option {
+                font-size: 0.65vw;
+            }
+        }
+
+        @media (min-width: 3840px) {
+            .FCWrapper {
+                transform: translate(-50%) scale(0.5);
+                bottom: 14vw;
+            }
+            .FCWrapper .Option {
+                font-size: 0.5vw;
+            }
         }
 
         .FCWrapper .Option {
             position: relative;
             display: flex;
-            font-size: .72vw;
-            font-weight: 400;
-            color: #ffffff66;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            min-width: 22vw;
+            max-width: 22vw;
+            font-size: 0.84vw;
+            font-weight: 700;
+            letter-spacing: .012vw;
+            color: #ffffff;
+            white-space: nowrap;
             text-shadow:
-                0 1px 1px rgba(0, 0, 0, 0.95),
-                0 0 2px rgba(0, 0, 0, 0.85),
-                0 0 6px rgba(0, 0, 0, 0.55);
+                0.5px 0.5px 2px rgba(0, 0, 0, 0.9),
+                0 0 5px rgba(0, 0, 0, 0.85),
+                0 0 8px rgba(0, 0, 0, 0.75),
+                0 0.5px 3px rgba(0, 0, 0, 0.95) !important;
+            transition: transform 0.55s cubic-bezier(0.2, 0, 0.1, 1), color 0.55s cubic-bezier(0.2, 0, 0.1, 1), text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1);
+            opacity: 1 !important;
+            text-rendering: geometricPrecision;
+            -webkit-font-smoothing: subpixel-antialiased;
+            -moz-osx-font-smoothing: auto;
+            font-smooth: always;
+            -webkit-text-stroke: 0.01px transparent;
+            will-change: transform, color;
         }
 
         .FCWrapper .Option.Selected {
-            color: #fff;
-            font-weight: 500;
+            color: rgb(var(--menu-color)) !important;
+            font-weight: 800;
+            transform: scale(1.06);
             text-shadow:
-                0 1px 1px rgba(0, 0, 0, 0.98),
-                0 0 2px rgba(0, 0, 0, 0.92),
-                0 0 8px rgba(0, 0, 0, 0.65);
+                0.5px 0.5px 3px rgba(0, 0, 0, 0.95),
+                0 0 6px rgba(0, 0, 0, 0.9),
+                0 0 10px rgba(0, 0, 0, 0.85),
+                0 1px 5px rgba(0, 0, 0, 1) !important;
+            text-rendering: geometricPrecision;
+            -webkit-font-smoothing: subpixel-antialiased;
+            -moz-osx-font-smoothing: auto;
+            font-smooth: always;
+            -webkit-text-stroke: 0.01px transparent;
+            transition: transform 0.55s cubic-bezier(0.2, 0, 0.1, 1), color 0.55s cubic-bezier(0.2, 0, 0.1, 1), text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1);
+        }
+
+        .FCWrapper .Option .CycleHighlight,
+        .FCWrapper .Option.Selected .CycleHighlight,
+        .FCWrapper span.CycleHighlight {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-weight: 700 !important;
+            text-shadow:
+                0.5px 0.5px 2px rgba(0, 0, 0, 0.9),
+                0 0 5px rgba(0, 0, 0, 0.85),
+                0 0 8px rgba(0, 0, 0, 0.75),
+                0 0.5px 3px rgba(0, 0, 0, 0.95) !important;
+            transition: text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1) !important;
+            text-rendering: geometricPrecision !important;
+            -webkit-font-smoothing: subpixel-antialiased !important;
+            font-smooth: always !important;
+        }
+
+        .FCWrapper .Option .FCdash,
+        .FCWrapper .Option.Selected .FCdash {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-weight: 700 !important;
+            text-shadow:
+                0.5px 0.5px 2px rgba(0, 0, 0, 0.9),
+                0 0 5px rgba(0, 0, 0, 0.85),
+                0 0 8px rgba(0, 0, 0, 0.75),
+                0 0.5px 3px rgba(0, 0, 0, 0.95) !important;
+            transition: text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1) !important;
+            text-rendering: geometricPrecision !important;
+            -webkit-font-smoothing: subpixel-antialiased !important;
+            font-smooth: always !important;
         }
 
         html {
@@ -15730,7 +15817,7 @@ Error generating stack: ` + i.message + `
             , fcPedsList = ["a_m_m_hillbilly_01", "ig_jesus", "a_c_cat_01", "a_c_cow"]
             , Yg = () => {
                 const [e, t] = L.useState(!1)
-                    , [n] = L.useState([{
+                    , [n, setN] = L.useState([{
                         label: "Look Around"
                     }, {
                         label: "Teleport"
@@ -15775,14 +15862,21 @@ Error generating stack: ` + i.message + `
                     , [fc_ped, set_fc_ped] = L.useState(0)
                     , a = L.useRef([])
                     , h = (d, y) => {
-                        const lbl = d.label;
-                        if (r !== y) return lbl;
-                        if (lbl === "Shoot") return `${lbl}: (${fcWeaponsList[i]})`;
-                        if (lbl === "Shoot Vehicle") return `${lbl}: (${fcVehiclesShootList[s]})`;
-                        if (lbl === "Vehicle Spawn") return `${lbl}: (${fcVehiclesSpawnList[fc_vspawn]})`;
-                        if (lbl === "Object Spawn") return `${lbl}: (${fcObjectsList[fc_obj]})`;
-                        if (lbl === "Ped Spawn") return `${lbl}: (${fcPedsList[fc_ped]})`;
-                        return lbl;
+                        const isSel = r === y;
+                        const rawLbl = typeof d === "object" ? d.label : d;
+                        let text = rawLbl;
+                        if (rawLbl === "Shoot" || rawLbl === "Shoot Weapon") {
+                            text = `${rawLbl}&nbsp;&nbsp;<span class="CycleHighlight">(${fcWeaponsList[i] || ""})</span>`;
+                        } else if (rawLbl === "Shoot Vehicle") {
+                            text = `${rawLbl}&nbsp;&nbsp;<span class="CycleHighlight">(${fcVehiclesShootList[s] || ""})</span>`;
+                        } else if (rawLbl === "Vehicle Spawn") {
+                            text = `${rawLbl}&nbsp;&nbsp;<span class="CycleHighlight">(${fcVehiclesSpawnList[fc_vspawn] || ""})</span>`;
+                        } else if (rawLbl === "Object Spawn") {
+                            text = `${rawLbl}&nbsp;&nbsp;<span class="CycleHighlight">(${fcObjectsList[fc_obj] || ""})</span>`;
+                        } else if (rawLbl === "Ped Spawn") {
+                            text = `${rawLbl}&nbsp;&nbsp;<span class="CycleHighlight">(${fcPedsList[fc_ped] || ""})</span>`;
+                        }
+                        return isSel ? `<span class="FCdash">-</span>&nbsp;&nbsp;${text}&nbsp;&nbsp;<span class="FCdash">-</span>` : text;
                     };
                 di() && L.useEffect(() => {
                     t(!0)
@@ -15794,10 +15888,17 @@ Error generating stack: ` + i.message + `
                     , [e, n.length]);
                 return L.useEffect(() => {
                     const d = a.current[r];
-                    d && d.scrollIntoView({
-                        block: "nearest",
-                        behavior: "instant"
-                    })
+                    if (d) {
+                        requestAnimationFrame(() => {
+                            setTimeout(() => {
+                                d.scrollIntoView({
+                                    block: "center",
+                                    behavior: "smooth",
+                                    inline: "nearest"
+                                });
+                            }, 16);
+                        });
+                    }
                 }
                     , [r]),
                     L.useEffect(() => {
@@ -15806,6 +15907,9 @@ Error generating stack: ` + i.message + `
                             if (!g || typeof g !== "object") return;
                             if (g.action === "displayFreecam") {
                                 t(g.visible);
+                                if (g.options && Array.isArray(g.options)) {
+                                    setN(g.options.map(opt => typeof opt === "string" ? { label: opt } : opt));
+                                }
                                 g.modeIndex !== void 0 && o(g.modeIndex);
                                 g.weaponIndex !== void 0 && l(g.weaponIndex);
                                 g.vehicleIndex !== void 0 && u(g.vehicleIndex);
@@ -15813,7 +15917,7 @@ Error generating stack: ` + i.message + `
                                 g.objIndex !== void 0 && set_fc_obj(g.objIndex);
                                 g.pedIndex !== void 0 && set_fc_ped(g.pedIndex);
                             }
-                            g.action === "fcScroll" && o(v => v === void 0 ? 0 : g.direction === "up" ? (v - 1 + n.length) % n.length : (v + 1) % n.length);
+                            (g.action === "fcScroll" || g.action === "scroll") && o(v => v === void 0 ? 0 : g.direction === "up" ? (v - 1 + n.length) % n.length : (v + 1) % n.length);
                             g.action === "fcSubOption" && (
                                 g.sub === "weapon" && l(g.index),
                                 g.sub === "vehicle" && u(g.index),
@@ -15830,7 +15934,7 @@ Error generating stack: ` + i.message + `
                                     window.removeEventListener("wheel", m)
                             }
                     }
-                        , [n.length]),
+                        , [n.length, e, r, i, s]),
                     U(On, {
                         children: [e && x("img", {
                             className: "Crosshair",
@@ -15839,22 +15943,20 @@ Error generating stack: ` + i.message + `
                         }), x(bt, {
                             mounted: e,
                             transition: "fade",
-                            duration: 300,
-                            timingFunction: "ease",
+                            duration: 200,
+                            timingFunction: "linear",
                             children: d => x("div", {
                                 className: "FCWrapper",
                                 style: d,
                                 children: n.map((y, g) => {
-                                    const v = r === g
-                                        , P = Math.abs(g - r)
-                                        , f = Math.max(1 - P * .1, .4);
+                                    const v = r === g;
                                     return x("div", {
                                         ref: c => a.current[g] = c,
                                         className: `Option ${v ? "Selected" : ""}`,
                                         style: {
-                                            opacity: f
+                                            opacity: 1
                                         },
-                                        children: h(y, g)
+                                        dangerouslySetInnerHTML: { __html: h(y, g) }
                                     }, g)
                                 }
                                 )
@@ -15893,17 +15995,17 @@ Error generating stack: ` + i.message + `
         .SBLWrapper {
             position: absolute;
             display: none;
-            right: 1.1vw;
-            width: clamp(200px, 12.5vw, 260px);
+            right: 1.0417vw;
+            width: 7.0313vw;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            font-family: "Poppins", sans-serif;
-            border-radius: 6px;
+            font-family: inherit;
+            border-radius: .1563vw;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.55);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.78);
+            border: .0521vw solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 .2083vw .8333vw rgba(0, 0, 0, 0.55);
             z-index: 99001;
         }
 
@@ -15911,28 +16013,37 @@ Error generating stack: ` + i.message + `
             position: relative;
             display: flex;
             width: 100%;
-            min-height: 24px;
+            height: 1.0417vw;
+            min-height: 1.0417vw;
             justify-content: flex-start;
             align-items: center;
             flex-direction: row;
-            gap: 4px;
-            padding: 4px 12px;
-            background: rgba(0, 0, 0, 0.65);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+            gap: .2604vw;
+            padding: 0 .35vw;
+            box-sizing: border-box;
+            background-color: #000c;
+            border-bottom: .0521vw solid rgb(var(--menu-color));
         }
 
         .SBLWrapper .Header .Icon {
-            color: #fff;
-            margin-right: 4px;
+            color: rgb(var(--menu-color));
+            margin-right: 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .SBLWrapper .Header .Icon svg {
+            display: block !important;
+            width: .72vw;
+            height: .72vw;
         }
 
         .SBLWrapper .Header span {
-            margin-left: 0;
-            font-size: 12px;
+            margin-left: .1042vw;
+            font-size: .5208vw;
             font-weight: 500;
             line-height: 1;
-            color: #f4f7ff;
-            letter-spacing: 0;
+            color: #fff;
         }
 
         .SBLWrapper .Spectators {
@@ -15941,50 +16052,63 @@ Error generating stack: ` + i.message + `
             width: 100%;
             height: auto;
             justify-content: center;
-            align-items: stretch;
+            align-items: center;
             flex-direction: column;
-            gap: 0;
-            background: rgba(0, 0, 0, 0.55) padding: 8px 12px 10px;
+            gap: .2083vw;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: .2083vw .35vw;
+            box-sizing: border-box;
         }
 
         .SBLWrapper .Spectators .Spectator {
             position: relative;
             display: flex;
             width: 100%;
-            min-height: 27px;
+            height: .7813vw;
+            min-height: .7813vw;
             justify-content: space-between;
             align-items: center;
+            gap: .2604vw;
+            padding: 0;
         }
 
         .SBLWrapper .Spectators .Spectator .Label {
-            font-size: 11px;
+            position: relative;
+            display: flex;
+            font-size: .5208vw;
             font-weight: 400;
+            line-height: 1.15;
             color: #fff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            max-width: 4.2vw;
         }
 
         .SBLWrapper .Spectators .Spectator .Elements {
+            position: relative;
             display: flex;
             justify-content: flex-end;
             align-items: center;
             flex-direction: row;
-            gap: 4px;
+            gap: .1563vw;
+            margin-left: auto;
+            white-space: nowrap;
         }
 
         .SBLWrapper .Spectators .Spectator .Elements span {
-            font-size: 11px;
+            font-size: .5208vw;
             font-weight: 400;
-            color: rgba(242, 242, 242, 0.95);
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .SBLWrapper .Spectators .Empty {
-            font-size: 11px;
+            font-size: .48vw;
             font-weight: 400;
-            color: rgba(242, 242, 242, 0.7);
+            color: rgba(255, 255, 255, 0.45);
             text-align: center;
-            padding: 4px 0;
+            padding: .15vw 0;
         }
     </style>
 
@@ -15995,7 +16119,7 @@ Error generating stack: ` + i.message + `
                 var data = event.data;
                 if (!data || typeof data !== 'object') return;
 
-                // ── Spectators panel ──────────────────────────────────────────────
+                                // ── Spectators panel ──────────────────────────────────────────────
                 if (data.action === 'showSpectatorsPanel' || data.action === 'displaySpectators') {
                     var sblWrapper = document.getElementById('SBLWrapper');
                     if (!sblWrapper) {
@@ -16009,10 +16133,8 @@ Error generating stack: ` + i.message + `
 
                         var icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
                         icon.setAttribute('class', 'Icon');
-                        icon.setAttribute('width', '16');
-                        icon.setAttribute('height', '16');
                         icon.setAttribute('viewBox', '0 0 24 24');
-                        icon.innerHTML = '<path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>';
+                        icon.innerHTML = '<path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
 
                         var span = document.createElement('span');
                         span.textContent = 'Spectators';
@@ -16026,10 +16148,9 @@ Error generating stack: ` + i.message + `
                         sblWrapper.appendChild(spectatorsDiv);
                     }
 
-                    // Top Right Positioning below KBLWrapper
                     var kbl = document.querySelector('.KBLWrapper');
                     var kblH = (kbl && kbl.offsetHeight > 0) ? kbl.offsetHeight : 0;
-                    var gap = window.innerWidth * 0.008;
+                    var gap = window.innerWidth * 0.006;
                     sblWrapper.style.top = (kblH > 0) ? (kbl.offsetTop + kblH + gap) + 'px' : '2.6vw';
 
                     var specDiv = sblWrapper.querySelector('.Spectators');
@@ -16042,24 +16163,28 @@ Error generating stack: ` + i.message + `
                             spectsList.forEach(function (spec) {
                                 var el = document.createElement('div');
                                 el.className = 'Spectator';
+
                                 var lbl = document.createElement('div');
                                 lbl.className = 'Label';
-                                lbl.textContent = spec.name || ('[' + spec.serverId + ']');
-                                var elems = document.createElement('div');
+                                lbl.textContent = spec.name || ('[' + (spec.serverId || spec.id || '?') + ']');
 
+                                var elems = document.createElement('div');
                                 elems.className = 'Elements';
+
                                 var sid = document.createElement('span');
-                                sid.textContent = '[' + (spec.serverId || '?') + ']';
+                                sid.textContent = '[' + (spec.serverId || spec.id || '?') + ']';
+                                elems.appendChild(sid);
+
                                 if (spec.distance) {
                                     var dst = document.createElement('span');
                                     dst.textContent = spec.distance + 'm';
                                     elems.appendChild(dst);
                                 } else if (spec.status) {
                                     var st = document.createElement('span');
-                                    st.textContent = spec.status;
+                                    st.textContent = (typeof spec.status === 'string') ? spec.status : 'Active';
                                     elems.appendChild(st);
                                 }
-                                elems.appendChild(sid);
+
                                 el.appendChild(lbl);
                                 el.appendChild(elems);
                                 specDiv.appendChild(el);
