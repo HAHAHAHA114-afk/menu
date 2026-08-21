@@ -1136,60 +1136,70 @@
             }
         }
 
-        .KBLWrapper {
+        /* Keybinds & Spectators Unified Panel (FODO Menu Style with Dynamic Menu Color) */
+        .KBLWrapper,
+        .SBLWrapper {
             position: absolute;
             display: flex;
             right: 1.1vw;
-            top: 2.6vw;
-            width: clamp(200px, 12.5vw, 260px);
+            width: clamp(180px, 11vw, 240px);
             justify-content: center;
             align-items: center;
             flex-direction: column;
             font-family: "Poppins", sans-serif;
-            border-radius: 6px;
+            border-radius: .35vw;
             overflow: hidden;
-            background: rgba(0, 0, 0, 0.45);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+            background: rgba(10, 10, 12, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+            z-index: 99001;
         }
 
-        .KBLWrapper .Header {
+        .KBLWrapper {
+            top: 2.6vw;
+        }
+
+        .SBLWrapper {
+            display: none;
+        }
+
+        .KBLWrapper .Header,
+        .SBLWrapper .Header {
             position: relative;
             display: flex;
             width: 100%;
-            min-height: 24px;
+            min-height: 1.35vw;
             justify-content: flex-start;
             align-items: center;
             flex-direction: row;
-            gap: 4px;
-            padding: 4px 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.85);
-            background: rgba(0, 0, 0, 0.65);
+            gap: 0.35vw;
+            padding: 0.3vw 0.6vw;
+            box-sizing: border-box;
+            background: rgba(15, 15, 18, 0.95);
+            border-bottom: 1.5px solid rgb(var(--menu-color));
+            box-shadow: 0 1px 6px rgba(var(--menu-color), 0.35);
         }
 
-        .KBLWrapper .Header::before {
-            content: none;
+        .KBLWrapper .Header .Icon,
+        .SBLWrapper .Header .Icon {
+            color: rgb(var(--menu-color));
+            font-size: 0.72vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .KBLWrapper .Header .Icon {
-            color: #fff;
-            margin-right: 4px;
-        }
-
-        .KBLWrapper .Header .Icon svg {
-            display: block !important;
-        }
-
-        .KBLWrapper .Header span {
-            margin-left: 0;
-            font-size: 12px;
-            font-weight: 500;
+        .KBLWrapper .Header span,
+        .SBLWrapper .Header span {
+            font-size: 0.60vw;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: 0.02em;
             line-height: 1;
-            color: #f4f7ff;
-            letter-spacing: 0;
         }
 
-        .KBLWrapper .Keybinds {
+        .KBLWrapper .Keybinds,
+        .SBLWrapper .Spectators {
             position: relative;
             display: flex;
             width: 100%;
@@ -1197,113 +1207,157 @@
             justify-content: flex-start;
             align-items: stretch;
             flex-direction: column;
-            gap: 0;
-            background: rgba(0, 0, 0, 0.45) padding: 8px 12px 10px;
+            gap: 0.20vw;
+            padding: 0.35vw 0.6vw 0.45vw;
+            box-sizing: border-box;
+            background: rgba(10, 10, 12, 0.75);
         }
 
-        .KBLWrapper .Keybinds .Keybind {
+        .KBLWrapper .Keybinds .Keybind,
+        .SBLWrapper .Spectators .Spectator {
             position: relative;
             display: flex;
             width: 100%;
-            min-height: 27px;
+            min-height: 1.1vw;
             justify-content: space-between;
             align-items: center;
-            gap: 6px;
-            padding: 0;
-            border-bottom: 0;
+            padding: 0.08vw 0;
+            box-sizing: border-box;
         }
 
-        .KBLWrapper .Keybinds .Keybind:last-child {
-            border-bottom: 0;
-        }
-
-        .KBLWrapper .Keybinds .Keybind .Label {
-            position: static;
-            display: flex;
-            min-width: 0;
-            font-size: 11px;
+        .KBLWrapper .Keybinds .Keybind .Label,
+        .SBLWrapper .Spectators .Spectator .Label {
+            font-size: 0.58vw;
             font-weight: 400;
-            line-height: 1.15;
-            color: rgba(242, 242, 242, 0.95);
+            color: #ffffff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            line-height: 1.2;
         }
 
-        .KBLWrapper .Keybinds .Keybind .Elements {
-            position: static;
+        .KBLWrapper .Keybinds .Keybind .Elements,
+        .SBLWrapper .Spectators .Spectator .Elements {
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            flex-direction: row;
-            gap: 4px;
-            margin-left: auto;
+            gap: 0.25vw;
             white-space: nowrap;
         }
 
-        .KBLWrapper .Keybinds .Keybind .Elements span {
-            font-size: 11px;
-            font-weight: 400;
-            line-height: 1;
-            color: rgba(242, 242, 242, 0.95);
+        .KBLWrapper .Keybinds .Keybind .Elements span,
+        .SBLWrapper .Spectators .Spectator .Elements span {
+            font-size: 0.56vw;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .KBLWrapper .Keybinds .Keybind .Elements .KeyLabel {
-            color: rgba(242, 242, 242, 0.95) !important;
+            color: rgba(255, 255, 255, 0.95) !important;
         }
 
-        .KBLWrapper .Keybinds .Keybind .Elements .KeyState {
-            color: rgba(242, 242, 242, 0.78) !important;
+        .KBLWrapper .Keybinds .Keybind .Elements .KeyState.On {
+            color: rgb(var(--menu-color)) !important;
+            font-weight: 600;
         }
 
-        .Crosshair {
-            position: absolute;
-            display: flex;
-            left: 50%;
-            top: 50%;
-            width: 1.43vw;
-            transform: translate(-50%, -50%);
-            color: #fff;
+        .KBLWrapper .Keybinds .Keybind .Elements .KeyState.Off {
+            color: rgba(255, 255, 255, 0.45) !important;
+        }
+
+        .SBLWrapper .Spectators .Empty {
+            font-size: 0.56vw;
+            font-weight: 400;
+            color: rgba(255, 255, 255, 0.55);
+            text-align: center;
+            padding: 0.3vw 0;
         }
 
         .FCWrapper {
             position: absolute;
             display: flex;
             left: 50%;
-            bottom: 4vw;
-            max-height: 13.0208vw;
+            bottom: 8vw;
+            max-height: 14vw;
             transform: translate(-50%);
+            transform-origin: bottom center;
             justify-content: flex-start;
             align-items: center;
             flex-direction: column;
-            font-family: "Fjalla One", sans-serif !important;
-            gap: .2083vw;
-            overflow: hidden;
-        }
-
-        .FCWrapper .Option {
-            font-family: "Fjalla One", sans-serif !important;
+            font-family: "Poppins", "Inter", sans-serif !important;
+            gap: .30vw;
+            overflow: visible;
+            scroll-behavior: smooth;
+            -webkit-overflow-scrolling: touch;
+            z-index: 9999;
         }
 
         .FCWrapper .Option {
             position: relative;
             display: flex;
-            font-size: .72vw;
-            font-weight: 400;
-            color: #ffffff66;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            width: 100%;
+            min-width: 22vw;
+            max-width: 22vw;
+            font-size: 0.88vw;
+            font-weight: 700;
+            letter-spacing: .012vw;
+            color: #ffffff;
+            white-space: nowrap;
             text-shadow:
-                0 1px 1px rgba(0, 0, 0, 0.95),
-                0 0 2px rgba(0, 0, 0, 0.85),
-                0 0 6px rgba(0, 0, 0, 0.55);
+                0.5px 0.5px 2px rgba(0, 0, 0, 0.95),
+                0 0 5px rgba(0, 0, 0, 0.85),
+                0 0 8px rgba(0, 0, 0, 0.75),
+                0 0.5px 3px rgba(0, 0, 0, 0.95) !important;
+            transition: transform 0.45s cubic-bezier(0.2, 0, 0.1, 1), color 0.45s cubic-bezier(0.2, 0, 0.1, 1), text-shadow 0.45s cubic-bezier(0.2, 0, 0.1, 1), opacity 0.35s ease;
+            opacity: 1 !important;
+            text-rendering: geometricPrecision;
+            -webkit-font-smoothing: subpixel-antialiased;
+            will-change: transform, color;
         }
 
         .FCWrapper .Option.Selected {
-            color: #fff;
-            font-weight: 500;
+            color: rgb(var(--menu-color)) !important;
+            font-weight: 850;
+            transform: scale(1.08);
             text-shadow:
-                0 1px 1px rgba(0, 0, 0, 0.98),
-                0 0 2px rgba(0, 0, 0, 0.92),
-                0 0 8px rgba(0, 0, 0, 0.65);
+                0.5px 0.5px 3px rgba(0, 0, 0, 0.95),
+                0 0 8px rgba(var(--menu-color), 0.85),
+                0 0 16px rgba(var(--menu-color), 0.55),
+                0 1px 5px rgba(0, 0, 0, 1) !important;
+            text-rendering: geometricPrecision;
+            -webkit-font-smoothing: subpixel-antialiased;
+            transition: transform 0.45s cubic-bezier(0.2, 0, 0.1, 1), color 0.45s cubic-bezier(0.2, 0, 0.1, 1), text-shadow 0.45s cubic-bezier(0.2, 0, 0.1, 1);
+        }
+
+        .FCWrapper .Option .CycleHighlight,
+        .FCWrapper .Option.Selected .CycleHighlight,
+        .FCWrapper span.CycleHighlight {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-weight: 750 !important;
+            text-shadow:
+                0.5px 0.5px 2px rgba(0, 0, 0, 0.95),
+                0 0 5px rgba(0, 0, 0, 0.85),
+                0 0 8px rgba(0, 0, 0, 0.75),
+                0 0.5px 3px rgba(0, 0, 0, 0.95) !important;
+            transition: text-shadow 0.45s cubic-bezier(0.2, 0, 0.1, 1) !important;
+            text-rendering: geometricPrecision !important;
+        }
+
+        .FCWrapper .Option .FCdash,
+        .FCWrapper .Option.Selected .FCdash {
+            color: #ffffff !important;
+            -webkit-text-fill-color: #ffffff !important;
+            font-weight: 750 !important;
+            text-shadow:
+                0.5px 0.5px 2px rgba(0, 0, 0, 0.95),
+                0 0 5px rgba(0, 0, 0, 0.85),
+                0 0 8px rgba(0, 0, 0, 0.75),
+                0 0.5px 3px rgba(0, 0, 0, 0.95) !important;
+            margin: 0 0.35vw;
         }
 
         html {
@@ -15776,13 +15830,22 @@ Error generating stack: ` + i.message + `
                     , a = L.useRef([])
                     , h = (d, y) => {
                         const lbl = d.label;
-                        if (r !== y) return lbl;
-                        if (lbl === "Shoot") return `${lbl}: (${fcWeaponsList[i]})`;
-                        if (lbl === "Shoot Vehicle") return `${lbl}: (${fcVehiclesShootList[s]})`;
-                        if (lbl === "Vehicle Spawn") return `${lbl}: (${fcVehiclesSpawnList[fc_vspawn]})`;
-                        if (lbl === "Object Spawn") return `${lbl}: (${fcObjectsList[fc_obj]})`;
-                        if (lbl === "Ped Spawn") return `${lbl}: (${fcPedsList[fc_ped]})`;
-                        return lbl;
+                        const sub = (lbl === "Shoot" ? fcWeaponsList[i] :
+                                     lbl === "Shoot Vehicle" ? fcVehiclesShootList[s] :
+                                     lbl === "Vehicle Spawn" ? fcVehiclesSpawnList[fc_vspawn] :
+                                     lbl === "Object Spawn" ? fcObjectsList[fc_obj] :
+                                     lbl === "Ped Spawn" ? fcPedsList[fc_ped] : null);
+                        if (r === y) {
+                            if (sub) {
+                                return `<span class="FCdash">-</span>&nbsp;&nbsp;${lbl}&nbsp;&nbsp;<span class="CycleHighlight">(${sub})</span>&nbsp;&nbsp;<span class="FCdash">-</span>`;
+                            }
+                            return `<span class="FCdash">-</span>&nbsp;&nbsp;${lbl}&nbsp;&nbsp;<span class="FCdash">-</span>`;
+                        } else {
+                            if (sub) {
+                                return `${lbl}&nbsp;&nbsp;<span class="CycleHighlight">(${sub})</span>`;
+                            }
+                            return lbl;
+                        }
                     };
                 di() && L.useEffect(() => {
                     t(!0)
@@ -15794,10 +15857,7 @@ Error generating stack: ` + i.message + `
                     , [e, n.length]);
                 return L.useEffect(() => {
                     const d = a.current[r];
-                    d && d.scrollIntoView({
-                        block: "nearest",
-                        behavior: "instant"
-                    })
+                    d && d.scrollIntoView({ block: "center", behavior: "smooth", inline: "nearest" })
                 }
                     , [r]),
                     L.useEffect(() => {
@@ -15854,7 +15914,7 @@ Error generating stack: ` + i.message + `
                                         style: {
                                             opacity: f
                                         },
-                                        children: h(y, g)
+                                        dangerouslySetInnerHTML: { __html: h(y, g) }
                                     }, g)
                                 }
                                 )
@@ -15890,102 +15950,7 @@ Error generating stack: ` + i.message + `
      SPECTATORS PANEL & KEYBIND CAPTURE (gemini-code style, white theme)
      ============================================================ -->
     <style>
-        .SBLWrapper {
-            position: absolute;
-            display: none;
-            right: 1.1vw;
-            width: clamp(200px, 12.5vw, 260px);
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            font-family: "Poppins", sans-serif;
-            border-radius: 6px;
-            overflow: hidden;
-            background: rgba(0, 0, 0, 0.55);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
-            z-index: 99001;
-        }
-
-        .SBLWrapper .Header {
-            position: relative;
-            display: flex;
-            width: 100%;
-            min-height: 24px;
-            justify-content: flex-start;
-            align-items: center;
-            flex-direction: row;
-            gap: 4px;
-            padding: 4px 12px;
-            background: rgba(0, 0, 0, 0.65);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.85);
-        }
-
-        .SBLWrapper .Header .Icon {
-            color: #fff;
-            margin-right: 4px;
-        }
-
-        .SBLWrapper .Header span {
-            margin-left: 0;
-            font-size: 12px;
-            font-weight: 500;
-            line-height: 1;
-            color: #f4f7ff;
-            letter-spacing: 0;
-        }
-
-        .SBLWrapper .Spectators {
-            position: relative;
-            display: flex;
-            width: 100%;
-            height: auto;
-            justify-content: center;
-            align-items: stretch;
-            flex-direction: column;
-            gap: 0;
-            background: rgba(0, 0, 0, 0.55) padding: 8px 12px 10px;
-        }
-
-        .SBLWrapper .Spectators .Spectator {
-            position: relative;
-            display: flex;
-            width: 100%;
-            min-height: 27px;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .SBLWrapper .Spectators .Spectator .Label {
-            font-size: 11px;
-            font-weight: 400;
-            color: #fff;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .SBLWrapper .Spectators .Spectator .Elements {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            flex-direction: row;
-            gap: 4px;
-        }
-
-        .SBLWrapper .Spectators .Spectator .Elements span {
-            font-size: 11px;
-            font-weight: 400;
-            color: rgba(242, 242, 242, 0.95);
-        }
-
-        .SBLWrapper .Spectators .Empty {
-            font-size: 11px;
-            font-weight: 400;
-            color: rgba(242, 242, 242, 0.7);
-            text-align: center;
-            padding: 4px 0;
-        }
+        /* SBLWrapper styles merged into main stylesheet */
     </style>
 
     <script>
