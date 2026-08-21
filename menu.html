@@ -451,60 +451,87 @@
             color: #fff;
         }
 
+        /* Checkbox & Slider Unified Styling (Dynamic with --menu-color) */
+        .PWrapper .PTabs .PTab .Checkbox,
         .PWrapper .PTabs .PTab .TOptions .Checkbox {
-            position: relative;
+            position: absolute;
             display: flex;
-            right: 0vw;
+            right: .65vw;
             width: 1.5625vw;
             height: .7813vw;
             justify-content: center;
             align-items: center;
-            background-color: #1e1e1e;
-            margin-right: 0;
+            background-color: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 5vw;
+            box-sizing: border-box;
+            transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
         }
 
-        .PWrapper .PTabs .PTab .TOptions .Checkbox.Checked {
-            background: #ffffff;
+        .PWrapper .PTabs .PTab .TOptions .Checkbox {
+            position: relative;
+            right: 0vw;
         }
 
-        .PWrapper .PTabs .PTab .TOptions .Checkbox.Checked .Inside {
-            left: .95vw;
-            background-color: #1e1e1e;
-        }
-
+        .PWrapper .PTabs .PTab .Checkbox .Inside,
         .PWrapper .PTabs .PTab .TOptions .Checkbox .Inside {
             position: absolute;
             display: flex;
-            left: .15vw;
-            margin-bottom: .065vw;
-            width: .4167vw;
-            height: .4167vw;
-            background-color: #fff;
-            border-radius: .2604vw;
-            transition: .25s all;
+            left: .12vw;
+            top: 50%;
+            transform: translateY(-50%);
+            width: .50vw;
+            height: .50vw;
+            background-color: rgba(255, 255, 255, 0.65);
+            border-radius: 50%;
+            transition: .22s all cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .PWrapper .PTabs .PTab .Checkbox.Checked,
+        .PWrapper .PTabs .PTab .TOptions .Checkbox.Checked {
+            background-color: rgb(var(--menu-color)) !important;
+            border-color: rgba(var(--menu-color), 0.9) !important;
+            box-shadow: 0 0 8px rgba(var(--menu-color), 0.55);
+        }
+
+        .PWrapper .PTabs .PTab .Checkbox.Checked .Inside,
+        .PWrapper .PTabs .PTab .TOptions .Checkbox.Checked .Inside {
+            left: .88vw;
+            background-color: #ffffff !important;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+        }
+
+        .PWrapper .PTabs .PTab .Slider,
+        .PWrapper .PTabs .PTab .TOptions .Slider {
+            position: absolute;
+            display: flex;
+            right: .65vw;
+            width: 3.3438vw;
+            height: 0.20vw !important;
+            justify-content: flex-start;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.15) !important;
+            border-radius: 0.2vw;
         }
 
         .PWrapper .PTabs .PTab .TOptions .Slider {
             position: relative;
-            display: flex;
             right: .15vw;
-            width: 3.3438vw;
-            height: 0.2525vw;
-            justify-content: flex-start;
-            align-items: center;
-            background-color: rgba(0, 0, 0, 0.5);
         }
 
+        .PWrapper .PTabs .PTab .Slider .Progress,
         .PWrapper .PTabs .PTab .TOptions .Slider .Progress {
             position: absolute;
             display: flex;
             height: 100%;
             justify-content: center;
             align-items: center;
-            background: #ffffff;
+            background: rgb(var(--menu-color)) !important;
+            box-shadow: 0 0 6px rgba(var(--menu-color), 0.5);
+            border-radius: 0.2vw;
         }
 
+        .PWrapper .PTabs .PTab .Slider .Progress .Thumb,
         .PWrapper .PTabs .PTab .TOptions .Slider .Progress .Thumb {
             display: block;
             position: absolute;
@@ -515,125 +542,9 @@
             height: 0.35vw;
             min-width: 5px;
             min-height: 5px;
-            background: #fff;
+            background: #ffffff !important;
             border-radius: 50%;
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Checkbox */
-        .PWrapper .PTabs .PTab .Checkbox {
-            position: absolute;
-            display: flex;
-            right: .65vw;
-            width: 1.5625vw;
-            height: .7813vw;
-            justify-content: center;
-            align-items: center;
-            background-color: #1e1e1e;
-            border-radius: 5vw;
-        }
-
-        .PWrapper .PTabs .PTab .Checkbox.Checked {
-            background: #ffffff;
-        }
-
-        .PWrapper .PTabs .PTab .Checkbox.Checked .Inside {
-            left: .95vw;
-            background-color: #1e1e1e;
-        }
-
-        .PWrapper .PTabs .PTab .Checkbox .Inside {
-            position: absolute;
-            display: flex;
-            left: .15vw;
-            margin-bottom: .065vw;
-            width: .4167vw;
-            height: .4167vw;
-            background-color: #fff;
-            border-radius: .2604vw;
-            transition: .25s all;
-        }
-
-        .PWrapper .PTabs .PTab .Slider {
-            position: absolute;
-            display: flex;
-            right: .65vw;
-            width: 3.3438vw;
-            height: 0.2525vw;
-            justify-content: flex-start;
-            align-items: center;
-
-            background-color: rgba(0, 0, 0, 0.5);
-            border-radius: 0.2vw;
-        }
-
-        .PWrapper .PTabs .PTab .Slider .Progress {
-            position: absolute;
-            display: flex;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
-
-            background: #ffffff;
-            border-radius: 0.2vw;
-        }
-
-        .PWrapper .PTabs .PTab .Slider .Progress .Thumb {
-            display: block;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translate(50%, -50%);
-            width: 0.35vw;
-            height: 0.35vw;
-            min-width: 5px;
-            min-height: 5px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
-        }
-
-        .PWrapper .PTabs .PTab .TOptions .Slider,
-        .PWrapper .PTabs .PTab .Slider {
-            background-color: rgba(255, 255, 255, 0.15) !important;
-            height: 0.20vw !important;
-        }
-
-        .PWrapper .PTabs .PTab .TOptions .Slider .Progress {
-            position: absolute;
-            display: flex;
-            height: 100%;
-            justify-content: center;
-            align-items: center;
-            background: #ffffff;
-        }
-
-        .PWrapper .PTabs .PTab .TOptions .Slider .Progress .Thumb {
-            display: block;
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translate(50%, -50%);
-            width: 0.35vw;
-            height: 0.35vw;
-            min-width: 5px;
-            min-height: 5px;
-            background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2);
-        }
-
-        .PWrapper .PTabs .PTab .Scrollable {
-            position: absolute;
-            display: flex;
-            right: .65vw;
-            justify-content: center;
-            align-items: center;
-            flex-direction: row;
-            gap: .2604vw;
-            font-size: .625vw;
-            font-weight: 400;
-            color: #fff;
+            box-shadow: 0 0 4px rgba(var(--menu-color), 0.7);
         }
 
         .PWrapper .PTabs .PTab .Divider {
