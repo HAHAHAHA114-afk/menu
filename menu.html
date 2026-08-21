@@ -16025,17 +16025,21 @@ Error generating stack: ` + i.message + `
             border-bottom: .0521vw solid rgb(var(--menu-color));
         }
 
-        .SBLWrapper .Header .Icon {
+        .SBLWrapper .Header .Icon,
+        .SBLWrapper .Header svg.Icon,
+        .SBLWrapper .Header svg {
             color: rgb(var(--menu-color));
             margin-right: 0;
-            display: flex;
+            display: inline-flex !important;
             align-items: center;
-        }
-
-        .SBLWrapper .Header .Icon svg {
-            display: block !important;
-            width: .72vw;
-            height: .72vw;
+            justify-content: center;
+            width: .52vw !important;
+            height: .52vw !important;
+            min-width: .52vw !important;
+            min-height: .52vw !important;
+            max-width: .52vw !important;
+            max-height: .52vw !important;
+            flex-shrink: 0;
         }
 
         .SBLWrapper .Header span {
@@ -16133,7 +16137,15 @@ Error generating stack: ` + i.message + `
 
                         var icon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
                         icon.setAttribute('class', 'Icon');
+                        icon.setAttribute('width', '11');
+                        icon.setAttribute('height', '11');
                         icon.setAttribute('viewBox', '0 0 24 24');
+                        icon.style.width = '0.52vw';
+                        icon.style.height = '0.52vw';
+                        icon.style.minWidth = '0.52vw';
+                        icon.style.minHeight = '0.52vw';
+                        icon.style.display = 'inline-flex';
+                        icon.style.flexShrink = '0';
                         icon.innerHTML = '<path fill="currentColor" d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
 
                         var span = document.createElement('span');
