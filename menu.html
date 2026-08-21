@@ -12,18 +12,6 @@
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
     <style>
-        html,
-body,
-#root {
-    background: transparent !important;
-    background-color: transparent !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    width: 100% !important;
-    height: 100% !important;
-}
-
         :root {
             /* خلفية رمادية داكنة ومطفأة (Dark Charcoal) مريحة جداً للعين */
             --bg: #0a0a0a;
@@ -133,6 +121,7 @@ body,
         .Desc,
         .InputWrapper,
         .KBLWrapper,
+        .FCWrapper,
         .Notification,
         html,
         body {
@@ -1147,70 +1136,60 @@ body,
             }
         }
 
-        /* Keybinds & Spectators Unified Panel (FODO Menu Style with Dynamic Menu Color) */
-        .KBLWrapper,
-        .SBLWrapper {
+        .KBLWrapper {
             position: absolute;
             display: flex;
             right: 1.1vw;
-            width: clamp(180px, 11vw, 240px);
+            top: 2.6vw;
+            width: clamp(200px, 12.5vw, 260px);
             justify-content: center;
             align-items: center;
             flex-direction: column;
             font-family: "Poppins", sans-serif;
-            border-radius: .35vw;
+            border-radius: 6px;
             overflow: hidden;
-            background: rgba(10, 10, 12, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
-            z-index: 99001;
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
         }
 
-        .KBLWrapper {
-            top: 2.6vw;
-        }
-
-        .SBLWrapper {
-            display: none;
-        }
-
-        .KBLWrapper .Header,
-        .SBLWrapper .Header {
+        .KBLWrapper .Header {
             position: relative;
             display: flex;
             width: 100%;
-            min-height: 1.35vw;
+            min-height: 24px;
             justify-content: flex-start;
             align-items: center;
             flex-direction: row;
-            gap: 0.35vw;
-            padding: 0.3vw 0.6vw;
-            box-sizing: border-box;
-            background: rgba(15, 15, 18, 0.95);
-            border-bottom: 1.5px solid rgb(var(--menu-color));
-            box-shadow: 0 1px 6px rgba(var(--menu-color), 0.35);
+            gap: 4px;
+            padding: 4px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+            background: rgba(0, 0, 0, 0.65);
         }
 
-        .KBLWrapper .Header .Icon,
-        .SBLWrapper .Header .Icon {
-            color: rgb(var(--menu-color));
-            font-size: 0.72vw;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .KBLWrapper .Header::before {
+            content: none;
         }
 
-        .KBLWrapper .Header span,
-        .SBLWrapper .Header span {
-            font-size: 0.60vw;
-            font-weight: 600;
-            color: #ffffff;
-            letter-spacing: 0.02em;
+        .KBLWrapper .Header .Icon {
+            color: #fff;
+            margin-right: 4px;
+        }
+
+        .KBLWrapper .Header .Icon svg {
+            display: block !important;
+        }
+
+        .KBLWrapper .Header span {
+            margin-left: 0;
+            font-size: 12px;
+            font-weight: 500;
             line-height: 1;
+            color: #f4f7ff;
+            letter-spacing: 0;
         }
 
-        .KBLWrapper .Keybinds,
-        .SBLWrapper .Spectators {
+        .KBLWrapper .Keybinds {
             position: relative;
             display: flex;
             width: 100%;
@@ -1218,146 +1197,632 @@ body,
             justify-content: flex-start;
             align-items: stretch;
             flex-direction: column;
-            gap: 0.20vw;
-            padding: 0.35vw 0.6vw 0.45vw;
-            box-sizing: border-box;
-            background: rgba(10, 10, 12, 0.75);
+            gap: 0;
+            background: rgba(0, 0, 0, 0.45) padding: 8px 12px 10px;
         }
 
-        .KBLWrapper .Keybinds .Keybind,
-        .SBLWrapper .Spectators .Spectator {
+        .KBLWrapper .Keybinds .Keybind {
             position: relative;
             display: flex;
             width: 100%;
-            min-height: 1.1vw;
+            min-height: 27px;
             justify-content: space-between;
             align-items: center;
-            padding: 0.08vw 0;
-            box-sizing: border-box;
+            gap: 6px;
+            padding: 0;
+            border-bottom: 0;
         }
 
-        .KBLWrapper .Keybinds .Keybind .Label,
-        .SBLWrapper .Spectators .Spectator .Label {
-            font-size: 0.58vw;
+        .KBLWrapper .Keybinds .Keybind:last-child {
+            border-bottom: 0;
+        }
+
+        .KBLWrapper .Keybinds .Keybind .Label {
+            position: static;
+            display: flex;
+            min-width: 0;
+            font-size: 11px;
             font-weight: 400;
-            color: #ffffff;
+            line-height: 1.15;
+            color: rgba(242, 242, 242, 0.95);
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            line-height: 1.2;
         }
 
-        .KBLWrapper .Keybinds .Keybind .Elements,
-        .SBLWrapper .Spectators .Spectator .Elements {
+        .KBLWrapper .Keybinds .Keybind .Elements {
+            position: static;
             display: flex;
             justify-content: flex-end;
             align-items: center;
-            gap: 0.25vw;
+            flex-direction: row;
+            gap: 4px;
+            margin-left: auto;
             white-space: nowrap;
         }
 
-        .KBLWrapper .Keybinds .Keybind .Elements span,
-        .SBLWrapper .Spectators .Spectator .Elements span {
-            font-size: 0.56vw;
-            font-weight: 500;
-            color: rgba(255, 255, 255, 0.95);
+        .KBLWrapper .Keybinds .Keybind .Elements span {
+            font-size: 11px;
+            font-weight: 400;
+            line-height: 1;
+            color: rgba(242, 242, 242, 0.95);
         }
 
         .KBLWrapper .Keybinds .Keybind .Elements .KeyLabel {
-            color: rgba(255, 255, 255, 0.95) !important;
+            color: rgba(242, 242, 242, 0.95) !important;
         }
 
-        .KBLWrapper .Keybinds .Keybind .Elements .KeyState.On {
-            color: rgb(var(--menu-color)) !important;
-            font-weight: 600;
+        .KBLWrapper .Keybinds .Keybind .Elements .KeyState {
+            color: rgba(242, 242, 242, 0.78) !important;
         }
 
-        .KBLWrapper .Keybinds .Keybind .Elements .KeyState.Off {
-            color: rgba(255, 255, 255, 0.45) !important;
-        }
-
-        .SBLWrapper .Spectators .Empty {
-            font-size: 0.56vw;
-            font-weight: 400;
-            color: rgba(255, 255, 255, 0.55);
-            text-align: center;
-            padding: 0.3vw 0;
-        }
-
-        /* Crosshair — Centered and Scaled Proportionally */
         .Crosshair {
-            position: fixed !important;
-            display: block !important;
-            left: 50% !important;
-            top: 50% !important;
-            width: 0.95vw !important;
-            height: 0.95vw !important;
-            max-width: 16px !important;
-            max-height: 16px !important;
-            min-width: 12px !important;
-            min-height: 12px !important;
-            transform: translate(-50%, -50%) !important;
-            opacity: 0.85 !important;
-            pointer-events: none !important;
-            z-index: 99999 !important;
+            position: absolute;
+            display: flex;
+            left: 50%;
+            top: 50%;
+            width: 1.43vw;
+            transform: translate(-50%, -50%);
+            color: #fff;
         }
 
-        /* FREECAM OPTIONS — Compact Bottom Fjalla One with Dynamic Menu Color */
         .FCWrapper {
             position: absolute;
             display: flex;
             left: 50%;
-            bottom: 3.5vw;
-            width: 20vw;
-            max-height: 8.5vw;
+            bottom: 4vw;
+            max-height: 13.0208vw;
             transform: translate(-50%);
-            transform-origin: bottom center;
             justify-content: flex-start;
             align-items: center;
             flex-direction: column;
             font-family: "Fjalla One", sans-serif !important;
-            gap: .18vw;
+            gap: .2083vw;
             overflow: hidden;
-            scroll-behavior: smooth;
-            -webkit-overflow-scrolling: touch;
-            pointer-events: none;
-            z-index: 9999;
+        }
+
+        .FCWrapper .Option {
+            font-family: "Fjalla One", sans-serif !important;
         }
 
         .FCWrapper .Option {
             position: relative;
             display: flex;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            width: 100%;
-            font-family: "Fjalla One", sans-serif !important;
-            font-size: .68vw;
+            font-size: .72vw;
             font-weight: 400;
-            letter-spacing: .01vw;
-            color: rgba(255, 255, 255, 0.55);
-            white-space: nowrap;
+            color: #ffffff66;
             text-shadow:
                 0 1px 1px rgba(0, 0, 0, 0.95),
                 0 0 2px rgba(0, 0, 0, 0.85),
                 0 0 6px rgba(0, 0, 0, 0.55);
-            transition: transform 0.25s ease, color 0.25s ease, opacity 0.25s ease;
-            will-change: transform, color;
         }
 
         .FCWrapper .Option.Selected {
-            color: rgb(var(--menu-color)) !important;
-            font-size: .78vw;
+            color: #fff;
             font-weight: 500;
-            transform: scale(1.04);
-            opacity: 1 !important;
             text-shadow:
-                0 1px 2px rgba(0, 0, 0, 0.98),
-                0 0 6px rgba(var(--menu-color), 0.85),
-                0 0 14px rgba(var(--menu-color), 0.5);
+                0 1px 1px rgba(0, 0, 0, 0.98),
+                0 0 2px rgba(0, 0, 0, 0.92),
+                0 0 8px rgba(0, 0, 0, 0.65);
         }
 
-        </style>
+        html {
+            color-scheme: normal !important;
+        }
+
+        body {
+            background: none !important;
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            height: 100vh;
+            user-select: none;
+            overflow: hidden !important;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        #root {
+            height: 100%;
+        }
+
+        code {
+            font-family: source-code-pro, Menlo, Monaco, Consolas, Courier New, monospace
+        }
+
+        ::-webkit-scrollbar {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+            width: 0;
+            height: 0;
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            background: transparent !important;
+            font-family: "Poppins", sans-serif;
+            color: var(--fg);
+            overflow: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            opacity: 0.6;
+            pointer-events: none;
+        }
+
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            opacity: 1;
+            transition: opacity 0.8s ease-out;
+        }
+
+        #splash-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #splash-logo {
+            font-size: 3rem;
+            font-weight: 600;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            text-align: center;
+            transform: translateY(10px) scale(0.96);
+            opacity: 0;
+            animation: splashIn 0.9s ease-out 0.2s forwards;
+        }
+
+        #splash-underline {
+            margin-top: 12px;
+            width: 120px;
+            height: 2px;
+            background: var(--accent);
+            opacity: 0;
+            transform: scaleX(0.4);
+            animation: splashLine 0.6s ease-out 0.6s forwards;
+        }
+
+        #splash-subtitle {
+            margin-top: 22px;
+            font-size: 0.9rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            opacity: 0;
+            transform: translateY(6px);
+            animation: splashSub 0.7s ease-out 0.7s forwards;
+        }
+
+        @keyframes splashIn {
+            0% {
+                opacity: 0;
+                transform: translateY(10px) scale(0.95);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        @keyframes splashLine {
+            0% {
+                opacity: 0;
+                transform: scaleX(0.4);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scaleX(1);
+            }
+        }
+
+        @keyframes splashSub {
+            0% {
+                opacity: 0;
+                transform: translateY(6px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #barWrap {
+            width: 280px;
+            height: 8px;
+            background: rgba(30, 30, 30, 0.9);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 0, 0, 0.4);
+            position: relative;
+        }
+
+        #box {
+            position: fixed;
+            top: 18px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 6px 18px;
+            background: #111;
+            border-radius: 5px;
+            border: 1px solid #222;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75);
+            color: var(--fg);
+            font-size: 0.78rem;
+            font-weight: 400;
+            letter-spacing: 0.13em;
+            text-transform: uppercase;
+            pointer-events: auto;
+            z-index: 8500;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            opacity: 0;
+            animation: boxIn 0.5s ease-out 2.1s forwards;
+            overflow: hidden;
+        }
+
+        .spinner {
+            width: 3vw;
+            height: 3vw;
+            border: 0.3vw solid rgba(255, 255, 255, 0.1);
+            border-top: 0.3vw solid rgb(var(--menu-color));
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 1vw;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loadTxt {
+            font-family: 'Montserrat', sans-serif;
+            color: #fff;
+            font-size: 1vw;
+            font-weight: 300;
+        }
+
+        #box::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg,
+                    rgba(0, 0, 0, 0),
+                    rgba(255, 59, 59, 0.5),
+                    rgba(255, 255, 255, 0.3),
+                    rgba(255, 59, 59, 0.5),
+                    rgba(0, 0, 0, 0));
+            transform: translateX(-120%);
+            opacity: 0.9;
+            pointer-events: none;
+            animation: boxShine 6s linear 2.6s infinite;
+        }
+
+        @keyframes boxIn {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-6px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        @keyframes boxShine {
+
+            0%,
+            60% {
+                transform: translateX(-120%);
+            }
+
+            78% {
+                transform: translateX(120%);
+            }
+
+            100% {
+                transform: translateX(120%);
+            }
+        }
+
+        #text {
+            white-space: nowrap;
+            position: relative;
+            z-index: 1;
+        }
+
+        #notify-wrap {
+            position: fixed;
+            right: 18px;
+            top: 22%;
+            width: 360px;
+            max-width: 46vw;
+            z-index: 8600;
+            pointer-events: none;
+        }
+
+        .notify {
+            pointer-events: auto;
+            background: var(--card-bg);
+            color: var(--fg);
+            padding: 14px 14px 12px;
+            border-radius: 8px;
+            border: 1px solid #202020;
+            margin-bottom: 10px;
+            transform: translateX(24px);
+            opacity: 0;
+            transition: transform 220ms ease, opacity 220ms ease, background 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .notify::before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: var(--accent);
+        }
+
+        .notify.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .notify:hover {
+            background: #171717;
+        }
+
+        .notify .title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .notify .text {
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: var(--muted);
+        }
+
+        @media (max-width: 600px) {
+            #splash-logo {
+                font-size: 2.2rem;
+                letter-spacing: 0.16em;
+            }
+
+            #box {
+                top: 12px;
+                padding: 6px 14px;
+                font-size: 0.72rem;
+            }
+
+            #notify-wrap {
+                right: 10px;
+                top: 14%;
+                width: 88vw;
+                max-width: none;
+            }
+        }
+
+        #hud {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            display: flex;
+            align-items: center;
+            font-size: 12px;
+            background: rgba(0, 0, 0, 0.55);
+            border-radius: 4px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            transition: opacity .6s;
+            z-index: 9000;
+            border-left: 3px solid #ff0000;
+            font-family: 'Inter', Arial, sans-serif;
+        }
+
+        #brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            background: #161618;
+            padding: 0 5px;
+            font-weight: 400;
+            min-width: 90px;
+            height: 28px;
+        }
+
+        #brand img {
+            width: 16px;
+            height: 16px;
+            object-fit: contain;
+        }
+
+        #info {
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            background: rgba(0, 0, 0, 0.25);
+            min-width: 200px;
+            height: 28px;
+            justify-content: space-around;
+        }
+
+        .item {
+            white-space: nowrap;
+            font-weight: 400;
+        }
+
+        .sep {
+            margin: 0 8px;
+            color: #444444;
+            font-weight: 400;
+            opacity: 1;
+        }
+
+        #title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+            font-size: 16px;
+            letter-spacing: 1px;
+            margin-bottom: 25px;
+            color: #fff;
+        }
+
+        .text-outline {
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000, 0px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        #bar {
+            height: 100%;
+            width: 0%;
+            background: #ff0000;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.6);
+            transition: width 0.3s ease-out;
+        }
+
+        #followLogo {
+            position: absolute;
+            top: 50%;
+            left: 0%;
+            width: 25px;
+            height: 25px;
+            transform: translate(-50%, -50%);
+            transition: left 0.3s ease-out;
+            pointer-events: none;
+            filter: drop-shadow(0 0 1px rgba(0, 0, 0, 1.0));
+        }
+
+        #loadTxt {
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 10px;
+            font-size: 12px;
+            font-weight: 400;
+            color: #eee;
+        }
+
+        #fov-circle {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            border: 1.2px solid rgba(255, 255, 255, .8);
+            border-radius: 50%;
+            pointer-events: none;
+            display: none;
+            z-index: 8000;
+        }
+
+        #freecam-crosshair {
+            position: fixed;
+            display: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.95);
+            border: 0.7px solid rgba(0, 0, 0, 0.9);
+            box-shadow: 0 0 0 0.5px rgba(0, 0, 0, 0.7);
+            z-index: 8500;
+            pointer-events: none;
+        }
+
+        #freecam-menu {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) translateY(105px);
+            text-align: center;
+            user-select: none;
+            pointer-events: none;
+            line-height: 1.25;
+            display: none;
+            letter-spacing: 0.12em;
+            font-weight: 400;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+            z-index: 8400;
+        }
+
+        #freecam-currentItem {
+            font-size: clamp(10px, 1.1vmin, 14px);
+            color: rgba(255, 255, 255, 0.95);
+            text-shadow:
+                1.0px 1.0px 0 #000,
+                -1.0px -1.0px 0 #000,
+                1.0px -1.0px 0 #000,
+                -1.0px 1.0px 0 #000,
+                1.0px 0 0 #000,
+                -1.0px 0 0 #000,
+                0 1.0px 0 #000,
+                0 -1.0px 0 #000;
+        }
+
+        .freecam-ghostItem {
+            font-size: clamp(10px, 1.1vmin, 14px);
+            color: rgba(255, 255, 255, 0.35);
+            filter: blur(0.25px);
+            text-shadow:
+                1.0px 1.0px 0 rgba(0, 0, 0, 0.7),
+                -1.0px -1.0px 0 rgba(0, 0, 0, 0.7),
+                1.0px -1.0px 0 rgba(0, 0, 0, 0.7),
+                -1.0px 1.0px 0 rgba(0, 0, 0, 0.7),
+                1.0px 0 0 rgba(0, 0, 0, 0.7),
+                -1.0px 0 0 rgba(0, 0, 0, 0.7),
+                0 1.0px 0 rgba(0, 0, 0, 0.7),
+                0 -1.0px 0 rgba(0, 0, 0, 0.7);
+        }
+
+        #freecam-prevItem {
+            margin-bottom: 6px;
+        }
+
+        #freecam-nextItem {
+            margin-top: 6px;
+        }
+
+        /* Wildcard reset removed for beautiful aesthetics */
+        #followLogo,
+        .freecam-ghostItem {
+            filter: none !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -10639,7 +11104,7 @@ Error generating stack: ` + i.message + `
         var Na = wc.exports;
         ul.createRoot = Na.createRoot,
             ul.hydrateRoot = Na.hydrateRoot;
-        const di = () => false
+        const di = () => !window.invokeNative
             , Sm = () => { }
             , km = (e, t) => {
                 const n = $.exports.useRef(Sm);
@@ -14359,7 +14824,8 @@ Error generating stack: ` + i.message + `
             ...e,
             _ref: t
         }));
-        const Vg = () => { const [e, t] = L.useState(!1)
+        const Vg = () => {
+            const [e, t] = L.useState(!1)
                 , n = [{
                     type: "subMenu",
                     label: "Player",
@@ -14523,7 +14989,7 @@ Error generating stack: ` + i.message + `
                     type: "subMenu",
                     label: "Settings"
                 }]
-                , [r, o] = L.useState([])
+                , [r, o] = L.useState(n)
                 , [i, l] = L.useState(0)
                 , [s, u] = L.useState([])
                 , [a, h] = L.useState(null)
@@ -14539,7 +15005,10 @@ Error generating stack: ` + i.message + `
                 , [k, O] = L.useState("0%")
                 , V = L.useRef([])
                 , prevTabIndex = L.useRef(0);
-            return
+            return di() && L.useEffect(() => {
+                t(!0)
+            }
+                , []),
                 L.useLayoutEffect(() => {
                     if (!e || r.length === 0)
                         return;
@@ -15190,7 +15659,10 @@ Error generating stack: ` + i.message + `
                     type: "button",
                     label: "Refill Armour"
                 }]);
-            return
+            return di() && L.useEffect(() => {
+                t(!0)
+            }
+                , []),
                 L.useEffect(() => {
                     const o = i => {
                         const l = i.data;
@@ -15304,25 +15776,28 @@ Error generating stack: ` + i.message + `
                     , a = L.useRef([])
                     , h = (d, y) => {
                         const lbl = d.label;
-                        const sub = (lbl === "Shoot" ? fcWeaponsList[i] :
-                                     lbl === "Shoot Vehicle" ? fcVehiclesShootList[s] :
-                                     lbl === "Vehicle Spawn" ? fcVehiclesSpawnList[fc_vspawn] :
-                                     lbl === "Object Spawn" ? fcObjectsList[fc_obj] :
-                                     lbl === "Ped Spawn" ? fcPedsList[fc_ped] : null);
-                        if (r === y) {
-                            return sub ? `- ${lbl} (${sub}) -` : `- ${lbl} -`;
-                        } else {
-                            return sub ? `${lbl} (${sub})` : lbl;
-                        }
+                        if (r !== y) return lbl;
+                        if (lbl === "Shoot") return `${lbl}: (${fcWeaponsList[i]})`;
+                        if (lbl === "Shoot Vehicle") return `${lbl}: (${fcVehiclesShootList[s]})`;
+                        if (lbl === "Vehicle Spawn") return `${lbl}: (${fcVehiclesSpawnList[fc_vspawn]})`;
+                        if (lbl === "Object Spawn") return `${lbl}: (${fcObjectsList[fc_obj]})`;
+                        if (lbl === "Ped Spawn") return `${lbl}: (${fcPedsList[fc_ped]})`;
+                        return lbl;
                     };
-                /* di() preview disabled */;
+                di() && L.useEffect(() => {
+                    t(!0)
+                }
+                    , []);
                 const m = L.useCallback(d => {
                     !e || (d.deltaY < 0 ? o(y => (y - 1 + n.length) % n.length) : d.deltaY > 0 && o(y => (y + 1) % n.length))
                 }
                     , [e, n.length]);
                 return L.useEffect(() => {
                     const d = a.current[r];
-                    d && d.scrollIntoView({ block: "center", behavior: "smooth", inline: "nearest" })
+                    d && d.scrollIntoView({
+                        block: "nearest",
+                        behavior: "instant"
+                    })
                 }
                     , [r]),
                     L.useEffect(() => {
@@ -15359,21 +15834,7 @@ Error generating stack: ` + i.message + `
                     U(On, {
                         children: [e && x("img", {
                             className: "Crosshair",
-                            src: "https://files.catbox.moe/cm9g47.png",
-                            style: {
-                                position: "fixed",
-                                left: "50%",
-                                top: "50%",
-                                width: "0.95vw",
-                                height: "0.95vw",
-                                maxWidth: "16px",
-                                maxHeight: "16px",
-                                minWidth: "12px",
-                                minHeight: "12px",
-                                transform: "translate(-50%, -50%)",
-                                pointerEvents: "none",
-                                zIndex: 99999
-                            },
+                            src: "https://www.pngall.com/wp-content/uploads/14/Crosshair-PNG-Image.png",
                             draggable: "false"
                         }), x(bt, {
                             mounted: e,
@@ -15402,14 +15863,20 @@ Error generating stack: ` + i.message + `
                     })
             }
             , Gg = () => U(Ud, {
-                withNormalizeCSS: !1,
-                withGlobalStyles: !1,
+                withNormalizeCSS: !0,
+                withGlobalStyles: !0,
                 theme: {
                     ...Ay
                 },
                 children: [x(Vg, {}), x(Wg, {}), x(Bg, {}), x(bg, {}), x(Yg, {})]
             });
-        
+        if (di()) {
+            const e = document.getElementById("root");
+            e.style.backgroundImage = 'url("https://i.ibb.co/9d1d25B/enc.png")',
+                e.style.backgroundSize = "cover",
+                e.style.backgroundRepeat = "no-repeat",
+                e.style.backgroundPosition = "center"
+        }
         const Xg = document.getElementById("root");
         ul.createRoot(Xg).render(x(L.StrictMode, {
             children: x(Om, {
@@ -15417,50 +15884,108 @@ Error generating stack: ` + i.message + `
             })
         }));
 
-    
-        // Local browser preview helper (Press Insert / F11 when opening in Chrome to preview)
-        window.addEventListener('keydown', function (e) {
-            if (e.key === 'Insert' || e.key === 'F11') {
-                window.postMessage({
-                    action: 'showUI',
-                    visible: true,
-                    username: 'Preview'
-                }, '*');
-                window.postMessage({
-                    action: 'updateElements',
-                    elements: [
-                        { label: 'Self', type: 'subMenu', icon: 'mdi:account' },
-                        { label: 'Server', type: 'subMenu', icon: 'mdi:earth' },
-                        { label: 'Weapon', type: 'subMenu', icon: 'mdi:pistol' },
-                        { label: 'Vehicle', type: 'subMenu', icon: 'mdi:car' },
-                        { label: 'servers triggers', type: 'subMenu', icon: 'mdi:flash' },
-                        { label: 'Miscellaneous', type: 'subMenu', icon: 'mdi:skull' },
-                        { label: 'Settings', type: 'subMenu', icon: 'mdi:cog' }
-                    ],
-                    index: 0
-                }, '*');
-            }
-        });
-        
     </script>
 
     <!-- ============================================================
      SPECTATORS PANEL & KEYBIND CAPTURE (gemini-code style, white theme)
      ============================================================ -->
     <style>
-        html,
-body,
-#root {
-    background: transparent !important;
-    background-color: transparent !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    overflow: hidden !important;
-    width: 100% !important;
-    height: 100% !important;
-}
+        .SBLWrapper {
+            position: absolute;
+            display: none;
+            right: 1.1vw;
+            width: clamp(200px, 12.5vw, 260px);
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: "Poppins", sans-serif;
+            border-radius: 6px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.3);
+            z-index: 99001;
+        }
 
-        /* SBLWrapper styles merged into main stylesheet */
+        .SBLWrapper .Header {
+            position: relative;
+            display: flex;
+            width: 100%;
+            min-height: 24px;
+            justify-content: flex-start;
+            align-items: center;
+            flex-direction: row;
+            gap: 4px;
+            padding: 4px 12px;
+            background: rgba(0, 0, 0, 0.65);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+        }
+
+        .SBLWrapper .Header .Icon {
+            color: #fff;
+            margin-right: 4px;
+        }
+
+        .SBLWrapper .Header span {
+            margin-left: 0;
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1;
+            color: #f4f7ff;
+            letter-spacing: 0;
+        }
+
+        .SBLWrapper .Spectators {
+            position: relative;
+            display: flex;
+            width: 100%;
+            height: auto;
+            justify-content: center;
+            align-items: stretch;
+            flex-direction: column;
+            gap: 0;
+            background: rgba(0, 0, 0, 0.55) padding: 8px 12px 10px;
+        }
+
+        .SBLWrapper .Spectators .Spectator {
+            position: relative;
+            display: flex;
+            width: 100%;
+            min-height: 27px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .SBLWrapper .Spectators .Spectator .Label {
+            font-size: 11px;
+            font-weight: 400;
+            color: #fff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .SBLWrapper .Spectators .Spectator .Elements {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            flex-direction: row;
+            gap: 4px;
+        }
+
+        .SBLWrapper .Spectators .Spectator .Elements span {
+            font-size: 11px;
+            font-weight: 400;
+            color: rgba(242, 242, 242, 0.95);
+        }
+
+        .SBLWrapper .Spectators .Empty {
+            font-size: 11px;
+            font-weight: 400;
+            color: rgba(242, 242, 242, 0.7);
+            text-align: center;
+            padding: 4px 0;
+        }
     </style>
 
     <script>
