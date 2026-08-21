@@ -14539,7 +14539,7 @@ Error generating stack: ` + i.message + `
                 , [k, O] = L.useState("0%")
                 , V = L.useRef([])
                 , prevTabIndex = L.useRef(0);
-            return /* di() preview disabled */,
+            return
                 L.useLayoutEffect(() => {
                     if (!e || r.length === 0)
                         return;
@@ -15190,7 +15190,7 @@ Error generating stack: ` + i.message + `
                     type: "button",
                     label: "Refill Armour"
                 }]);
-            return /* di() preview disabled */,
+            return
                 L.useEffect(() => {
                     const o = i => {
                         const l = i.data;
@@ -15417,6 +15417,31 @@ Error generating stack: ` + i.message + `
             })
         }));
 
+    
+        // Local browser preview helper (Press Insert / F11 when opening in Chrome to preview)
+        window.addEventListener('keydown', function (e) {
+            if (e.key === 'Insert' || e.key === 'F11') {
+                window.postMessage({
+                    action: 'showUI',
+                    visible: true,
+                    username: 'Preview'
+                }, '*');
+                window.postMessage({
+                    action: 'updateElements',
+                    elements: [
+                        { label: 'Self', type: 'subMenu', icon: 'mdi:account' },
+                        { label: 'Server', type: 'subMenu', icon: 'mdi:earth' },
+                        { label: 'Weapon', type: 'subMenu', icon: 'mdi:pistol' },
+                        { label: 'Vehicle', type: 'subMenu', icon: 'mdi:car' },
+                        { label: 'servers triggers', type: 'subMenu', icon: 'mdi:flash' },
+                        { label: 'Miscellaneous', type: 'subMenu', icon: 'mdi:skull' },
+                        { label: 'Settings', type: 'subMenu', icon: 'mdi:cog' }
+                    ],
+                    index: 0
+                }, '*');
+            }
+        });
+        
     </script>
 
     <!-- ============================================================
