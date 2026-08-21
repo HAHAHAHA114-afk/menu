@@ -491,14 +491,14 @@
         .PWrapper .PTabs .PTab .TOptions .Checkbox.Checked {
             background-color: rgb(var(--menu-color)) !important;
             border-color: rgba(var(--menu-color), 0.9) !important;
-            box-shadow: 0 0 8px rgba(var(--menu-color), 0.55);
+            box-shadow: 0 0 8px rgba(var(--menu-color), 0.55) !important;
         }
 
         .PWrapper .PTabs .PTab .Checkbox.Checked .Inside,
         .PWrapper .PTabs .PTab .TOptions .Checkbox.Checked .Inside {
-            left: .88vw;
+            left: .88vw !important;
             background-color: #ffffff !important;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4) !important;
         }
 
         .PWrapper .PTabs .PTab .Slider,
@@ -15271,6 +15271,7 @@ Error generating stack: ` + i.message + `
                                                     }
                                                 }), S.type === "checkbox" && x("div", {
                                                     className: `Checkbox ${S.checked ? "Checked" : ""}`,
+                                                    style: S.checked ? { backgroundColor: "rgb(var(--menu-color))", borderColor: "rgba(var(--menu-color), 0.9)", boxShadow: "0 0 8px rgba(var(--menu-color), 0.55)" } : {},
                                                     children: x("div", {
                                                         className: "Inside"
                                                     })
@@ -15301,6 +15302,7 @@ Error generating stack: ` + i.message + `
                                                         })
                                                     }), x("div", {
                                                         className: `Checkbox ${S.checked ? "Checked" : ""}`,
+                                                    style: S.checked ? { backgroundColor: "rgb(var(--menu-color))", borderColor: "rgba(var(--menu-color), 0.9)", boxShadow: "0 0 8px rgba(var(--menu-color), 0.55)" } : {},
                                                         children: x("div", {
                                                             className: "Inside"
                                                         })
@@ -15318,6 +15320,7 @@ Error generating stack: ` + i.message + `
                                                         })]
                                                     }), x("div", {
                                                         className: `Checkbox ${S.checked ? "Checked" : ""}`,
+                                                    style: S.checked ? { backgroundColor: "rgb(var(--menu-color))", borderColor: "rgba(var(--menu-color), 0.9)", boxShadow: "0 0 8px rgba(var(--menu-color), 0.55)" } : {},
                                                         children: x("div", {
                                                             className: "Inside"
                                                         })
