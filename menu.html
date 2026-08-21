@@ -426,20 +426,22 @@
             color: #fff;
         }
 
-        .PWrapper .PTabs .PTab .TOptions {
+                .PWrapper .PTabs .PTab .TOptions {
             position: absolute;
             display: flex;
             right: .65vw;
-            width: 7.8125vw;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 100%;
             justify-content: flex-end;
             align-items: center;
             flex-direction: row;
-            gap: .5208vw;
+            gap: .40vw;
         }
 
-                .PWrapper .PTabs .PTab .Scrollable {
+        .PWrapper .PTabs .PTab .Scrollable {
             position: absolute;
-            display: flex;
+            display: inline-flex;
             right: .65vw;
             top: 50%;
             transform: translateY(-50%);
@@ -451,13 +453,16 @@
             font-weight: 400;
             color: rgba(255, 255, 255, 0.95);
             white-space: nowrap;
+            line-height: 1;
             z-index: 5;
         }
 
         .PWrapper .PTabs .PTab .TOptions .Scrollable {
             position: relative;
-            display: flex;
-            right: 0vw;
+            display: inline-flex;
+            right: 0;
+            top: auto;
+            transform: none;
             justify-content: flex-end;
             align-items: center;
             margin-right: 0;
@@ -467,6 +472,16 @@
             font-weight: 400;
             color: rgba(255, 255, 255, 0.95);
             white-space: nowrap;
+            line-height: 1;
+        }
+
+        .PWrapper .PTabs .PTab .TOptions .Checkbox {
+            position: relative;
+            display: flex;
+            right: 0;
+            top: auto;
+            transform: none;
+            margin: 0;
         }
 
         .PWrapper .Metadata {
@@ -479,13 +494,13 @@
             align-items: center;
             flex-direction: column;
             gap: 0;
-            background: rgba(10, 10, 12, 0.88);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(14, 14, 16, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.09);
             border-radius: 0.35vw;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6), 0 0 0.4vw rgba(var(--menu-color), 0.15);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55), 0 0 0.35vw rgba(var(--menu-color), 0.12);
             padding: 0.6vw 0.75vw;
             box-sizing: border-box;
+            overflow: hidden;
             z-index: 100;
         }
 
