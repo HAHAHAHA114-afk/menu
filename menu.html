@@ -34,7 +34,7 @@
 
         :root {
             /* ألوان القائمة تم تحويلها لدرجات داكنة متناسقة */
-            --menu-color: 28, 28, 30;
+            --menu-color: 255, 255, 255;
             --menu-x: 20%;
             --menu-y: 50%;
         }
@@ -72,8 +72,7 @@
             left: 70px;
             top: 0;
             bottom: 0;
-            transform: scale(0.95) !important;
-            transform-origin: left center !important;
+            transform: none !important;
             margin-top: auto;
             margin-bottom: auto;
             justify-content: center;
@@ -81,6 +80,9 @@
             flex-direction: column;
             font-family: "Poppins", sans-serif;
             z-index: 9001;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         .PWrapper .PElements {
@@ -96,15 +98,15 @@
             position: absolute;
             display: flex;
             left: -0.65vw;
-            width: 0.30vw;
+            width: 0.35vw;
             top: 0;
             bottom: 0;
             height: 100%;
-            background-color: rgba(20, 20, 24, 0.85);
+            background-color: #1d1d1d98;
             justify-content: center;
             align-items: center;
             flex-direction: column;
-            border-radius: 0.15vw;
+            border-radius: 0.10vw;
             box-sizing: border-box;
             margin: 0;
             padding: 0;
@@ -181,7 +183,7 @@
         .PWrapper .PElements .PRightElements {
             position: relative;
             display: flex;
-            width: 22.4vw;
+            width: 20.4vw;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -196,12 +198,12 @@
             position: relative;
             display: flex;
             width: 100%;
-            height: 7.0vw;
+            height: 6.6vw;
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            border-radius: 0.55vw 0.55vw 0 0;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.45);
+            border-radius: 0.5vw 0.5vw 0 0;
+            background-color: #0c0c0e;
         }
 
         .PWrapper .PBanner img {
@@ -210,7 +212,7 @@
             height: 100%;
             object-fit: cover;
             object-position: center;
-            border-radius: 0.55vw 0.55vw 0 0;
+            border-radius: 0.5vw 0.5vw 0 0;
         }
 
         .PWrapper .SantaHat {
@@ -227,12 +229,12 @@
             position: relative;
             display: flex;
             width: 100%;
-            height: 1.45vw;
+            height: 1.4vw;
             margin-bottom: 0;
             justify-content: center;
             align-items: center;
             flex-direction: row;
-            background-color: rgba(14, 14, 16, 0.95);
+            background-color: #111114;
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
             overflow: hidden;
@@ -248,9 +250,9 @@
             align-items: center;
             font-size: .62vw;
             font-weight: 500;
-            color: rgba(255, 255, 255, 0.75);
+            color: rgba(255, 255, 255, 0.72);
             white-space: nowrap;
-            padding: 0 0.35vw;
+            padding: 0 0.3vw;
             border-radius: 0 !important;
             transition: all 0.2s ease;
         }
@@ -261,8 +263,8 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 1px;
-            background: rgba(255, 255, 255, 0.1);
+            height: 0.5px;
+            background: rgba(var(--menu-color), 0.5);
             z-index: 12;
         }
 
@@ -274,12 +276,11 @@
             width: 100%;
             line-height: 1;
             text-align: center;
-            white-space: nowrap;
         }
 
         .PWrapper .PCategories .PCategory.active {
             background: linear-gradient(180deg,
-                    rgba(255, 255, 255, 0.14) 0%,
+                    rgba(255, 255, 255, 0.15) 0%,
                     rgba(255, 255, 255, 0.05) 100%) !important;
             border-radius: 0 !important;
             color: #ffffff !important;
@@ -305,17 +306,16 @@
             display: flex;
             width: 100%;
             height: auto;
-            max-height: 18.0vw;
+            max-height: 21.0vw;
             padding-bottom: 0;
             justify-content: flex-start;
             align-items: center;
             flex-direction: column;
-            background-color: rgba(18, 18, 20, 0.88);
-            backdrop-filter: blur(12px);
-            border-radius: 0 0 0.55vw 0.55vw;
+            background-color: #141417;
+            border-radius: 0 0 0.5vw 0.5vw;
             border: 1px solid rgba(255, 255, 255, 0.07);
             border-top: none;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
             overflow-y: hidden;
             transition: height 300ms ease, max-height 300ms ease;
         }
@@ -324,9 +324,9 @@
             position: relative;
             display: flex;
             width: 100%;
-            height: 1.50vw;
-            min-height: 1.50vw;
-            max-height: 1.50vw;
+            height: 1.48vw;
+            min-height: 1.48vw;
+            max-height: 1.48vw;
             justify-content: center;
             align-items: center;
             transform: translateX(0);
@@ -355,35 +355,34 @@
             display: flex;
             width: 100%;
             height: auto;
-            max-height: 18.0vw;
+            max-height: 21.0vw;
             padding-bottom: 0;
             justify-content: flex-start;
             align-items: center;
             flex-direction: column;
-            background-color: rgba(18, 18, 20, 0.88);
-            backdrop-filter: blur(12px);
-            border-radius: 0 0 0.55vw 0.55vw;
+            background-color: #141417;
+            border-radius: 0 0 0.5vw 0.5vw;
             border: 1px solid rgba(255, 255, 255, 0.07);
             border-top: none;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.45);
             overflow-y: hidden;
             transition: height 300ms ease, max-height 300ms ease;
         }
 
         .PWrapper .PTabs .PTab .PTLabel {
             position: absolute;
-            left: .7vw;
-            width: 62%;
+            left: .5vw;
+            width: 60%;
             top: 50%;
             transform: translateY(-50%);
-            font-size: .64vw;
+            font-size: .625vw;
             font-weight: 400;
             color: rgb(224, 224, 224);
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
-            line-height: 1.25;
-            padding-bottom: .02vw;
+            line-height: 1.2;
+            padding-bottom: .05vw;
             transition: color 200ms ease;
         }
 
@@ -795,17 +794,16 @@
             position: relative;
             display: flex;
             width: 100%;
-            height: 1.55vw;
-            margin-top: 0.38vw;
+            height: 1.50vw;
+            margin-top: 0.35vw;
             justify-content: space-between;
             align-items: center;
-            padding: 0 0.8vw;
+            padding: 0 0.7vw;
             box-sizing: border-box;
-            background: linear-gradient(180deg, rgba(18, 18, 22, 0.92) 0%, rgba(10, 10, 12, 0.96) 100%);
-            backdrop-filter: blur(14px);
+            background-color: #0f0f12;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 0.42vw;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            border-radius: 0.38vw;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
         }
         .PWrapper .PFooter .PFooterLogo {
             display: none !important;
@@ -817,9 +815,9 @@
             align-items: center;
             min-width: 9vw;
             height: 100%;
-            font-size: .58vw;
+            font-size: .56vw;
             font-weight: 500;
-            color: #e2e8f0;
+            color: #f1f5f9;
             letter-spacing: 0.03em;
         }
         .PWrapper .PFooter .PBuild::before {
@@ -829,36 +827,32 @@
             left: 0;
             top: 50%;
             transform: translateY(-50%);
-            width: 0.30vw;
-            height: 0.30vw;
+            width: 0.32vw;
+            height: 0.32vw;
             border-radius: 50%;
-            background: #38bdf8;
-            box-shadow: 0 0 8px #38bdf8;
+            background: rgb(var(--menu-color, 255, 255, 255));
+            box-shadow: 0 0 6px rgb(var(--menu-color, 255, 255, 255)), 0 0 12px rgba(var(--menu-color, 255, 255, 255), 0.6);
         }
         .PWrapper .PFooter .PIndicator {
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: .58vw;
+            font-size: .56vw;
             font-weight: 600;
             color: #ffffff;
             background: rgba(255, 255, 255, 0.07);
-            padding: 0.12vw 0.55vw;
-            border-radius: 0.25vw;
+            padding: 0.10vw 0.50vw;
+            border-radius: 0.22vw;
             border: 1px solid rgba(255, 255, 255, 0.08);
-            letter-spacing: 0.06em;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.3);
+            letter-spacing: 0.05em;
         }
 
         .PWrapper .PFooter .PBuild .PBuildText1,
         .PWrapper .PFooter .PBuild .PBuildText2,
         .PWrapper .PFooter .PBuild .PBuildText3 {
             position: absolute;
-            left: 0.65vw;
-            top: 50%;
-            transform: translateY(-50%);
-            white-space: nowrap;
+            left: 0;
             opacity: 0;
             animation-duration: 9s;
             animation-timing-function: ease-in-out;
@@ -15476,7 +15470,7 @@ Error generating stack: ` + i.message + `
                                                     children: "ELmaystro Modz"
                                                 }), x("span", {
                                                     className: "PBuildText2",
-                                                    children: "discord.gg/elmaystro"
+                                                    children: "discord.gg/mz1"
                                                 }), x("span", {
                                                     className: "PBuildText3",
                                                     children: "ELmaystro Modz"
