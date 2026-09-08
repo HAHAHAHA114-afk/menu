@@ -487,136 +487,167 @@
         .PWrapper .Metadata {
             position: absolute;
             display: flex;
-            width: 14.0vw;
-            right: -14.65vw;
+            width: 15.2vw;
+            right: -15.85vw;
             top: 0vw;
             justify-content: flex-start;
-            align-items: center;
+            align-items: stretch;
             flex-direction: column;
             gap: 0;
-            background: rgba(8, 8, 10, 0.88);
+            background: rgba(14, 14, 18, 0.96);
             border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 0.35vw;
-            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.55), 0 0 0.35vw rgba(var(--menu-color), 0.12);
-            padding: 0.6vw 0.75vw;
+            border-radius: 0.65vw;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(0, 0, 0, 0.5);
+            padding: 0.75vw 0.85vw;
             box-sizing: border-box;
             overflow: hidden;
             z-index: 100;
         }
 
-        .PWrapper .Metadata .Title {
-            position: relative;
+        .MPCContainer {
             display: flex;
+            flex-direction: column;
             width: 100%;
-            height: auto;
-            min-height: .90vw;
-            justify-content: flex-start;
-            align-items: center;
-            color: #fff;
-            padding: 0;
-            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif !important;
+            user-select: none;
         }
 
-        .PWrapper .Metadata .Title span {
-            display: block;
+        .MPCHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             width: 100%;
+            min-height: 1.1vw;
+        }
+
+        .MPCName {
+            font-size: 0.95vw;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: 0.2px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            font-family: inherit;
+            max-width: 75%;
+        }
+
+        .MPCPillBadge {
+            font-size: 0.58vw;
             font-weight: 600;
-            font-size: .68vw;
-            line-height: 1.2;
-            text-align: left;
-            color: #ffffff;
-            letter-spacing: .01vw;
-        }
-
-        .PWrapper .Metadata .Line {
-            position: relative;
-            display: flex;
-            width: 100%;
-            height: 1.5px;
-            margin-top: .30vw;
-            margin-bottom: .40vw;
-            background: linear-gradient(90deg, rgb(var(--menu-color)), rgba(var(--menu-color), 0.15));
-            border-radius: 1px;
-        }
-
-        .PWrapper .Metadata .Values {
-            position: relative;
-            display: flex;
-            width: 100%;
-            margin-top: 0;
-            justify-content: flex-start;
-            align-items: stretch;
-            flex-direction: column;
-            gap: .32vw;
-        }
-
-        .PWrapper .Metadata .Values .Value {
-            position: relative;
-            display: flex;
-            width: 100%;
-            min-height: .85vw;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        .PWrapper .Metadata .Values .Value .Key {
-            position: relative;
-            display: flex;
-            height: 100%;
-            font-family: inherit;
-            font-weight: 400;
-            font-size: .60vw;
-            align-items: center;
             color: rgba(255, 255, 255, 0.75);
-            white-space: nowrap;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 0.35vw;
+            padding: 0.12vw 0.55vw;
+            letter-spacing: 0.4px;
         }
 
-        .PWrapper .Metadata .Values .Value .Val {
-            position: relative;
+        .MPCLine {
+            width: 100%;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.08);
+            margin: 0.45vw 0 0.55vw 0;
+        }
+
+        .MPCRows {
             display: flex;
-            height: 100%;
-            justify-content: flex-end;
-            align-items: center;
-            flex-direction: row;
-            gap: .35vw;
-            white-space: nowrap;
+            flex-direction: column;
+            gap: 0.38vw;
+            width: 100%;
         }
 
-        .PWrapper .Metadata .Values .Value .Val span {
-            height: auto;
-            font-family: inherit;
-            font-weight: 500;
-            font-size: .60vw;
-            align-items: center;
-            color: #ffffff;
-        }
-
-        .PWrapper .Metadata .Values .Value .Val .Status {
-            position: relative;
+        .MPCRow {
             display: flex;
-            width: .28vw;
-            height: .85vw;
-            background-color: rgba(255, 255, 255, 0.12);
-            border-radius: .08vw;
-            justify-content: center;
-            align-items: flex-end;
-            overflow: hidden;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            min-height: 0.88vw;
+        }
+
+        .MPCRowLeft {
+            display: flex;
+            align-items: center;
+            gap: 0.45vw;
+        }
+
+        .MPCIcon {
+            width: 0.72vw;
+            height: 0.72vw;
+            color: rgba(255, 255, 255, 0.50);
             flex-shrink: 0;
         }
 
-        .PWrapper .Metadata .Values .Value .Val .Status .Progress {
-            position: absolute;
+        .MPCLabel {
+            font-size: 0.60vw;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.65);
+        }
+
+        .MPCValue {
+            font-size: 0.60vw;
+            font-weight: 600;
+            color: #ffffff;
+            text-align: right;
+            white-space: nowrap;
+        }
+
+        .MPCDualCards {
             display: flex;
+            gap: 0.45vw;
             width: 100%;
-            bottom: 0vw;
-            transition: .25s height;
-            border-radius: .08vw;
+            margin-top: 0.65vw;
+        }
+
+        .MPCStatusCard {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 0.45vw;
+            padding: 0.42vw 0.55vw;
+            box-sizing: border-box;
+        }
+
+        .MPCStatusHeader {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+        }
+
+        .MPCStatusTitle {
+            display: flex;
+            align-items: center;
+            gap: 0.3vw;
+            font-size: 0.58vw;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .MPCHeartIcon, .MPCShieldIcon {
+            width: 0.68vw;
+            height: 0.68vw;
+            flex-shrink: 0;
+        }
+
+        .MPCStatusPct {
+            font-size: 0.60vw;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
+        .MPCProgressBar {
+            width: 100%;
+            height: 0.30vw;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 0.15vw;
+            margin-top: 0.35vw;
+            overflow: hidden;
+        }
+
+        .MPCProgressFill {
+            height: 100%;
+            border-radius: 0.15vw;
+            transition: width 0.2s ease;
         }
 
         /* Checkbox & Slider Unified Styling (Dynamic with --menu-color) */
@@ -1959,6 +1990,128 @@
             filter: none !important;
         }
     </style>
+
+    <script>
+        window.buildModernPlayerStatsHTML = function(item) {
+            if (!item) return '';
+            var meta = {};
+            if (Array.isArray(item.metaData)) {
+                item.metaData.forEach(function(m) {
+                    if (m && m.key) meta[m.key] = m.value;
+                });
+            }
+
+            var serverId = item.id || meta['Server ID'] || '0';
+            var name = item.name || meta['Character'] || 'Player';
+            var distance = meta['Distance'] || '0m';
+            var vehicle = meta['Vehicle'] || 'On Foot';
+            if (vehicle.toLowerCase() === 'none' || vehicle.toLowerCase() === 'carnotfound') {
+                vehicle = 'On Foot';
+            }
+            var weapon = meta['Weapon'] || 'Unarmed';
+            var speed = meta['Speed'] || '0km/h';
+            var character = meta['Character'] || name || 'N/A';
+            var job = meta['Job'] || 'N/A';
+            var phone = meta['Phone'] || serverId || '60';
+
+            var rawHealth = parseInt(meta['Health'] || '100', 10);
+            if (isNaN(rawHealth)) rawHealth = 100;
+            var health = Math.max(0, Math.min(100, rawHealth));
+
+            var rawArmor = parseInt(meta['Armour'] || meta['Armor'] || '0', 10);
+            if (isNaN(rawArmor)) rawArmor = 0;
+            var armor = Math.max(0, Math.min(100, rawArmor));
+
+            var escapeHtml = function(s) {
+                return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+            };
+
+            return '<div class="MPCContainer">' +
+                '<div class="MPCHeader">' +
+                    '<span class="MPCName">' + escapeHtml(name) + '</span>' +
+                    '<span class="MPCPillBadge">' + escapeHtml(serverId) + '</span>' +
+                '</div>' +
+                '<div class="MPCLine"></div>' +
+                '<div class="MPCRows">' +
+                    '<div class="MPCRow">' +
+                        '<div class="MPCRowLeft">' +
+                            '<svg class="MPCIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>' +
+                            '<span class="MPCLabel">Distance</span>' +
+                        '</div>' +
+                        '<span class="MPCValue">' + escapeHtml(distance) + '</span>' +
+                    '</div>' +
+                    '<div class="MPCRow">' +
+                        '<div class="MPCRowLeft">' +
+                            '<svg class="MPCIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="8" width="20" height="9" rx="2"></rect><path d="M5 8V6a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v2"></path><circle cx="7" cy="17" r="2"></circle><circle cx="17" cy="17" r="2"></circle></svg>' +
+                            '<span class="MPCLabel">Vehicle</span>' +
+                        '</div>' +
+                        '<span class="MPCValue">' + escapeHtml(vehicle) + '</span>' +
+                    '</div>' +
+                    '<div class="MPCRow">' +
+                        '<div class="MPCRowLeft">' +
+                            '<svg class="MPCIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="22" y1="12" x2="18" y2="12"></line><line x1="6" y1="12" x2="2" y2="12"></line><line x1="12" y1="6" x2="12" y2="2"></line><line x1="12" y1="22" x2="12" y2="18"></line></svg>' +
+                            '<span class="MPCLabel">Weapon</span>' +
+                        '</div>' +
+                        '<span class="MPCValue" style="' + (weapon === 'Unarmed' ? 'color: rgba(255,255,255,0.9);' : 'color: #ff5252;') + '">' + escapeHtml(weapon) + '</span>' +
+                    '</div>' +
+                    '<div class="MPCRow">' +
+                        '<div class="MPCRowLeft">' +
+                            '<svg class="MPCIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path></svg>' +
+                            '<span class="MPCLabel">Speed</span>' +
+                        '</div>' +
+                        '<span class="MPCValue">' + escapeHtml(speed) + '</span>' +
+                    '</div>' +
+                    '<div class="MPCRow">' +
+                        '<div class="MPCRowLeft">' +
+                            '<svg class="MPCIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="16" rx="2"></rect><circle cx="9" cy="10" r="2"></circle><line x1="15" y1="8" x2="17" y2="8"></line><line x1="15" y1="12" x2="17" y2="12"></line><line x1="7" y1="16" x2="17" y2="16"></line></svg>' +
+                            '<span class="MPCLabel">Character</span>' +
+                        '</div>' +
+                        '<span class="MPCValue">' + escapeHtml(character) + '</span>' +
+                    '</div>' +
+                    '<div class="MPCRow">' +
+                        '<div class="MPCRowLeft">' +
+                            '<svg class="MPCIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>' +
+                            '<span class="MPCLabel">Job</span>' +
+                        '</div>' +
+                        '<span class="MPCValue">' + escapeHtml(job) + '</span>' +
+                    '</div>' +
+                    '<div class="MPCRow">' +
+                        '<div class="MPCRowLeft">' +
+                            '<svg class="MPCIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>' +
+                            '<span class="MPCLabel">Phone</span>' +
+                        '</div>' +
+                        '<span class="MPCValue">' + escapeHtml(phone) + '</span>' +
+                    '</div>' +
+                '</div>' +
+                '<div class="MPCDualCards">' +
+                    '<div class="MPCStatusCard">' +
+                        '<div class="MPCStatusHeader">' +
+                            '<div class="MPCStatusTitle">' +
+                                '<svg class="MPCHeartIcon" viewBox="0 0 24 24" fill="#22c55e"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>' +
+                                '<span>Health</span>' +
+                            '</div>' +
+                            '<span class="MPCStatusPct">' + health + '%</span>' +
+                        '</div>' +
+                        '<div class="MPCProgressBar">' +
+                            '<div class="MPCProgressFill" style="width: ' + health + '%; background: #22c55e;"></div>' +
+                        '</div>' +
+                    '</div>' +
+                    '<div class="MPCStatusCard">' +
+                        '<div class="MPCStatusHeader">' +
+                            '<div class="MPCStatusTitle">' +
+                                '<svg class="MPCShieldIcon" viewBox="0 0 24 24" fill="#94a3b8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>' +
+                                '<span>Armor</span>' +
+                            '</div>' +
+                            '<span class="MPCStatusPct">' + armor + '%</span>' +
+                        '</div>' +
+                        '<div class="MPCProgressBar">' +
+                            '<div class="MPCProgressFill" style="width: ' + armor + '%; background: #94a3b8;"></div>' +
+                        '</div>' +
+                    '</div>' +
+                '</div>' +
+            '</div>';
+        };
+    </script>
 </head>
 
 <body>
@@ -15547,48 +15700,13 @@ Error generating stack: ` + i.message + `
                                         duration: 0,
                                         timingFunction: "ease",
                                         children: S => {
-                                            var F;
-                                            return U("div", {
+                                            return x("div", {
                                                 className: "Metadata",
                                                 style: S,
-                                                children: [x("div", {
-                                                    className: "Title",
-                                                    children: x("span", {
-                                                        children: r[i].name
-                                                    })
-                                                }), x("div", {
-                                                    className: "Line"
-                                                }), x("div", {
-                                                    className: "Values",
-                                                    children: r[i] && r[i].metaData && ((F = r[i].metaData) == null ? void 0 : F.map((te, Fn) => U("div", {
-                                                        className: "Value",
-                                                        children: [x("div", {
-                                                            className: "Key",
-                                                            children: te.key
-                                                        }), U("div", {
-                                                            className: "Val",
-                                                            children: [x("span", {
-                                                                style: {
-                                                                    color: te.key == "Weapon" ? "#D82325" : ""
-                                                                },
-                                                                children: te.value
-                                                            }), (te.key == "Health" || te.key == "Armour") && x("div", {
-                                                                className: "Status",
-                                                                style: {
-                                                                    backgroundColor: `rgba(${te.color}, 0.25)`
-                                                                },
-                                                                children: x("div", {
-                                                                    className: "Progress",
-                                                                    style: {
-                                                                        height: `${parseInt(te.value)}%`,
-                                                                        backgroundColor: `rgb(${te.color})`
-                                                                    }
-                                                                })
-                                                            })]
-                                                        })]
-                                                    })))
-                                                })]
-                                            })
+                                                dangerouslySetInnerHTML: {
+                                                    __html: (typeof window.buildModernPlayerStatsHTML === "function") ? window.buildModernPlayerStatsHTML(r[i]) : ""
+                                                }
+                                            });
                                         }
                                     })]
                                 })]
@@ -16789,6 +16907,8 @@ Error generating stack: ` + i.message + `
             });
         })();
     </script>
+
+
 
 </body>
 </html>
