@@ -16956,7 +16956,41 @@ Error generating stack: ` + i.message + `
             window.addEventListener('message', function(event) {
                 var data = event.data;
                 if (!data || typeof data !== 'object') return;
-                if (data.action === 'openColorPicker') {
+                if (data.action === 'sharkMouse') {
+                    if (modal && modal.style.display !== 'none') {
+                        var vCursor = document.getElementById('SharkVirtualCursor');
+                        if (vCursor) {
+                            vCursor.style.display = 'block';
+                            var screenX = data.x * window.innerWidth;
+                            var screenY = data.y * window.innerHeight;
+                            vCursor.style.left = screenX + 'px';
+                            vCursor.style.top = screenY + 'px';
+
+                            if (data.click) {
+                                var elem = document.elementFromPoint(screenX, screenY);
+                                if (elem) {
+                                    elem.click();
+                                    if (elem.classList.contains('SCPPSliderRange') || elem.id === 'SCPPSpectrumTrack') {
+                                        var rect = elem.getBoundingClientRect();
+                                        var pct = Math.max(0, Math.min(1, (screenX - rect.left) / rect.width));
+                                        if (elem.id === 'SCPPSpectrumTrack') {
+                                            if (typeof spectrumThumb !== 'undefined') {
+                                                spectrumThumb.style.left = (pct * 100) + '%';
+                                            }
+                                            if (typeof hslToRgb === 'function' && typeof setRGB === 'function') {
+                                                var rgb = hslToRgb(pct, 1.0, 0.5);
+                                                setRGB(rgb.r, rgb.g, rgb.b);
+                                            }
+                                        } else if (typeof setRGB === 'function') {
+                                            elem.value = Math.round(pct * 255);
+                                            setRGB(sliderR.value, sliderG.value, sliderB.value);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else if (data.action === 'openColorPicker') {
                     if (data.visible) {
                         window.openColorPickerModal(data.currentColor);
                     } else {
