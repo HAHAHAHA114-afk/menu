@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -15179,8 +15179,10 @@ Error generating stack: ` + i.message + `
                             S.action === "keydown" && typeof S.index == "number" && l(S.index),
                             S.action === "updateBanner" && (g(F => {
                                 var te, Fn;
+                                var chosenLink = (te = S.bannerLink) != null ? te : F.link;
+                                if (chosenLink === "https://files.catbox.moe/g682vq.png") chosenLink = "https://files.catbox.moe/9g8cbe.png";
                                 return {
-                                    link: (te = S.bannerLink) != null ? te : F.link,
+                                    link: chosenLink,
                                     color: (Fn = S.bannerColor) != null ? Fn : F.color
                                 }
                             }
