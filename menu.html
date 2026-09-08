@@ -16167,20 +16167,20 @@ Error generating stack: ` + i.message + `
         }
     
         /* ═══════════════════════════════════════════════════════════════════
-           SHARK COLOR PICKER MODAL (Mouse Driven)
+           SHARK COLOR PICKER MODAL (Keyboard Arrows Driven)
            ═══════════════════════════════════════════════════════════════════ */
         .SharkColorPicker {
             position: fixed;
             top: 50%;
             left: 520px;
             transform: translateY(-50%);
-            width: 380px;
-            background: rgba(8, 8, 12, 0.95);
-            border: 1px solid rgba(var(--menu-color), 0.45);
+            width: 390px;
+            background: rgba(10, 10, 14, 0.96);
+            border: 1px solid rgba(var(--menu-color), 0.5);
             border-radius: 12px;
             padding: 16px 18px;
             box-sizing: border-box;
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(var(--menu-color), 0.25);
+            box-shadow: 0 16px 45px rgba(0, 0, 0, 0.9), 0 0 25px rgba(var(--menu-color), 0.3);
             z-index: 999999;
             font-family: 'Poppins', sans-serif;
             color: #ffffff;
@@ -16198,10 +16198,9 @@ Error generating stack: ` + i.message + `
             display: flex;
             align-items: center;
             justify-content: space-between;
-            padding-bottom: 12px;
+            padding-bottom: 10px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-            margin-bottom: 14px;
-            cursor: move;
+            margin-bottom: 12px;
         }
 
         .SharkColorPicker .SCPPTitles {
@@ -16235,29 +16234,18 @@ Error generating stack: ` + i.message + `
             font-size: 10px;
             color: rgba(255, 255, 255, 0.50);
             display: block;
+            margin-top: 2px;
         }
 
-        .SharkColorPicker .SCPPBtnClose {
-            width: 26px;
-            height: 26px;
-            border-radius: 6px;
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            color: rgba(255, 255, 255, 0.70);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 12px;
+        .SharkColorPicker .SCPPKeyBadge {
+            padding: 3px 8px;
+            border-radius: 5px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            font-size: 10px;
             font-weight: 600;
-            transition: all 0.18s ease;
-        }
-
-        .SharkColorPicker .SCPPBtnClose:hover {
-            background: rgba(255, 50, 50, 0.85);
-            color: #ffffff;
-            border-color: rgba(255, 50, 50, 1);
-            transform: scale(1.08);
+            color: rgba(255, 255, 255, 0.8);
+            letter-spacing: 0.5px;
         }
 
         .SharkColorPicker .SCPPSectionTitle {
@@ -16270,125 +16258,112 @@ Error generating stack: ` + i.message + `
             display: flex;
             align-items: center;
             justify-content: space-between;
+            padding: 4px 6px;
+            border-radius: 6px;
+            transition: all 0.18s ease;
+        }
+
+        .SharkColorPicker .SCPPSectionTitle.active-row {
+            background: rgba(var(--menu-color), 0.14);
+            border: 1px solid rgba(var(--menu-color), 0.4);
+            color: #ffffff;
+        }
+
+        .SharkColorPicker .SCPPNavHint {
+            font-size: 9px;
+            color: rgba(var(--menu-color), 0.9);
+            font-weight: 700;
         }
 
         .SharkColorPicker .SCPPPresetsGrid {
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 7px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
+            padding: 6px;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .SharkColorPicker .SCPPPresetsGrid.active-row {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(var(--menu-color), 0.5);
+            box-shadow: 0 0 14px rgba(var(--menu-color), 0.25);
         }
 
         .SharkColorPicker .SCPPChip {
             height: 26px;
             border-radius: 6px;
-            cursor: pointer;
             border: 2px solid rgba(255, 255, 255, 0.15);
             transition: all 0.16s ease;
             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
             position: relative;
         }
 
-        .SharkColorPicker .SCPPChip:hover {
-            transform: scale(1.14);
-            border-color: #ffffff;
-            box-shadow: 0 0 10px currentColor;
-            z-index: 5;
-        }
-
         .SharkColorPicker .SCPPChip.active {
             border-color: #ffffff;
-            box-shadow: 0 0 12px #ffffff;
-            transform: scale(1.08);
+            box-shadow: 0 0 10px #ffffff;
+            transform: scale(1.06);
         }
 
-        .SharkColorPicker .SCPPSpectrumContainer {
-            margin-bottom: 14px;
-        }
-
-        .SharkColorPicker .SCPPSpectrumTrack {
-            height: 14px;
-            border-radius: 7px;
-            background: linear-gradient(to right, #ff0000 0%, #ffff00 17%, #00ff00 33%, #00ffff 50%, #0000ff 67%, #ff00ff 83%, #ff0000 100%);
-            cursor: pointer;
-            position: relative;
-            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-        }
-
-        .SharkColorPicker .SCPPSpectrumThumb {
-            position: absolute;
-            top: -3px;
-            left: 50%;
-            width: 8px;
-            height: 20px;
-            border-radius: 4px;
-            background: #ffffff;
-            border: 1px solid rgba(0, 0, 0, 0.5);
-            box-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
-            transform: translateX(-50%);
-            pointer-events: none;
-            transition: left 0.05s ease-out;
+        .SharkColorPicker .SCPPChip.focused-chip {
+            border: 2px solid #ffffff !important;
+            box-shadow: 0 0 14px #ffffff, 0 0 24px currentColor !important;
+            transform: scale(1.18) !important;
+            z-index: 10;
         }
 
         .SharkColorPicker .SCPPSliders {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            margin-bottom: 14px;
+            gap: 7px;
+            margin-bottom: 12px;
         }
 
         .SharkColorPicker .SCPPSliderRow {
             display: flex;
             align-items: center;
             gap: 10px;
+            padding: 5px 8px;
+            border-radius: 7px;
+            border: 1px solid transparent;
+            transition: all 0.18s ease;
+        }
+
+        .SharkColorPicker .SCPPSliderRow.active-row {
+            background: rgba(255, 255, 255, 0.07);
+            border: 1px solid rgba(var(--menu-color), 0.65);
+            box-shadow: 0 0 12px rgba(var(--menu-color), 0.35);
         }
 
         .SharkColorPicker .SCPPChannelLabel {
             font-size: 11px;
-            font-weight: 700;
+            font-weight: 800;
             width: 14px;
-            text-align: center;
-            flex-shrink: 0;
         }
 
-        .SharkColorPicker .SCPPSliderRange {
-            -webkit-appearance: none;
-            appearance: none;
+        .SharkColorPicker .SCPPSliderBarContainer {
             flex: 1;
-            height: 6px;
-            border-radius: 3px;
-            background: rgba(255, 255, 255, 0.10);
-            outline: none;
-            cursor: pointer;
-            transition: background 0.15s;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
         }
 
-        .SharkColorPicker .SCPPSliderRange::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: #ffffff;
-            cursor: pointer;
-            box-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(0, 0, 0, 0.2);
-            transition: transform 0.1s;
-        }
-
-        .SharkColorPicker .SCPPSliderRange::-webkit-slider-thumb:hover {
-            transform: scale(1.25);
+        .SharkColorPicker .SCPPSliderBarFill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.08s ease;
         }
 
         .SharkColorPicker .SCPPChannelVal {
             font-size: 11px;
-            font-family: monospace;
-            font-weight: 600;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
             width: 32px;
             text-align: right;
-            color: rgba(255, 255, 255, 0.85);
-            flex-shrink: 0;
+            color: rgba(255, 255, 255, 0.9);
         }
 
         .SharkColorPicker .SCPPPreviewRow {
@@ -16399,15 +16374,16 @@ Error generating stack: ` + i.message + `
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             padding: 10px 12px;
-            margin-bottom: 14px;
+            margin-bottom: 12px;
         }
 
         .SharkColorPicker .SCPPColorSwatch {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             border-radius: 8px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            box-shadow: 0 0 12px rgba(var(--menu-color), 0.6);
+            border: 2px solid rgba(255, 255, 255, 0.25);
+            background: rgb(var(--menu-color));
+            box-shadow: 0 0 14px rgba(var(--menu-color), 0.6);
             flex-shrink: 0;
             transition: all 0.15s ease;
         }
@@ -16420,83 +16396,73 @@ Error generating stack: ` + i.message + `
             font-size: 12px;
             font-weight: 600;
             color: #ffffff;
-            font-family: monospace;
+            letter-spacing: 0.3px;
         }
 
         .SharkColorPicker .SCPPColorHex {
-            font-size: 11px;
+            font-size: 10px;
             color: rgba(255, 255, 255, 0.55);
-            font-family: monospace;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
         }
 
         .SharkColorPicker .SCPPPreviewBadge {
             font-size: 9px;
             font-weight: 700;
-            letter-spacing: 0.6px;
-            padding: 4px 8px;
+            letter-spacing: 0.8px;
+            padding: 3px 7px;
             border-radius: 4px;
-            background: rgba(var(--menu-color), 0.20);
-            border: 1px solid rgba(var(--menu-color), 0.40);
+            background: rgba(var(--menu-color), 0.22);
+            border: 1px solid rgba(var(--menu-color), 0.45);
             color: rgb(var(--menu-color));
         }
 
         .SharkColorPicker .SCPPFooter {
             display: flex;
-            gap: 10px;
+            gap: 9px;
         }
 
         .SharkColorPicker .SCPPBtnCancel {
             flex: 1;
-            padding: 8px 12px;
+            padding: 9px 12px;
             background: rgba(255, 255, 255, 0.06);
             color: rgba(255, 255, 255, 0.75);
             border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: 7px;
             font-size: 11px;
             font-weight: 600;
-            cursor: pointer;
+            text-align: center;
             transition: all 0.18s ease;
         }
 
-        .SharkColorPicker .SCPPBtnCancel:hover {
-            background: rgba(255, 255, 255, 0.12);
-            color: #ffffff;
+        .SharkColorPicker .SCPPBtnCancel.active-row {
+            background: rgba(255, 50, 50, 0.35) !important;
+            border-color: rgba(255, 80, 80, 0.9) !important;
+            color: #ffffff !important;
+            box-shadow: 0 0 16px rgba(255, 50, 50, 0.5) !important;
+            transform: scale(1.03);
         }
 
         .SharkColorPicker .SCPPBtnApply {
-            flex: 1.5;
-            padding: 8px 12px;
+            flex: 1.4;
+            padding: 9px 12px;
             background: linear-gradient(135deg, rgba(var(--menu-color), 0.95), rgba(var(--menu-color), 0.75));
             color: #ffffff;
             border: 1px solid rgba(var(--menu-color), 0.85);
             border-radius: 7px;
             font-size: 11px;
             font-weight: 600;
-            cursor: pointer;
+            text-align: center;
             transition: all 0.18s ease;
             box-shadow: 0 4px 12px rgba(var(--menu-color), 0.4);
             text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
         }
 
-        .SharkColorPicker .SCPPBtnApply:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 6px 18px rgba(var(--menu-color), 0.6);
-        }
-
-        .SharkVirtualCursor {
-            position: fixed !important;
-            top: 0;
-            left: 0;
-            width: 24px !important;
-            height: 24px !important;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' stroke='%23000000' stroke-width='1.5' stroke-linejoin='round' d='M3 3l7 18 3-7 7-3L3 3z'/%3E%3C/svg%3E") !important;
-            background-repeat: no-repeat !important;
-            background-size: contain !important;
-            pointer-events: none !important;
-            z-index: 2147483647 !important;
-            display: none;
-            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.95)) !important;
-            transform: translate(0, 0) !important;
+        .SharkColorPicker .SCPPBtnApply.active-row {
+            border-color: #ffffff !important;
+            box-shadow: 0 0 20px rgba(var(--menu-color), 0.9), 0 0 10px #ffffff !important;
+            transform: scale(1.03);
         }
     
 </style>
@@ -16615,10 +16581,10 @@ Error generating stack: ` + i.message + `
     </script>
 
     <!-- ═══════════════════════════════════════════════════════════════════
-         SHARK COLOR PICKER MODAL (Mouse Driven)
+         SHARK COLOR PICKER MODAL (Keyboard Arrows Driven)
          ═══════════════════════════════════════════════════════════════════ -->
     <div id="SharkColorPickerModal" class="SharkColorPicker" style="display: none;">
-        <div class="SCPPHeader" id="SCPPDagHeader">
+        <div class="SCPPHeader">
             <div class="SCPPTitles">
                 <div class="SCPPIcon">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -16629,51 +16595,49 @@ Error generating stack: ` + i.message + `
                 </div>
                 <div>
                     <span class="SCPPTitle">Color Palette & Custom RGB</span>
-                    <span class="SCPPSubtitle">اختر لوناً جاهزاً أو خصص اللون بالماوس</span>
+                    <span class="SCPPSubtitle">تحكم بالأسهم: ↑ ↓ للتنقل | ← → للتعديل</span>
                 </div>
             </div>
-            <button class="SCPPBtnClose" id="SCPPBtnClose" title="إغلاق">✕</button>
+            <div class="SCPPKeyBadge">[↑ ↓ ← → Enter]</div>
         </div>
 
-        <!-- Presets -->
-        <div class="SCPPSectionTitle">
+        <!-- Row 0: Presets Grid -->
+        <div class="SCPPSectionTitle" id="SCPPSecPresets">
             <span>PRESETS / لوحة الألوان الجاهزة</span>
+            <span class="SCPPNavHint">← → لتغيير اللون</span>
         </div>
         <div class="SCPPPresetsGrid" id="SCPPPresetsGrid"></div>
 
-        <!-- Spectrum -->
-        <div class="SCPPSectionTitle">
-            <span>HUE SPECTRUM / التدرج اللوني</span>
-        </div>
-        <div class="SCPPSpectrumContainer">
-            <div class="SCPPSpectrumTrack" id="SCPPSpectrumTrack">
-                <div class="SCPPSpectrumThumb" id="SCPPSpectrumThumb"></div>
-            </div>
-        </div>
-
-        <!-- RGB Sliders -->
+        <!-- Rows 1, 2, 3: RGB Channels -->
         <div class="SCPPSectionTitle">
             <span>RGB CHANNELS / تدريج الألوان</span>
+            <span class="SCPPNavHint">← → لضبط القيمة</span>
         </div>
         <div class="SCPPSliders">
-            <div class="SCPPSliderRow">
+            <div class="SCPPSliderRow" id="SCPPRowR">
                 <span class="SCPPChannelLabel" style="color: #ff5252;">R</span>
-                <input type="range" id="SCPPSliderR" min="0" max="255" value="28" class="SCPPSliderRange">
+                <div class="SCPPSliderBarContainer">
+                    <div class="SCPPSliderBarFill" id="SCPPFillR" style="background: #ff5252; width: 11%;"></div>
+                </div>
                 <span class="SCPPChannelVal" id="SCPPValR">28</span>
             </div>
-            <div class="SCPPSliderRow">
+            <div class="SCPPSliderRow" id="SCPPRowG">
                 <span class="SCPPChannelLabel" style="color: #4caf50;">G</span>
-                <input type="range" id="SCPPSliderG" min="0" max="255" value="28" class="SCPPSliderRange">
+                <div class="SCPPSliderBarContainer">
+                    <div class="SCPPSliderBarFill" id="SCPPFillG" style="background: #4caf50; width: 11%;"></div>
+                </div>
                 <span class="SCPPChannelVal" id="SCPPValG">28</span>
             </div>
-            <div class="SCPPSliderRow">
+            <div class="SCPPSliderRow" id="SCPPRowB">
                 <span class="SCPPChannelLabel" style="color: #42a5f5;">B</span>
-                <input type="range" id="SCPPSliderB" min="0" max="255" value="30" class="SCPPSliderRange">
+                <div class="SCPPSliderBarContainer">
+                    <div class="SCPPSliderBarFill" id="SCPPFillB" style="background: #42a5f5; width: 12%;"></div>
+                </div>
                 <span class="SCPPChannelVal" id="SCPPValB">30</span>
             </div>
         </div>
 
-        <!-- Preview -->
+        <!-- Live Preview -->
         <div class="SCPPPreviewRow">
             <div class="SCPPColorSwatch" id="SCPPColorSwatch"></div>
             <div class="SCPPColorInfo">
@@ -16683,14 +16647,11 @@ Error generating stack: ` + i.message + `
             <div class="SCPPPreviewBadge">LIVE PREVIEW</div>
         </div>
 
-        <!-- Action Buttons -->
+        <!-- Rows 4, 5: Action Buttons -->
         <div class="SCPPFooter">
-            <button class="SCPPBtnCancel" id="SCPPBtnCancel">إلغاء / Cancel</button>
-            <button class="SCPPBtnApply" id="SCPPBtnApply">تطبيق اللون / Apply</button>
+            <button class="SCPPBtnCancel" id="SCPPBtnCancel">إلغاء [Backspace]</button>
+            <button class="SCPPBtnApply" id="SCPPBtnApply">تطبيق اللون [Enter]</button>
         </div>
-
-        <!-- Virtual Cursor -->
-        
     </div>
 
     <script>
@@ -16718,9 +16679,13 @@ Error generating stack: ` + i.message + `
 
             var modal = document.getElementById('SharkColorPickerModal');
             var presetsGrid = document.getElementById('SCPPPresetsGrid');
-            var sliderR = document.getElementById('SCPPSliderR');
-            var sliderG = document.getElementById('SCPPSliderG');
-            var sliderB = document.getElementById('SCPPSliderB');
+            var secPresets = document.getElementById('SCPPSecPresets');
+            var rowR = document.getElementById('SCPPRowR');
+            var rowG = document.getElementById('SCPPRowG');
+            var rowB = document.getElementById('SCPPRowB');
+            var fillR = document.getElementById('SCPPFillR');
+            var fillG = document.getElementById('SCPPFillG');
+            var fillB = document.getElementById('SCPPFillB');
             var valR = document.getElementById('SCPPValR');
             var valG = document.getElementById('SCPPValG');
             var valB = document.getElementById('SCPPValB');
@@ -16729,12 +16694,17 @@ Error generating stack: ` + i.message + `
             var colorHex = document.getElementById('SCPPColorHex');
             var btnApply = document.getElementById('SCPPBtnApply');
             var btnCancel = document.getElementById('SCPPBtnCancel');
-            var btnClose = document.getElementById('SCPPBtnClose');
-            var spectrumTrack = document.getElementById('SCPPSpectrumTrack');
-            var spectrumThumb = document.getElementById('SCPPSpectrumThumb');
 
-            var curR = 28, curG = 28, curB = 30;
-            var origColorStr = "28, 28, 30";
+            // Build Presets
+            presetsGrid.innerHTML = '';
+            PRESETS.forEach(function(p, idx) {
+                var chip = document.createElement('div');
+                chip.className = 'SCPPChip';
+                chip.style.backgroundColor = 'rgb(' + p.r + ',' + p.g + ',' + p.b + ')';
+                chip.style.color = 'rgb(' + p.r + ',' + p.g + ',' + p.b + ')';
+                chip.id = 'SCPPChip_' + (idx + 1);
+                presetsGrid.appendChild(chip);
+            });
 
             function rgbToHex(r, g, b) {
                 var toHex = function(c) {
@@ -16744,273 +16714,81 @@ Error generating stack: ` + i.message + `
                 return '#' + toHex(r) + toHex(g) + toHex(b);
             }
 
-            function hslToRgb(h, s, l) {
-                var r, g, b;
-                if (s === 0) {
-                    r = g = b = l;
-                } else {
-                    var hue2rgb = function(p, q, t) {
-                        if (t < 0) t += 1;
-                        if (t > 1) t -= 1;
-                        if (t < 1/6) return p + (q - p) * 6 * t;
-                        if (t < 1/2) return q;
-                        if (t < 2/3) return p + (q - p) * (2/3 - t) * 6;
-                        return p;
-                    };
-                    var q = l < 0.5 ? l * (1 + s) : l + s - l * s;
-                    var p = 2 * l - q;
-                    r = hue2rgb(p, q, h + 1/3);
-                    g = hue2rgb(p, q, h);
-                    b = hue2rgb(p, q, h - 1/3);
-                }
-                return { r: Math.round(r * 255), g: Math.round(g * 255), b: Math.round(b * 255) };
-            }
-
-            function setRGB(r, g, b, skipLive) {
-                curR = Math.max(0, Math.min(255, parseInt(r, 10) || 0));
-                curG = Math.max(0, Math.min(255, parseInt(g, 10) || 0));
-                curB = Math.max(0, Math.min(255, parseInt(b, 10) || 0));
-
-                sliderR.value = curR;
-                sliderG.value = curG;
-                sliderB.value = curB;
+            function updateUI(row, presetIdx, r, g, b) {
+                var curR = Math.max(0, Math.min(255, parseInt(r, 10) || 0));
+                var curG = Math.max(0, Math.min(255, parseInt(g, 10) || 0));
+                var curB = Math.max(0, Math.min(255, parseInt(b, 10) || 0));
 
                 valR.textContent = curR;
                 valG.textContent = curG;
                 valB.textContent = curB;
 
+                fillR.style.width = (curR / 255 * 100) + '%';
+                fillG.style.width = (curG / 255 * 100) + '%';
+                fillB.style.width = (curB / 255 * 100) + '%';
+
                 var rgbStr = curR + ', ' + curG + ', ' + curB;
                 var hexStr = rgbToHex(curR, curG, curB);
 
                 colorSwatch.style.background = 'rgb(' + rgbStr + ')';
-                colorSwatch.style.boxShadow = '0 0 14px rgba(' + rgbStr + ', 0.6)';
+                colorSwatch.style.boxShadow = '0 0 16px rgba(' + rgbStr + ', 0.65)';
                 colorRGB.textContent = 'rgb(' + rgbStr + ')';
                 colorHex.textContent = hexStr;
 
-                // Update CSS Variable live
                 document.documentElement.style.setProperty('--menu-color', rgbStr);
 
-                // Highlight active chip
+                // Highlight Row
+                [presetsGrid, secPresets, rowR, rowG, rowB, btnApply, btnCancel].forEach(function(el) {
+                    if (el) el.classList.remove('active-row');
+                });
+
+                if (row === 0) {
+                    presetsGrid.classList.add('active-row');
+                    secPresets.classList.add('active-row');
+                } else if (row === 1) {
+                    rowR.classList.add('active-row');
+                } else if (row === 2) {
+                    rowG.classList.add('active-row');
+                } else if (row === 3) {
+                    rowB.classList.add('active-row');
+                } else if (row === 4) {
+                    btnApply.classList.add('active-row');
+                } else if (row === 5) {
+                    btnCancel.classList.add('active-row');
+                }
+
+                // Highlight Selected Chip in Presets
                 var chips = presetsGrid.querySelectorAll('.SCPPChip');
-                chips.forEach(function(chip) {
-                    if (chip.dataset.r == curR && chip.dataset.g == curG && chip.dataset.b == curB) {
-                        chip.classList.add('active');
-                    } else {
-                        chip.classList.remove('active');
+                chips.forEach(function(chip, cIdx) {
+                    chip.classList.remove('focused-chip');
+                    chip.classList.remove('active');
+                    if (cIdx + 1 === presetIdx) {
+                        chip.classList.add(row === 0 ? 'focused-chip' : 'active');
                     }
                 });
-
-                if (!skipLive) {
-                    try {
-                        if (navigator.clipboard && navigator.clipboard.writeText) {
-                            navigator.clipboard.writeText('SHARK_COLOR_LIVE:' + rgbStr);
-                        }
-                    } catch(e) {}
-                }
             }
 
-            // Populate Presets Grid
-            presetsGrid.innerHTML = '';
-            PRESETS.forEach(function(p) {
-                var chip = document.createElement('div');
-                chip.className = 'SCPPChip';
-                chip.style.backgroundColor = 'rgb(' + p.r + ',' + p.g + ',' + p.b + ')';
-                chip.style.color = 'rgb(' + p.r + ',' + p.g + ',' + p.b + ')';
-                chip.title = p.name + ' (' + p.r + ', ' + p.g + ', ' + p.b + ')';
-                chip.dataset.r = p.r;
-                chip.dataset.g = p.g;
-                chip.dataset.b = p.b;
-                chip.addEventListener('click', function() {
-                    setRGB(p.r, p.g, p.b);
-                });
-                presetsGrid.appendChild(chip);
-            });
-
-            // Spectrum dragging & clicking
-            function handleSpectrum(e) {
-                var rect = spectrumTrack.getBoundingClientRect();
-                var x = Math.max(0, Math.min(e.clientX - rect.left, rect.width));
-                var pct = x / rect.width;
-                spectrumThumb.style.left = (pct * 100) + '%';
-                var rgb = hslToRgb(pct, 1.0, 0.5);
-                setRGB(rgb.r, rgb.g, rgb.b);
-            }
-
-            var spectrumActive = false;
-            spectrumTrack.addEventListener('mousedown', function(e) {
-                spectrumActive = true;
-                handleSpectrum(e);
-            });
-            window.addEventListener('mousemove', function(e) {
-                if (spectrumActive) handleSpectrum(e);
-            });
-            window.addEventListener('mouseup', function() {
-                spectrumActive = false;
-            });
-
-            // Sliders input
-            [sliderR, sliderG, sliderB].forEach(function(slider) {
-                slider.addEventListener('input', function() {
-                    setRGB(sliderR.value, sliderG.value, sliderB.value);
-                });
-            });
-
-            // Buttons
-            btnApply.addEventListener('click', function() {
-                var rgbStr = curR + ', ' + curG + ', ' + curB;
-                try {
-                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText('SHARK_COLOR_APPLY:' + rgbStr);
-                    }
-                } catch(e) {}
-                window.closeColorPickerModal();
-            });
-
-            function cancelAction() {
-                document.documentElement.style.setProperty('--menu-color', origColorStr);
-                try {
-                    if (navigator.clipboard && navigator.clipboard.writeText) {
-                        navigator.clipboard.writeText('SHARK_COLOR_CANCEL');
-                    }
-                } catch(e) {}
-                window.closeColorPickerModal();
-            }
-
-            btnCancel.addEventListener('click', cancelAction);
-            btnClose.addEventListener('click', cancelAction);
-
-            // Draggable Header
-            var dragHeader = document.getElementById('SCPPDagHeader');
-            var isDragging = false;
-            var dragX = 0, dragY = 0, initL = 0, initT = 0;
-
-            dragHeader.addEventListener('mousedown', function(e) {
-                if (e.target.id === 'SCPPBtnClose') return;
-                isDragging = true;
-                dragX = e.clientX;
-                dragY = e.clientY;
-                var rect = modal.getBoundingClientRect();
-                initL = rect.left;
-                initT = rect.top;
-                modal.style.transform = 'none';
-                modal.style.left = initL + 'px';
-                modal.style.top = initT + 'px';
-            });
-
-            window.addEventListener('mousemove', function(e) {
-                if (!isDragging) return;
-                var dx = e.clientX - dragX;
-                var dy = e.clientY - dragY;
-                modal.style.left = (initL + dx) + 'px';
-                modal.style.top = (initT + dy) + 'px';
-            });
-
-            window.addEventListener('mouseup', function() {
-                isDragging = false;
-            });
-
-            // Global modal controls
-            window.openColorPickerModal = function(colorStr) {
-                origColorStr = colorStr || "28, 28, 30";
-                var parts = origColorStr.split(',');
-                var r = parseInt(parts[0], 10) || 28;
-                var g = parseInt(parts[1], 10) || 28;
-                var b = parseInt(parts[2], 10) || 30;
-
-                setRGB(r, g, b, true);
-                modal.style.display = 'block';
-
-                // Reposition next to menu if not moved
-                if (!modal.style.left || modal.style.left === '520px') {
-                    modal.style.top = '50%';
-                    modal.style.left = '520px';
-                    modal.style.transform = 'translateY(-50%)';
-                }
-            };
-
-            window.closeColorPickerModal = function() {
-                modal.style.display = 'none';
-                var vCursor = document.getElementById('SharkVirtualCursor');
-                if (vCursor) vCursor.style.display = 'none';
-            };
-
-            // SharkAPI virtual cursor & click bridge
-            window.updateSharkCursor = function(normX, normY) {
-                var vCursor = document.getElementById('SharkVirtualCursor');
-                if (!vCursor || modal.style.display === 'none') return;
-                vCursor.style.display = 'block';
-                vCursor.style.left = (normX * window.innerWidth) + 'px';
-                vCursor.style.top = (normY * window.innerHeight) + 'px';
-            };
-
-            window.handleSharkMouseClick = function(normX, normY, state, key) {
-                var cx = normX * window.innerWidth;
-                var cy = normY * window.innerHeight;
-                var elem = document.elementFromPoint(cx, cy);
-                if (!elem) return;
-                if (state === 'down') {
-                    var evt = new MouseEvent('click', { bubbles: true, cancelable: true, clientX: cx, clientY: cy });
-                    elem.dispatchEvent(evt);
-                }
-            };
-
-            // Message event listener for openColorPicker
+            // Message Receiver
             window.addEventListener('message', function(event) {
                 var data = event.data;
                 if (!data || typeof data !== 'object') return;
-                if (data.action === 'sharkMouse') {
-                    var vCursor = document.getElementById('SharkVirtualCursor');
-                    if (vCursor) {
-                        vCursor.style.display = 'block';
-                        var screenX = (data.x > 1.0) ? data.x : (data.x * window.innerWidth);
-                        var screenY = (data.y > 1.0) ? data.y : (data.y * window.innerHeight);
 
-                        vCursor.style.left = screenX + 'px';
-                        vCursor.style.top = screenY + 'px';
-
-                        if (data.click) {
-                            var elem = document.elementFromPoint(screenX, screenY);
-                            if (elem) {
-                                elem.click();
-                                if (elem.classList.contains('SCPPSliderRange') || elem.tagName === 'INPUT') {
-                                    var rect = elem.getBoundingClientRect();
-                                    var pct = Math.max(0, Math.min(1, (screenX - rect.left) / rect.width));
-                                    elem.value = Math.round(pct * 255);
-                                    elem.dispatchEvent(new Event('input', { bubbles: true }));
-                                    elem.dispatchEvent(new Event('change', { bubbles: true }));
-                                } else if (elem.id === 'SCPPSpectrumTrack' || (elem.parentElement && elem.parentElement.id === 'SCPPSpectrumTrack')) {
-                                    var track = document.getElementById('SCPPSpectrumTrack');
-                                    var rect = track.getBoundingClientRect();
-                                    var pct = Math.max(0, Math.min(1, (screenX - rect.left) / rect.width));
-                                    if (typeof spectrumThumb !== 'undefined' && spectrumThumb) {
-                                        spectrumThumb.style.left = (pct * 100) + '%';
-                                    }
-                                    if (typeof hslToRgb === 'function' && typeof setRGB === 'function') {
-                                        var rgb = hslToRgb(pct, 1.0, 0.5);
-                                        setRGB(rgb.r, rgb.g, rgb.b);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                } else if (data.action === 'openColorPicker') {
+                if (data.action === 'openColorPicker') {
                     if (data.visible) {
-                        window.openColorPickerModal(data.currentColor);
-                        var vCursor = document.getElementById('SharkVirtualCursor');
-                        if (vCursor) {
-                            vCursor.style.display = 'block';
-                            vCursor.style.left = (window.innerWidth * 0.5) + 'px';
-                            vCursor.style.top = (window.innerHeight * 0.5) + 'px';
-                        }
+                        modal.style.display = 'block';
+                        updateUI(data.row || 0, data.presetIdx || 1, data.r || 28, data.g || 28, data.b || 30);
                     } else {
-                        window.closeColorPickerModal();
+                        modal.style.display = 'none';
                     }
+                } else if (data.action === 'updateColorPicker') {
+                    if (data.visible !== false) {
+                        modal.style.display = 'block';
+                    }
+                    updateUI(data.row, data.presetIdx, data.r, data.g, data.b);
                 }
             });
         })();
     </script>
-    
-    <div id="SharkVirtualCursor" class="SharkVirtualCursor" style="display: none;"></div>
-</body>
 
+</body>
 </html>
