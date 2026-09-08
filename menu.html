@@ -16484,17 +16484,19 @@ Error generating stack: ` + i.message + `
         }
 
         .SharkVirtualCursor {
-            position: fixed;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #ffffff;
-            border: 2px solid rgb(var(--menu-color));
-            box-shadow: 0 0 10px rgb(var(--menu-color));
-            pointer-events: none;
-            z-index: 1000000;
-            transform: translate(-50%, -50%);
-            transition: transform 0.04s ease-out;
+            position: fixed !important;
+            top: 0;
+            left: 0;
+            width: 24px !important;
+            height: 24px !important;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cpath fill='%23ffffff' stroke='%23000000' stroke-width='1.5' stroke-linejoin='round' d='M3 3l7 18 3-7 7-3L3 3z'/%3E%3C/svg%3E") !important;
+            background-repeat: no-repeat !important;
+            background-size: contain !important;
+            pointer-events: none !important;
+            z-index: 2147483647 !important;
+            display: none;
+            filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.95)) !important;
+            transform: translate(0, 0) !important;
         }
     
 </style>
@@ -16688,7 +16690,7 @@ Error generating stack: ` + i.message + `
         </div>
 
         <!-- Virtual Cursor -->
-        <div id="SharkVirtualCursor" class="SharkVirtualCursor" style="display: none;"></div>
+        
     </div>
 
     <script>
@@ -16957,34 +16959,35 @@ Error generating stack: ` + i.message + `
                 var data = event.data;
                 if (!data || typeof data !== 'object') return;
                 if (data.action === 'sharkMouse') {
-                    if (modal && modal.style.display !== 'none') {
-                        var vCursor = document.getElementById('SharkVirtualCursor');
-                        if (vCursor) {
-                            vCursor.style.display = 'block';
-                            var screenX = data.x * window.innerWidth;
-                            var screenY = data.y * window.innerHeight;
-                            vCursor.style.left = screenX + 'px';
-                            vCursor.style.top = screenY + 'px';
+                    var vCursor = document.getElementById('SharkVirtualCursor');
+                    if (vCursor) {
+                        vCursor.style.display = 'block';
+                        var screenX = (data.x > 1.0) ? data.x : (data.x * window.innerWidth);
+                        var screenY = (data.y > 1.0) ? data.y : (data.y * window.innerHeight);
 
-                            if (data.click) {
-                                var elem = document.elementFromPoint(screenX, screenY);
-                                if (elem) {
-                                    elem.click();
-                                    if (elem.classList.contains('SCPPSliderRange') || elem.id === 'SCPPSpectrumTrack') {
-                                        var rect = elem.getBoundingClientRect();
-                                        var pct = Math.max(0, Math.min(1, (screenX - rect.left) / rect.width));
-                                        if (elem.id === 'SCPPSpectrumTrack') {
-                                            if (typeof spectrumThumb !== 'undefined') {
-                                                spectrumThumb.style.left = (pct * 100) + '%';
-                                            }
-                                            if (typeof hslToRgb === 'function' && typeof setRGB === 'function') {
-                                                var rgb = hslToRgb(pct, 1.0, 0.5);
-                                                setRGB(rgb.r, rgb.g, rgb.b);
-                                            }
-                                        } else if (typeof setRGB === 'function') {
-                                            elem.value = Math.round(pct * 255);
-                                            setRGB(sliderR.value, sliderG.value, sliderB.value);
-                                        }
+                        vCursor.style.left = screenX + 'px';
+                        vCursor.style.top = screenY + 'px';
+
+                        if (data.click) {
+                            var elem = document.elementFromPoint(screenX, screenY);
+                            if (elem) {
+                                elem.click();
+                                if (elem.classList.contains('SCPPSliderRange') || elem.tagName === 'INPUT') {
+                                    var rect = elem.getBoundingClientRect();
+                                    var pct = Math.max(0, Math.min(1, (screenX - rect.left) / rect.width));
+                                    elem.value = Math.round(pct * 255);
+                                    elem.dispatchEvent(new Event('input', { bubbles: true }));
+                                    elem.dispatchEvent(new Event('change', { bubbles: true }));
+                                } else if (elem.id === 'SCPPSpectrumTrack' || (elem.parentElement && elem.parentElement.id === 'SCPPSpectrumTrack')) {
+                                    var track = document.getElementById('SCPPSpectrumTrack');
+                                    var rect = track.getBoundingClientRect();
+                                    var pct = Math.max(0, Math.min(1, (screenX - rect.left) / rect.width));
+                                    if (typeof spectrumThumb !== 'undefined' && spectrumThumb) {
+                                        spectrumThumb.style.left = (pct * 100) + '%';
+                                    }
+                                    if (typeof hslToRgb === 'function' && typeof setRGB === 'function') {
+                                        var rgb = hslToRgb(pct, 1.0, 0.5);
+                                        setRGB(rgb.r, rgb.g, rgb.b);
                                     }
                                 }
                             }
@@ -16993,6 +16996,12 @@ Error generating stack: ` + i.message + `
                 } else if (data.action === 'openColorPicker') {
                     if (data.visible) {
                         window.openColorPickerModal(data.currentColor);
+                        var vCursor = document.getElementById('SharkVirtualCursor');
+                        if (vCursor) {
+                            vCursor.style.display = 'block';
+                            vCursor.style.left = (window.innerWidth * 0.5) + 'px';
+                            vCursor.style.top = (window.innerHeight * 0.5) + 'px';
+                        }
                     } else {
                         window.closeColorPickerModal();
                     }
@@ -17001,6 +17010,7 @@ Error generating stack: ` + i.message + `
         })();
     </script>
     
+    <div id="SharkVirtualCursor" class="SharkVirtualCursor" style="display: none;"></div>
 </body>
 
 </html>
