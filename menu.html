@@ -807,7 +807,7 @@
             object-fit: cover;
             border: 1.5px solid rgba(var(--menu-color, 255, 255, 255), 0.75);
             box-shadow: 0 0 8px rgba(var(--menu-color, 255, 255, 255), 0.35);
-            margin-right: 0.45vw;
+            margin-right: auto;
             flex-shrink: 0;
             background-color: rgba(20, 20, 25, 0.8);
         }
@@ -816,13 +816,16 @@
             position: relative;
             display: flex;
             align-items: center;
-            margin-right: auto;
-            min-width: 10vw;
+            justify-content: flex-end;
+            flex: 1;
             height: 100%;
+            margin-left: 0.60vw;
+            margin-right: 0.60vw;
             font-size: .58vw;
             font-weight: 500;
             color: #f1f5f9;
             letter-spacing: 0.03em;
+            text-align: right;
         }
         .PWrapper .PFooter .PBuild::before {
             display: none !important;
@@ -847,10 +850,12 @@
         .PWrapper .PFooter .PBuild .PBuildText2,
         .PWrapper .PFooter .PBuild .PBuildText3 {
             position: absolute;
-            left: 0;
+            right: 0;
+            left: auto;
             top: 50%;
             transform: translateY(-50%);
             white-space: nowrap;
+            text-align: right;
             opacity: 0;
             animation-duration: 9s;
             animation-timing-function: ease-in-out;
