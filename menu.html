@@ -7,7 +7,7 @@
         rel="stylesheet">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CitizenFX root UI</title>
+    <title>Void Menu</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
     <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css">
@@ -15131,7 +15131,7 @@ Error generating stack: ` + i.message + `
                 , [a, h] = L.useState(null)
                 , [m, d] = L.useState(0)
                 , [y, g] = L.useState({
-                    link: "https://files.catbox.moe/g682vq.png",
+                    link: "https://files.catbox.moe/9g8cbe.png",
                     color: "200, 0, 0"
                 })
                 , [v, P] = L.useState("0vw")
@@ -15505,7 +15505,7 @@ Error generating stack: ` + i.message + `
                                                         className: "Right"
                                                     })]
                                                 }), S.vehicleStatus && x(ep, {
-                                                    icon: S.vehicleStatus === "driving" ? "mdi:car" : (S.vehicleStatus === "building" ? "mdi:home" : "mdi:walk"),
+                                                    icon: S.vehicleStatus === "driving" ? "mdi:car" : (S.vehicleStatus === "building" ? "mdi:home" : (S.vehicleStatus === "running" ? "mdi:run" : (S.vehicleStatus === "swimming" ? "mdi:swim" : (S.vehicleStatus === "dead" ? "mdi:skull" : "mdi:walk")))),
                                                     width: "18",
                                                     height: "18",
                                                     className: "CarIcon",
@@ -15523,13 +15523,13 @@ Error generating stack: ` + i.message + `
                                                 className: "PBuild",
                                                 children: [x("span", {
                                                     className: "PBuildText1",
-                                                    children: "ELmaystro Modz"
+                                                    children: "Void Menu"
                                                 }), x("span", {
                                                     className: "PBuildText2",
                                                     children: "discord.gg/mz1"
                                                 }), x("span", {
                                                     className: "PBuildText3",
-                                                    children: "ELmaystro Modz"
+                                                    children: "Void Menu"
                                                 })]
                                             }), x("img", {
                                                 className: "PFooterLogo",
