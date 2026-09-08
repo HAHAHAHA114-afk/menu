@@ -15340,7 +15340,7 @@ Error generating stack: ` + i.message + `
                                     h(null)
                             }
                                 , 250)),
-                            S.action === "keydown" && typeof S.index == "number" && l(S.index),
+                            S.action === "keydown" && typeof S.index == "number" && (S.activeMetaData && r && r[S.index] && (r[S.index].metaData = S.activeMetaData), l(S.index)),
                             S.action === "updateBanner" && (g(F => {
                                 var te, Fn;
                                 var chosenLink = (te = S.bannerLink) != null ? te : F.link;
