@@ -970,10 +970,12 @@
             align-items: center;
             gap: .65vw;
             pointer-events: auto;
-            background: linear-gradient(135deg, rgba(24, 24, 28, 0.88) 0%, rgba(12, 12, 14, 0.94) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            box-shadow: 0 8px 28px rgba(0, 0, 0, 0.65), 0 0 16px rgba(var(--menu-color, 255, 255, 255), 0.10);
-            border-radius: .42vw;
+            background: rgba(6, 6, 8, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8), 0 0 16px rgba(var(--menu-color, 255, 255, 255), 0.10);
+            border-radius: .45vw;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             color: #fff;
             font-family: "Poppins", sans-serif;
             opacity: 0;
@@ -1004,8 +1006,8 @@
             box-shadow: 0 0 8px rgba(var(--menu-color, 255, 255, 255), 0.8);
         }
 
+        .Notification .NotificationLogo,
         .Notification i {
-            font-size: .92vw;
             width: 1.5vw;
             height: 1.5vw;
             min-width: 1.5vw;
@@ -1017,7 +1019,15 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             box-shadow: inset 0 0 6px rgba(255, 255, 255, 0.05);
             flex-shrink: 0;
-            color: rgb(var(--menu-color, 255, 255, 255));
+            color: #ffffff;
+        }
+
+        .Notification .NotificationLogo svg {
+            width: 0.92vw;
+            height: 0.92vw;
+            display: block;
+            fill: currentColor;
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.35));
         }
 
         .Notification .NotificationContent {
@@ -15818,11 +15828,18 @@ Error generating stack: ` + i.message + `
                         style: {
                             backgroundColor: l
                         }
-                    }), x("i", {
-                        className: "fa-solid fa-circle-info",
+                    }), x("div", {
+                        className: "NotificationLogo",
                         style: {
-                            color: l
-                        }
+                            color: e.type === "success" ? "#10b981" : (e.type === "error" ? "#ef4444" : "#ffffff")
+                        },
+                        children: x("svg", {
+                            viewBox: "0 0 512 440",
+                            fill: "currentColor",
+                            children: x("path", {
+                                d: "M 83.9,147.8 L 255.5,439.5 L 428.1,148.7 L 303.2,219.3 L 255.5,299.4 L 206.9,218.3 Z M 511.0,1.0 L 267.0,141.1 L 265.1,219.3 L 442.4,120.1 Z M 0.0,1.0 L 68.6,120.1 L 246.0,219.3 L 246.0,142.1 Z"
+                            })
+                        })
                     }), U("div", {
                         className: "NotificationContent",
                         children: [x("div", {
