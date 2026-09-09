@@ -16234,10 +16234,11 @@ Error generating stack: ` + i.message + `
         .SBLWrapper {
             position: fixed;
             display: none;
-            left: var(--kbl-x, calc(100vw - 8.5vw));
+            left: var(--sbl-x, var(--kbl-x, calc(100vw - 8.5vw)));
+            top: var(--sbl-y, 2.6vw);
             right: auto;
             width: 7.0313vw;
-            transition: left 0.08s ease;
+            transition: left 0.08s ease, top 0.08s ease;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -16677,6 +16678,16 @@ Error generating stack: ` + i.message + `
                     if (typeof data.kblY !== 'undefined') {
                         document.documentElement.style.setProperty('--kbl-y', data.kblY + '%');
                     }
+                    if (typeof data.sblX !== 'undefined') {
+                        document.documentElement.style.setProperty('--sbl-x', data.sblX + '%');
+                        var sblWrapper = document.getElementById('SBLWrapper');
+                        if (sblWrapper) sblWrapper.style.left = data.sblX + '%';
+                    }
+                    if (typeof data.sblY !== 'undefined') {
+                        document.documentElement.style.setProperty('--sbl-y', data.sblY + '%');
+                        var sblWrapper = document.getElementById('SBLWrapper');
+                        if (sblWrapper) sblWrapper.style.top = data.sblY + '%';
+                    }
                 }
 
                                 // ── Spectators panel ──────────────────────────────────────────────
@@ -16716,10 +16727,17 @@ Error generating stack: ` + i.message + `
                         sblWrapper.appendChild(spectatorsDiv);
                     }
 
-                    var kbl = document.querySelector('.KBLWrapper');
-                    var kblH = (kbl && kbl.offsetHeight > 0) ? kbl.offsetHeight : 0;
-                    var gap = window.innerWidth * 0.006;
-                    sblWrapper.style.top = (kblH > 0) ? (kbl.offsetTop + kblH + gap) + 'px' : '2.6vw';
+                    if (document.documentElement.style.getPropertyValue('--sbl-y')) {
+                        sblWrapper.style.top = document.documentElement.style.getPropertyValue('--sbl-y');
+                    } else {
+                        var kbl = document.querySelector('.KBLWrapper');
+                        var kblH = (kbl && kbl.offsetHeight > 0) ? kbl.offsetHeight : 0;
+                        var gap = window.innerWidth * 0.006;
+                        sblWrapper.style.top = (kblH > 0) ? (kbl.offsetTop + kblH + gap) + 'px' : '2.6vw';
+                    }
+                    if (document.documentElement.style.getPropertyValue('--sbl-x')) {
+                        sblWrapper.style.left = document.documentElement.style.getPropertyValue('--sbl-x');
+                    }
 
                     var specDiv = sblWrapper.querySelector('.Spectators');
                     var spectsList = data.spectators || [];
