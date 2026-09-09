@@ -965,20 +965,18 @@
         .Notification {
             position: relative;
             width: fit-content;
-            min-width: 15vw;
+            min-width: 14vw;
             max-width: 24vw;
-            min-height: 2.6vw;
-            padding: .50vw 1.2vw .50vw .85vw;
+            min-height: 2.3vw;
+            padding: .45vw 1.1vw .45vw .75vw;
             display: flex;
             align-items: center;
-            gap: .75vw;
+            gap: .65vw;
             pointer-events: auto;
-            background: rgba(6, 6, 8, 0.94);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.8), 0 0 16px rgba(var(--menu-color, 255, 255, 255), 0.10);
-            border-radius: .45vw;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            background: rgba(6, 6, 8, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35);
+            border-radius: .40vw;
             color: #fff;
             font-family: "Poppins", sans-serif;
             opacity: 0;
@@ -1001,8 +999,8 @@
         .Notification .NotificationBorder {
             position: absolute;
             left: .20vw;
-            top: .32vw;
-            bottom: .32vw;
+            top: .28vw;
+            bottom: .28vw;
             width: .16vw;
             border-radius: .1vw;
             background: rgb(var(--menu-color, 255, 255, 255));
@@ -1025,18 +1023,18 @@
         }
 
         .Notification .NotificationLogo svg {
-            width: 2.2vw;
-            height: 1.85vw;
+            width: 1.6vw;
+            height: 1.38vw;
             display: block;
             fill: currentColor;
-            filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+            filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.30));
         }
 
         .Notification .NotificationContent {
             display: flex;
             flex-direction: column;
             justify-content: center;
-            gap: .08vw;
+            gap: .06vw;
             flex: 1;
             min-width: 0;
         }
