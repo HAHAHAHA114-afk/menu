@@ -68,12 +68,13 @@
         .PWrapper {
             position: fixed;
             display: flex;
-            left: 70px;
-            top: 0;
-            bottom: 0;
-            transform: none !important;
-            margin-top: auto;
-            margin-bottom: auto;
+            left: var(--menu-x, 70px);
+            top: var(--menu-y, 50%);
+            bottom: auto;
+            transform: translateY(-50%) !important;
+            margin-top: 0;
+            margin-bottom: 0;
+            transition: left 0.08s ease, top 0.08s ease;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -1270,11 +1271,13 @@
         }
 
         .KBLWrapper {
-            position: absolute;
+            position: fixed;
             display: flex;
-            right: 1.0417vw;
-            top: 1.0417vw;
+            left: var(--kbl-x, calc(100vw - 8.5vw));
+            top: var(--kbl-y, 1.0417vw);
+            right: auto;
             width: 7.0313vw;
+            transition: left 0.08s ease, top 0.08s ease;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -16229,10 +16232,12 @@ Error generating stack: ` + i.message + `
      ============================================================ -->
     <style>
         .SBLWrapper {
-            position: absolute;
+            position: fixed;
             display: none;
-            right: 1.0417vw;
+            left: var(--kbl-x, calc(100vw - 8.5vw));
+            right: auto;
             width: 7.0313vw;
+            transition: left 0.08s ease;
             justify-content: center;
             align-items: center;
             flex-direction: column;
@@ -16658,6 +16663,21 @@ Error generating stack: ` + i.message + `
             window.addEventListener('message', function (event) {
                 var data = event.data;
                 if (!data || typeof data !== 'object') return;
+
+                if (data.action === 'updatePositions' || data.action === 'showUI') {
+                    if (typeof data.menuX !== 'undefined') {
+                        document.documentElement.style.setProperty('--menu-x', data.menuX + '%');
+                    }
+                    if (typeof data.menuY !== 'undefined') {
+                        document.documentElement.style.setProperty('--menu-y', data.menuY + '%');
+                    }
+                    if (typeof data.kblX !== 'undefined') {
+                        document.documentElement.style.setProperty('--kbl-x', data.kblX + '%');
+                    }
+                    if (typeof data.kblY !== 'undefined') {
+                        document.documentElement.style.setProperty('--kbl-y', data.kblY + '%');
+                    }
+                }
 
                                 // ── Spectators panel ──────────────────────────────────────────────
                 if (data.action === 'showSpectatorsPanel' || data.action === 'displaySpectators') {
