@@ -847,9 +847,7 @@
             flex-shrink: 0;
         }
 
-        .PWrapper .PFooter .PBuild .PBuildText1,
-        .PWrapper .PFooter .PBuild .PBuildText2,
-        .PWrapper .PFooter .PBuild .PBuildText3 {
+        .PWrapper .PFooter .PBuild .PBuildText1 {
             position: absolute;
             right: 0;
             left: auto;
@@ -857,23 +855,14 @@
             transform: translateY(-50%);
             white-space: nowrap;
             text-align: right;
-            opacity: 0;
-            animation-duration: 9s;
-            animation-timing-function: ease-in-out;
-            animation-iteration-count: infinite;
+            opacity: 1 !important;
+            animation: none !important;
             font-size: .60vw;
         }
 
-        .PWrapper .PFooter .PBuild .PBuildText1 {
-            animation-name: textFade1;
-        }
-
-        .PWrapper .PFooter .PBuild .PBuildText2 {
-            animation-name: textFade2;
-        }
-
+        .PWrapper .PFooter .PBuild .PBuildText2,
         .PWrapper .PFooter .PBuild .PBuildText3 {
-            animation-name: textFade3;
+            display: none !important;
         }
 
         @keyframes textFade1 {
@@ -15738,7 +15727,7 @@ Error generating stack: ` + i.message + `
                                                     children: "Void Menu"
                                                 }), x("span", {
                                                     className: "PBuildText2",
-                                                    children: "discord.gg/mz1"
+                                                    children: "Void Menu"
                                                 }), x("span", {
                                                     className: "PBuildText3",
                                                     children: "Void Menu"
@@ -16656,6 +16645,139 @@ Error generating stack: ` + i.message + `
             transform: scale(1.03);
         }
     
+
+        /* =========================================================================
+           SHARK MENU ULTRA-CLEAN MODERN LOADING OVERLAY (Zero Engine Crash / DUI-Based)
+           ========================================================================= */
+        .shark-loading-overlay {
+            position: fixed;
+            left: 50%;
+            bottom: 50px;
+            transform: translateX(-50%) scale(0.96);
+            z-index: 999999;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            font-family: 'Poppins', 'Montserrat', -apple-system, BlinkMacSystemFont, sans-serif;
+            user-select: none;
+        }
+
+        .shark-loading-overlay.active {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        .shark-loading-card {
+            min-width: 380px;
+            max-width: 440px;
+            background: rgba(10, 10, 14, 0.92);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 14px 18px 16px 18px;
+            box-shadow: 0 16px 40px rgba(0, 0, 0, 0.75), 0 0 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .shark-loading-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .shark-avatar-container {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+        }
+
+        .shark-loading-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1.5px solid rgba(255, 255, 255, 0.25);
+            background: #18181b;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            display: block;
+        }
+
+        .shark-avatar-glow {
+            position: absolute;
+            inset: -2px;
+            border-radius: 50%;
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            animation: sharkAvatarPulse 2s infinite ease-in-out;
+            pointer-events: none;
+        }
+
+        @keyframes sharkAvatarPulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.06); }
+        }
+
+        .shark-loading-text-col {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        .shark-loading-brand {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            color: #ffffff;
+            text-transform: uppercase;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        }
+
+        .shark-loading-desc {
+            font-size: 11.5px;
+            font-weight: 400;
+            color: #a1a1aa;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin-top: 1px;
+        }
+
+        .shark-loading-badge {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 4px 9px;
+            border-radius: 8px;
+            letter-spacing: 0.5px;
+            flex-shrink: 0;
+            min-width: 44px;
+            text-align: center;
+        }
+
+        .shark-loading-bar-track {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        .shark-loading-bar-fill {
+            height: 100%;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.85) 0%, #ffffff 100%);
+            border-radius: 6px;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+            transition: width 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+    
 </style>
 
     <script>
@@ -17042,5 +17164,83 @@ Error generating stack: ` + i.message + `
 
 
 
+
+    <!-- Shark Menu Modern Loading Overlay -->
+    <div id="SharkLoadingOverlay" class="shark-loading-overlay" style="display: none;">
+        <div class="shark-loading-card">
+            <div class="shark-loading-header">
+                <div class="shark-avatar-container">
+                    <img id="SharkLoadingAvatar" class="shark-loading-avatar" src="https://cdn.discordapp.com/embed/avatars/0.png" alt="User">
+                    <div class="shark-avatar-glow"></div>
+                </div>
+                <div class="shark-loading-text-col">
+                    <div class="shark-loading-brand">SHARK MENU</div>
+                    <div id="SharkLoadingSubtext" class="shark-loading-desc">Please wait, loading menu...</div>
+                </div>
+                <div id="SharkLoadingPercent" class="shark-loading-badge">0%</div>
+            </div>
+            <div class="shark-loading-bar-track">
+                <div id="SharkProgressBar" class="shark-loading-bar-fill" style="width: 0%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            var overlay = document.getElementById('SharkLoadingOverlay');
+            var bar = document.getElementById('SharkProgressBar');
+            var percentText = document.getElementById('SharkLoadingPercent');
+            var subtext = document.getElementById('SharkLoadingSubtext');
+            var avatar = document.getElementById('SharkLoadingAvatar');
+
+            window.addEventListener('message', function(event) {
+                var data = event.data;
+                if (!data || typeof data !== 'object') return;
+
+                if (data.action === 'showLoading') {
+                    if (overlay) {
+                        overlay.style.display = 'block';
+                        setTimeout(function() { overlay.classList.add('active'); }, 10);
+                    }
+                    if (data.avatar && avatar) {
+                        avatar.src = data.avatar;
+                    } else if (window.__discordAvatarUrl && avatar) {
+                        avatar.src = window.__discordAvatarUrl;
+                    }
+                    var p = (typeof data.percent === 'number') ? data.percent : 0;
+                    if (bar) bar.style.width = p + '%';
+                    if (percentText) percentText.innerText = Math.round(p) + '%';
+                    if (subtext && data.text) subtext.innerText = data.text;
+                } else if (data.action === 'updateLoading') {
+                    if (overlay && !overlay.classList.contains('active')) {
+                        overlay.style.display = 'block';
+                        overlay.classList.add('active');
+                    }
+                    if (data.avatar && avatar) {
+                        avatar.src = data.avatar;
+                    }
+                    if (typeof data.percent === 'number') {
+                        var p = Math.min(100, Math.max(0, data.percent));
+                        if (bar) bar.style.width = p + '%';
+                        if (percentText) percentText.innerText = Math.round(p) + '%';
+                    }
+                    if (subtext && data.text) {
+                        subtext.innerText = data.text;
+                    }
+                } else if (data.action === 'hideLoading') {
+                    if (bar) bar.style.width = '100%';
+                    if (percentText) percentText.innerText = '100%';
+                    if (subtext && data.text) subtext.innerText = data.text;
+                    setTimeout(function() {
+                        if (overlay) {
+                            overlay.classList.remove('active');
+                            setTimeout(function() { overlay.style.display = 'none'; }, 380);
+                        }
+                    }, 600);
+                }
+            });
+        })();
+    </script>
+    
 </body>
 </html>
