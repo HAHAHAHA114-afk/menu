@@ -1431,10 +1431,9 @@
 
             .CarIconWrapper {
             position: absolute;
-            top: 0;
-            bottom: 0;
+            top: 50%;
+            transform: translateY(-50%);
             right: 2.8vw;
-            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -1449,7 +1448,7 @@
             justify-content: center;
             color: #ffd700 !important;
             filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.85)) !important;
-            margin-bottom: -2px;
+            margin-bottom: 2px !important;
             z-index: 12;
         }
 
@@ -15743,25 +15742,24 @@ Error generating stack: ` + i.message + `
                                                     className: "CarIconWrapper",
                                                     style: {
                                                         position: "absolute",
-                                                        top: 0,
-                                                        bottom: 0,
+                                                        top: "50%",
+                                                        transform: "translateY(-50%)",
                                                         display: "flex",
                                                         flexDirection: "column",
                                                         alignItems: "center",
                                                         justifyContent: "center",
                                                         right: "2.8vw",
-                                                        height: "100%",
                                                         pointerEvents: "none"
                                                     },
                                                     children: [
                                                         S.isDriver && x("svg", {
-                                                            width: "12",
-                                                            height: "12",
+                                                            width: "11",
+                                                            height: "11",
                                                             viewBox: "0 0 24 24",
                                                             className: "DriverCrown",
                                                             style: {
                                                                 color: "#ffd700",
-                                                                marginBottom: "-2px",
+                                                                marginBottom: "2px",
                                                                 filter: "drop-shadow(0 0 3px rgba(255, 215, 0, 0.85))",
                                                                 display: "block"
                                                             },
