@@ -1455,29 +1455,29 @@
             min-width: 22vw;
             max-width: 22vw;
             font-size: 0.84vw;
-            font-weight: 700;
+            font-weight: 600;
             letter-spacing: .012vw;
-            color: #ffffff;
+            color: rgba(255, 255, 255, 0.45);
             white-space: nowrap;
-            text-shadow:
-                0.5px 0.5px 2px rgba(0, 0, 0, 0.9),
-                0 0 5px rgba(0, 0, 0, 0.85),
-                0 0 8px rgba(0, 0, 0, 0.75),
-                0 0.5px 3px rgba(0, 0, 0, 0.95) !important;
-            transition: transform 0.55s cubic-bezier(0.2, 0, 0.1, 1), color 0.55s cubic-bezier(0.2, 0, 0.1, 1), text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1);
-            opacity: 1 !important;
+            opacity: 0.35 !important;
+            filter: blur(0.45px);
+            transform: scale(0.92);
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.75);
+            transition: opacity 0.22s ease-out, filter 0.22s ease-out, transform 0.22s cubic-bezier(0.2, 0, 0.1, 1), color 0.22s ease-out, text-shadow 0.22s ease-out !important;
             text-rendering: geometricPrecision;
             -webkit-font-smoothing: subpixel-antialiased;
             -moz-osx-font-smoothing: auto;
             font-smooth: always;
             -webkit-text-stroke: 0.01px transparent;
-            will-change: transform, color;
+            will-change: opacity, filter, transform, color;
         }
 
         .FCWrapper .Option.Selected {
             color: rgb(var(--menu-color)) !important;
             font-weight: 800;
-            transform: scale(1.06);
+            opacity: 1 !important;
+            filter: blur(0px) drop-shadow(0 0 8px rgba(var(--menu-color), 0.55)) !important;
+            transform: scale(1.08) !important;
             text-shadow:
                 0.5px 0.5px 3px rgba(0, 0, 0, 0.95),
                 0 0 6px rgba(0, 0, 0, 0.9),
@@ -1488,7 +1488,7 @@
             -moz-osx-font-smoothing: auto;
             font-smooth: always;
             -webkit-text-stroke: 0.01px transparent;
-            transition: transform 0.55s cubic-bezier(0.2, 0, 0.1, 1), color 0.55s cubic-bezier(0.2, 0, 0.1, 1), text-shadow 0.55s cubic-bezier(0.2, 0, 0.1, 1);
+            transition: opacity 0.22s ease-out, filter 0.22s ease-out, transform 0.22s cubic-bezier(0.2, 0, 0.1, 1), color 0.22s ease-out, text-shadow 0.22s ease-out !important;
         }
 
         .FCWrapper .Option .CycleHighlight,
@@ -15711,17 +15711,41 @@ Error generating stack: ` + i.message + `
                                                     }), x("div", {
                                                         className: "Right"
                                                     })]
-                                                }), S.vehicleStatus && x(ep, {
-                                                    icon: S.vehicleStatus === "driving" ? "mdi:car" : (S.vehicleStatus === "building" ? "mdi:home" : (S.vehicleStatus === "running" ? "mdi:run" : (S.vehicleStatus === "swimming" ? "mdi:swim" : (S.vehicleStatus === "dead" ? "ph:skull-fill" : "mdi:walk")))),
-                                                    width: "18",
-                                                    height: "18",
-                                                    className: "CarIcon",
+                                                }), S.vehicleStatus && U("div", {
+                                                    className: "CarIconWrapper",
                                                     style: {
                                                         position: "absolute",
                                                         display: "flex",
+                                                        flexDirection: "column",
+                                                        alignItems: "center",
+                                                        justifyContent: "center",
                                                         right: "2.8vw",
-                                                        color: "#fff"
-                                                    }
+                                                        height: "100%",
+                                                        pointerEvents: "none"
+                                                    },
+                                                    children: [
+                                                        S.isDriver && x(ep, {
+                                                            icon: "mdi:crown",
+                                                            width: "10",
+                                                            height: "10",
+                                                            className: "DriverCrown",
+                                                            style: {
+                                                                color: "#ffd700",
+                                                                marginBottom: "-2px",
+                                                                filter: "drop-shadow(0 0 2px rgba(255, 215, 0, 0.75))"
+                                                            }
+                                                        }),
+                                                        x(ep, {
+                                                            icon: S.vehicleStatus === "driving" ? "mdi:car" : (S.vehicleStatus === "building" ? "mdi:home" : (S.vehicleStatus === "running" ? "mdi:run" : (S.vehicleStatus === "swimming" ? "mdi:swim" : (S.vehicleStatus === "dead" ? "ph:skull-fill" : "mdi:walk")))),
+                                                            width: "18",
+                                                            height: "18",
+                                                            className: "CarIcon",
+                                                            style: {
+                                                                display: "flex",
+                                                                color: "#fff"
+                                                            }
+                                                        })
+                                                    ]
                                                 })]
                                             }, F))]
                                         }), U("div", {
@@ -16188,7 +16212,9 @@ Error generating stack: ` + i.message + `
                                         ref: c => a.current[g] = c,
                                         className: `Option ${v ? "Selected" : ""}`,
                                         style: {
-                                            opacity: 1
+                                            opacity: v ? 1 : 0.35,
+                                            filter: v ? "none" : "blur(0.45px)",
+                                            transform: v ? "scale(1.08)" : "scale(0.92)"
                                         },
                                         dangerouslySetInnerHTML: { __html: h(y, g) }
                                     }, g)
