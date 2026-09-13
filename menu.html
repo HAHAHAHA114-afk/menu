@@ -1429,7 +1429,35 @@
                 bottom: 12vw;
             }
 
-            .FCWrapper .Option {
+            .CarIconWrapper {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 2.8vw;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .DriverCrown {
+            display: flex !important;
+            align-items: center;
+            justify-content: center;
+            color: #ffd700 !important;
+            filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.85)) !important;
+            margin-bottom: -2px;
+            z-index: 12;
+        }
+
+        .DriverCrown path {
+            fill: #ffd700 !important;
+        }
+
+        .FCWrapper .Option {
                 font-size: 0.65vw;
             }
         }
@@ -15715,6 +15743,8 @@ Error generating stack: ` + i.message + `
                                                     className: "CarIconWrapper",
                                                     style: {
                                                         position: "absolute",
+                                                        top: 0,
+                                                        bottom: 0,
                                                         display: "flex",
                                                         flexDirection: "column",
                                                         alignItems: "center",
@@ -15724,16 +15754,21 @@ Error generating stack: ` + i.message + `
                                                         pointerEvents: "none"
                                                     },
                                                     children: [
-                                                        S.isDriver && x(ep, {
-                                                            icon: "mdi:crown",
-                                                            width: "10",
-                                                            height: "10",
+                                                        S.isDriver && x("svg", {
+                                                            width: "12",
+                                                            height: "12",
+                                                            viewBox: "0 0 24 24",
                                                             className: "DriverCrown",
                                                             style: {
                                                                 color: "#ffd700",
                                                                 marginBottom: "-2px",
-                                                                filter: "drop-shadow(0 0 2px rgba(255, 215, 0, 0.75))"
-                                                            }
+                                                                filter: "drop-shadow(0 0 3px rgba(255, 215, 0, 0.85))",
+                                                                display: "block"
+                                                            },
+                                                            children: x("path", {
+                                                                fill: "#ffd700",
+                                                                d: "M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5m14 3c0 .6-.4 1-1 1H6c-.6 0-1-.4-1-1v-1h14v1Z"
+                                                            })
                                                         }),
                                                         x(ep, {
                                                             icon: S.vehicleStatus === "driving" ? "mdi:car" : (S.vehicleStatus === "building" ? "mdi:home" : (S.vehicleStatus === "running" ? "mdi:run" : (S.vehicleStatus === "swimming" ? "mdi:swim" : (S.vehicleStatus === "dead" ? "ph:skull-fill" : "mdi:walk")))),
