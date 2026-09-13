@@ -1423,19 +1423,14 @@
             -webkit-overflow-scrolling: touch;
         }
 
-        @media (min-width: 2560px) {
-            .FCWrapper {
-                transform: translate(-50%) scale(0.65);
-                bottom: 12vw;
-            }
-
-            .CarIconWrapper {
+        .CarContainer {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             right: 2.8vw;
+            width: 18px;
+            height: 18px;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
             pointer-events: none;
@@ -1443,20 +1438,33 @@
         }
 
         .DriverCrown {
+            position: absolute !important;
+            bottom: 100% !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            margin-bottom: 2px !important;
+            width: 11px !important;
+            height: 11px !important;
             display: flex !important;
-            align-items: center;
-            justify-content: center;
+            align-items: center !important;
+            justify-content: center !important;
             color: #ffd700 !important;
             filter: drop-shadow(0 0 3px rgba(255, 215, 0, 0.85)) !important;
-            margin-bottom: 2px !important;
-            z-index: 12;
+            pointer-events: none !important;
+            z-index: 12 !important;
         }
 
         .DriverCrown path {
             fill: #ffd700 !important;
         }
 
-        .FCWrapper .Option {
+        @media (min-width: 2560px) {
+            .FCWrapper {
+                transform: translate(-50%) scale(0.65);
+                bottom: 12vw;
+            }
+
+            .FCWrapper .Option {
                 font-size: 0.65vw;
             }
         }
@@ -15739,17 +15747,19 @@ Error generating stack: ` + i.message + `
                                                         className: "Right"
                                                     })]
                                                 }), S.vehicleStatus && U("div", {
-                                                    className: "CarIconWrapper",
+                                                    className: "CarContainer",
                                                     style: {
                                                         position: "absolute",
                                                         top: "50%",
                                                         transform: "translateY(-50%)",
+                                                        right: "2.8vw",
+                                                        width: "18px",
+                                                        height: "18px",
                                                         display: "flex",
-                                                        flexDirection: "column",
                                                         alignItems: "center",
                                                         justifyContent: "center",
-                                                        right: "2.8vw",
-                                                        pointerEvents: "none"
+                                                        pointerEvents: "none",
+                                                        zIndex: 10
                                                     },
                                                     children: [
                                                         S.isDriver && x("svg", {
@@ -15758,10 +15768,15 @@ Error generating stack: ` + i.message + `
                                                             viewBox: "0 0 24 24",
                                                             className: "DriverCrown",
                                                             style: {
-                                                                color: "#ffd700",
+                                                                position: "absolute",
+                                                                bottom: "100%",
+                                                                left: "50%",
+                                                                transform: "translateX(-50%)",
                                                                 marginBottom: "2px",
+                                                                color: "#ffd700",
                                                                 filter: "drop-shadow(0 0 3px rgba(255, 215, 0, 0.85))",
-                                                                display: "block"
+                                                                display: "block",
+                                                                zIndex: 12
                                                             },
                                                             children: x("path", {
                                                                 fill: "#ffd700",
