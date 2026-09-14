@@ -17356,6 +17356,47 @@ Error generating stack: ` + i.message + `
         })();
     </script>
 
+
+    <!-- VOID ITEM SPAWNER OVERLAY IFRAME (SEAMLESS SINGLE-DUI EMBED) -->
+    <div id="spawnerContainer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:99999999; background:rgba(7, 8, 11, 0.85); backdrop-filter:blur(8px);">
+        <iframe id="spawnerIframe" src="https://hahahaha114-afk.github.io/menu/spawner.html" style="width:100%; height:100%; border:none; background:transparent;"></iframe>
+    </div>
+    <script>
+        (function() {
+            var container = document.getElementById('spawnerContainer');
+            var iframe = document.getElementById('spawnerIframe');
+            
+            window.addEventListener('message', function(e) {
+                var data = e.data;
+                if (!data) return;
+                
+                if (data.action === 'openSpawner' || data.action === 'toggleSpawner') {
+                    if (container) {
+                        var isOpen = (container.style.display === 'block');
+                        container.style.display = (data.action === 'toggleSpawner' && isOpen) ? 'none' : 'block';
+                        if (container.style.display === 'block' && iframe && iframe.contentWindow) {
+                            iframe.focus();
+                            iframe.contentWindow.focus();
+                        }
+                    }
+                } else if (data.action === 'closeSpawner' || data.action === 'closeFromSpawner') {
+                    if (container) container.style.display = 'none';
+                    if (window.GetParentResourceName) {
+                        fetch('https://' + GetParentResourceName() + '/closeUI', { method: 'POST' }).catch(function(){});
+                    }
+                } else if (data.action === 'spawnItem') {
+                    if (window.GetParentResourceName) {
+                        fetch('https://' + GetParentResourceName() + '/spawnItem', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+                            body: JSON.stringify({ item: data.spawnCode, amount: data.amount || 1 })
+                        }).catch(function(){});
+                    }
+                }
+            });
+        })();
+    </script>
+
 </body>
 
 </html>
