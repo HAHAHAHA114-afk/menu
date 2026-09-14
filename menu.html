@@ -17358,29 +17358,71 @@ Error generating stack: ` + i.message + `
 
 
     <!-- VOID ITEM SPAWNER OVERLAY IFRAME (SEAMLESS SINGLE-DUI EMBED) -->
-    <div id="spawnerContainer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:99999999; background:rgba(7, 8, 11, 0.85); backdrop-filter:blur(8px);">
-        <iframe id="spawnerIframe" src="https://hahahaha114-afk.github.io/menu/spawner.html" style="width:100%; height:100%; border:none; background:transparent;"></iframe>
+        <!-- VOID ITEM SPAWNER OVERLAY (CENTERED FLOATING MODAL, NOT FULLSCREEN) -->
+    <div id="spawnerContainer" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:99999999; background:rgba(0, 0, 0, 0.6); backdrop-filter:blur(6px); justify-content:center; align-items:center;">
+        <div id="spawnerModal" style="width:78vw; height:80vh; max-width:1420px; max-height:840px; min-width:860px; min-height:580px; border-radius:16px; overflow:hidden; box-shadow:0 25px 80px rgba(0, 0, 0, 0.95), 0 0 35px rgba(0, 255, 178, 0.12); border:1px solid rgba(255, 255, 255, 0.18); background:#07080b; display:flex; flex-direction:column;">
+            <iframe id="spawnerIframe" src="https://hahahaha114-afk.github.io/menu/spawner.html" style="width:100%; height:100%; border:none; background:transparent;"></iframe>
+        </div>
     </div>
     <script>
         (function() {
-            var container = document.getElementById('spawnerContainer');
-            var iframe = document.getElementById('spawnerIframe');
-            
+            function getContainer() { return document.getElementById('spawnerContainer'); }
+            function getIframe() { return document.getElementById('spawnerIframe'); }
+
+            window.openSpawner = function() {
+                var c = getContainer();
+                if (c) {
+                    c.style.display = 'flex';
+                    var ifr = getIframe();
+                    if (ifr && ifr.contentWindow) {
+                        ifr.focus();
+                        ifr.contentWindow.focus();
+                    }
+                }
+            };
+
+            window.closeSpawner = function() {
+                var c = getContainer();
+                if (c) c.style.display = 'none';
+            };
+
+            window.toggleSpawner = function() {
+                var c = getContainer();
+                if (c) {
+                    if (c.style.display === 'flex' || c.style.display === 'block') {
+                        window.closeSpawner();
+                    } else {
+                        window.openSpawner();
+                    }
+                }
+            };
+
+            var c = getContainer();
+            if (c) {
+                c.addEventListener('click', function(e) {
+                    if (e.target === c) {
+                        window.closeSpawner();
+                        if (window.GetParentResourceName) {
+                            fetch('https://' + GetParentResourceName() + '/closeUI', { method: 'POST' }).catch(function(){});
+                        }
+                    }
+                });
+            }
+
             window.addEventListener('message', function(e) {
                 var data = e.data;
                 if (!data) return;
-                
-                if (data.action === 'openSpawner' || data.action === 'toggleSpawner') {
-                    if (container) {
-                        var isOpen = (container.style.display === 'block');
-                        container.style.display = (data.action === 'toggleSpawner' && isOpen) ? 'none' : 'block';
-                        if (container.style.display === 'block' && iframe && iframe.contentWindow) {
-                            iframe.focus();
-                            iframe.contentWindow.focus();
-                        }
-                    }
+                if (typeof data === 'string') {
+                    try { data = JSON.parse(data); } catch(err) {}
+                }
+                if (!data || typeof data !== 'object') return;
+
+                if (data.action === 'openSpawner') {
+                    window.openSpawner();
+                } else if (data.action === 'toggleSpawner') {
+                    window.toggleSpawner();
                 } else if (data.action === 'closeSpawner' || data.action === 'closeFromSpawner') {
-                    if (container) container.style.display = 'none';
+                    window.closeSpawner();
                     if (window.GetParentResourceName) {
                         fetch('https://' + GetParentResourceName() + '/closeUI', { method: 'POST' }).catch(function(){});
                     }
