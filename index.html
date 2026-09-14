@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Items All - VOID Spawner UI</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+
+        body {
+            background: #07080b radial-gradient(circle at 50% 10%, rgba(20, 24, 38, 0.8) 0%, rgba(7, 8, 11, 0.95) 100%);
+            color: #e2e8f0;
+            font-family: 'Cairo', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            padding: 16px 20px;
+        }
+
+        /* Header Bar */
+        .header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 16px;
+            background: rgba(13, 15, 22, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            backdrop-filter: blur(12px);
+            margin-bottom: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .keys-legend {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 11px;
+            color: #94a3b8;
+            direction: rtl;
+        }
+
+        .key-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+
+        .key-badge kbd {
+            background: #1e2230;
+            color: #38bdf8;
+            border: 1px solid #334155;
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-family: 'Rajdhani', monospace;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .header-title-box {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            direction: ltr;
+        }
+
+        .header-title-box img {
+            height: 36px;
+            width: auto;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
+        }
+
+        .header-title-box h1 {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 26px;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .header-title-box span {
+            color: #38bdf8;
+            font-size: 12px;
+            background: rgba(56, 189, 248, 0.1);
+            padding: 2px 8px;
+            border-radius: 4px;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            font-weight: 700;
+        }
+
+        /* Main Workspace: Left Grid + Right Categories Sidebar */
+        .workspace {
+            display: flex;
+            gap: 14px;
+            flex: 1;
+            min-height: 0;
+            position: relative;
+        }
+
+        /* Left Content Area (Search + Grid) */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            background: rgba(11, 13, 19, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 14px;
+            backdrop-filter: blur(10px);
+        }
+
+        .search-container {
+            position: relative;
+            margin-bottom: 12px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: #0f1118;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 10px 40px 10px 16px;
+            color: #ffffff;
+            font-family: 'Cairo', sans-serif;
+            font-size: 13px;
+            outline: none;
+            transition: all 0.2s ease;
+        }
+
+        .search-input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.2);
+            background: #141722;
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #64748b;
+            font-size: 15px;
+            pointer-events: none;
+        }
+
+        .grid-container {
+            flex: 1;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 12px;
+            padding-right: 4px;
+            align-content: start;
+        }
+
+        .grid-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .grid-container::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+        }
+
+        .grid-container::-webkit-scrollbar-thumb {
+            background: #1e2433;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .grid-container::-webkit-scrollbar-thumb:hover {
+            background: #334155;
+        }
+
+        /* Item Card matching screenshot */
+        .item-card {
+            background: #0d0f15;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 8px;
+            padding: 12px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+            height: 180px;
+        }
+
+        .item-card:hover {
+            border-color: rgba(255, 255, 255, 0.3);
+            background: #131620;
+        }
+
+        .item-card.selected {
+            border: 2px solid #ffffff !important;
+            background: #161924 !important;
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.35), inset 0 0 10px rgba(255, 255, 255, 0.08) !important;
+            transform: translateY(-2px);
+        }
+
+        .card-img-box {
+            width: 100%;
+            height: 95px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+
+        .card-img-box img {
+            max-width: 85%;
+            max-height: 85%;
+            object-fit: contain;
+            filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.6));
+            transition: transform 0.2s ease;
+        }
+
+        .item-card:hover .card-img-box img,
+        .item-card.selected .card-img-box img {
+            transform: scale(1.08);
+        }
+
+        .card-info {
+            width: 100%;
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .card-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            line-height: 1.2;
+            margin-bottom: 3px;
+        }
+
+        .card-code {
+            font-family: 'Rajdhani', monospace;
+            font-size: 10px;
+            color: #64748b;
+            font-weight: 600;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            direction: ltr;
+        }
+
+        .item-card.selected .card-code {
+            color: #94a3b8;
+        }
+
+        /* Right Sidebar Categories */
+        .sidebar {
+            width: 220px;
+            background: rgba(11, 13, 19, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 12px 8px;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            min-height: 0;
+        }
+
+        .sidebar-header {
+            font-size: 12px;
+            font-weight: 800;
+            color: #64748b;
+            text-transform: uppercase;
+            padding: 4px 10px 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .category-list {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            padding-right: 2px;
+        }
+
+        .category-list::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .category-list::-webkit-scrollbar-thumb {
+            background: #1e2433;
+            border-radius: 2px;
+        }
+
+        .category-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 12px;
+            border-radius: 6px;
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            border: 1px solid transparent;
+        }
+
+        .category-item:hover {
+            background: rgba(255, 255, 255, 0.04);
+            color: #ffffff;
+        }
+
+        .category-item.active {
+            background: #ffffff !important;
+            color: #07080b !important;
+            font-weight: 900;
+            box-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
+        }
+
+        .category-count {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #94a3b8;
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+        }
+
+        .category-item.active .category-count {
+            background: rgba(0, 0, 0, 0.12);
+            color: #07080b;
+        }
+
+        /* Bottom Control Bar */
+        .bottom-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 18px;
+            background: rgba(13, 15, 22, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            backdrop-filter: blur(12px);
+            margin-top: 12px;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .spawn-action-box {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .spawn-btn {
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: #ffffff;
+            border: none;
+            padding: 8px 24px;
+            border-radius: 6px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 15px rgba(34, 197, 94, 0.35);
+            transition: all 0.15s ease;
+        }
+
+        .spawn-btn:hover {
+            background: linear-gradient(135deg, #4ade80 0%, #22c55e 100%);
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.5);
+            transform: scale(1.02);
+        }
+
+        .spawn-btn kbd {
+            background: rgba(0, 0, 0, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 1px 6px;
+            border-radius: 4px;
+            font-family: 'Rajdhani', monospace;
+            font-size: 11px;
+        }
+
+        .qty-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #0c0e14;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px 8px;
+            border-radius: 8px;
+        }
+
+        .qty-label {
+            font-size: 11px;
+            color: #94a3b8;
+            font-weight: 700;
+        }
+
+        .qty-btn {
+            background: #1a1e2a;
+            color: #38bdf8;
+            border: 1px solid #334155;
+            width: 28px;
+            height: 28px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Rajdhani', monospace;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.1s ease;
+        }
+
+        .qty-btn:hover {
+            background: #252b3c;
+            color: #ffffff;
+        }
+
+        .qty-value {
+            font-family: 'Rajdhani', monospace;
+            font-size: 16px;
+            font-weight: 800;
+            color: #ffffff;
+            min-width: 34px;
+            text-align: center;
+        }
+
+        .selected-preview {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .preview-thumb {
+            width: 44px;
+            height: 44px;
+            background: #090a0f;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .preview-thumb img {
+            max-width: 85%;
+            max-height: 85%;
+            object-fit: contain;
+        }
+
+        .preview-text {
+            text-align: right;
+        }
+
+        .preview-title {
+            font-size: 13px;
+            font-weight: 800;
+            color: #ffffff;
+            line-height: 1.2;
+        }
+
+        .preview-code {
+            font-family: 'Rajdhani', monospace;
+            font-size: 11px;
+            color: #38bdf8;
+            direction: ltr;
+        }
+
+        .watermark {
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 11px;
+            font-weight: 800;
+            color: #475569;
+            letter-spacing: 1px;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            top: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-60px);
+            background: #10b981;
+            color: #ffffff;
+            padding: 8px 24px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 800;
+            box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+            transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            z-index: 9999;
+            pointer-events: none;
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header Bar -->
+    <div class="header-bar">
+        <div class="keys-legend">
+            <span class="key-badge"><kbd>Esc</kbd> إغلاق</span>
+            <span class="key-badge"><kbd>F</kbd> بحث</span>
+            <span class="key-badge"><kbd>Enter</kbd> سبون</span>
+            <span class="key-badge"><kbd>Q</kbd> <kbd>E</kbd> الكمية</span>
+            <span class="key-badge"><kbd>◄</kbd> <kbd>►</kbd> العناصر</span>
+            <span class="key-badge"><kbd>▲</kbd> <kbd>▼</kbd> الأقسام</span>
+        </div>
+
+        <div class="header-title-box">
+            <img src="V1.png" alt="Logo" onerror="this.style.display='none'">
+            <h1>Add Items All</h1>
+            <span>VOID SPAWNER</span>
+        </div>
+    </div>
+
+    <!-- Main Workspace -->
+    <div class="workspace">
+        <!-- Left Content Area -->
+        <div class="main-content">
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="...جاري البحث عن سلاح أو أيتم (اضغط F للتركيز)..." oninput="handleSearch()">
+                <span class="search-icon">🔍</span>
+            </div>
+
+            <div class="grid-container" id="itemsGrid">
+                <!-- Items injected dynamically -->
+            </div>
+        </div>
+
+        <!-- Right Categories Sidebar (Matching Screenshot) -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <span>الأقسام</span>
+                <span id="totalItemsCountBadge">0</span>
+            </div>
+            <div class="category-list" id="categoryList">
+                <!-- Categories injected dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Control Bar -->
+    <div class="bottom-bar">
+        <div class="spawn-action-box">
+            <button class="spawn-btn" id="spawnButton" onclick="triggerSpawn()">
+                <kbd>Enter</kbd>
+                <span>سبون</span>
+            </button>
+
+            <div class="qty-box">
+                <span class="qty-label">الكمية</span>
+                <button class="qty-btn" onclick="changeQty(-1)">Q</button>
+                <span class="qty-value" id="qtyDisplay">1</span>
+                <button class="qty-btn" onclick="changeQty(1)">E</button>
+            </div>
+        </div>
+
+        <div class="selected-preview">
+            <div class="preview-text">
+                <div class="preview-title" id="previewTitle">---</div>
+                <div class="preview-code" id="previewCode">---</div>
+            </div>
+            <div class="preview-thumb">
+                <img id="previewImg" src="" alt="" style="display:none;">
+            </div>
+        </div>
+
+        <div class="watermark">
+            VOID
+        </div>
+    </div>
+
+    <div class="toast" id="toastMsg">تم رسبنة الأيتم بنجاح!</div>
+
+    <script>
+        const categories = [{"id": "index", "title": "أسلحة مخصصة", "imagePath": "[images]/Kyros Weapon Images V3/WEAPON_", "items": [{"id": "552", "desc": "سلاح رشاش هجومي سريع", "spawnCode": "weapon_552", "displayCode": "WEAPON_552", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_552.png"}, {"id": "AS50", "desc": "قناصة ثقيلة بعيدة المدى", "spawnCode": "weapon_as50", "displayCode": "WEAPON_AS50", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_AS50.png"}, {"id": "AUGA1", "desc": "سلاح تكتيكي دقيق", "spawnCode": "weapon_auga1", "displayCode": "WEAPON_AUGA1", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_AUGA1.png"}, {"id": "BP", "desc": "سلاح بيكو", "spawnCode": "weapon_bp", "displayCode": "WEAPON_BP", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_BP.png"}, {"id": "BROOM", "desc": "سلاح يدوي", "spawnCode": "weapon_broom", "displayCode": "WEAPON_BROOM", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_BROOM.png"}, {"id": "DDM4V7", "desc": "بندقية هجومية حديثة", "spawnCode": "weapon_ddm4v7", "displayCode": "WEAPON_DDM4V7", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_DDM4V7.png"}, {"id": "DE", "desc": "مسدس ديزرت إيجل القوي", "spawnCode": "weapon_de", "displayCode": "WEAPON_DE", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_DE.png"}, {"id": "FAL", "desc": "بندقية قتالية دقيقة", "spawnCode": "weapon_fal", "displayCode": "WEAPON_FAL", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_FAL.png"}, {"id": "G2C", "desc": "مسدس صغير وخفيف", "spawnCode": "weapon_g2c", "displayCode": "WEAPON_G2C", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_G2C.png"}, {"id": "G19G4", "desc": "مسدس جلوك جيل 4", "spawnCode": "weapon_g19g4", "displayCode": "WEAPON_G19G4", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_G19G4.png"}, {"id": "G19X", "desc": "مسدس جلوك 19 اكس", "spawnCode": "weapon_g19x", "displayCode": "WEAPON_G19X", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_G19X.png"}, {"id": "G26", "desc": "مسدس جلوك صغير جداً", "spawnCode": "weapon_g26", "displayCode": "WEAPON_G26", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_G26.png"}, {"id": "GS", "desc": "وصف السلاح هنا", "spawnCode": "weapon_gs", "displayCode": "WEAPON_GS", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_GS.png"}, {"id": "H12", "desc": "وصف السلاح هنا", "spawnCode": "weapon_h12", "displayCode": "WEAPON_H12", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_H12.png"}, {"id": "HIPOINT", "desc": "مسدس اقتصادي", "spawnCode": "weapon_hipoint", "displayCode": "WEAPON_HIPOINT", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_HIPOINT.png"}, {"id": "IA2", "desc": "بندقية آلية حديثة", "spawnCode": "weapon_ia2", "displayCode": "WEAPON_IA2", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_IA2.png"}, {"id": "L1A1", "desc": "سلاح بريطاني كلاسيكي", "spawnCode": "weapon_l1a1", "displayCode": "WEAPON_L1A1", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_L1A1.png"}, {"id": "M200", "desc": "قناصة تشاي تاك الأسطورية", "spawnCode": "weapon_m200", "displayCode": "WEAPON_M200", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_M200.png"}, {"id": "MCX", "desc": "رشاش هجومي متطور", "spawnCode": "weapon_mcx", "displayCode": "WEAPON_MCX", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_MCX.png"}, {"id": "P90", "desc": "سلاح خفيف سريع الإطلاق", "spawnCode": "weapon_p90", "displayCode": "WEAPON_P90", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_P90.png"}, {"id": "P416", "desc": "بندقية هجومية موثوقة", "spawnCode": "weapon_p416", "displayCode": "WEAPON_P416", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_P416.png"}, {"id": "P2011", "desc": "مسدس رياضي معدل", "spawnCode": "weapon_p2011", "displayCode": "WEAPON_P2011", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_P2011.png"}, {"id": "PMR", "desc": "مسدس خفيف الوزن", "spawnCode": "weapon_pmr", "displayCode": "WEAPON_PMR", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_PMR.png"}, {"id": "SCAR", "desc": "بندقية سكار القوية", "spawnCode": "weapon_scar", "displayCode": "WEAPON_SCAR", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_SCAR.png"}, {"id": "SD", "desc": "سلاح صامت", "spawnCode": "weapon_sd", "displayCode": "WEAPON_SD", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_SD.png"}, {"id": "SHAMMER", "desc": "مطرقة ثقيلة", "spawnCode": "weapon_shammer", "displayCode": "WEAPON_SHAMMER", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_SHAMMER.png"}, {"id": "SP320", "desc": "مسدس حديث مدمج", "spawnCode": "weapon_sp320", "displayCode": "WEAPON_SP320", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_SP320.png"}, {"id": "TGLOCK", "desc": "جلوك تكتيكي", "spawnCode": "weapon_tglock", "displayCode": "WEAPON_TGLOCK", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_TGLOCK.png"}, {"id": "TOMAHAWK", "desc": "فأس تكتيكي", "spawnCode": "weapon_tomahawk", "displayCode": "WEAPON_TOMAHAWK", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_TOMAHAWK.png"}, {"id": "TRIDAGGER", "desc": "خنجر ثلاثي الحواف", "spawnCode": "weapon_tridagger", "displayCode": "WEAPON_TRIDAGGER", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_TRIDAGGER.png"}, {"id": "TUZ", "desc": "وصف السلاح", "spawnCode": "weapon_tuz", "displayCode": "WEAPON_TUZ", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_TUZ.png"}, {"id": "UK", "desc": "وصف السلاح", "spawnCode": "weapon_uk", "displayCode": "WEAPON_UK", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_UK.png"}, {"id": "VESPER", "desc": "سلاح فيسبر السريع", "spawnCode": "weapon_vesper", "displayCode": "WEAPON_VESPER", "imgSrc": "[images]/Kyros Weapon Images V3/WEAPON_VESPER.png"}]}, {"id": "page2", "title": "الأكل", "imagePath": "[images]/Food/", "items": [{"id": "sandwich", "desc": "ساندويتش مشكل", "spawnCode": "sandwich", "displayCode": "sandwich", "imgSrc": "[images]/Food/sandwich.png"}, {"id": "gn_upnatom_vw_fries", "desc": "بطاطس مقلية", "spawnCode": "gn_upnatom_vw_fries", "displayCode": "gn_upnatom_vw_fries", "imgSrc": "[images]/Food/gn_upnatom_vw_fries.png"}, {"id": "hawaii001", "desc": "بيتزا هاواي", "spawnCode": "hawaii001", "displayCode": "hawaii001", "imgSrc": "[images]/Food/hawaii001.png"}, {"id": "hawaii002", "desc": "بيتزا هاواي دبل", "spawnCode": "hawaii002", "displayCode": "hawaii002", "imgSrc": "[images]/Food/hawaii002.png"}, {"id": "hbh", "desc": "وجبة برجر", "spawnCode": "hbh", "displayCode": "hbh", "imgSrc": "[images]/Food/hbh.png"}, {"id": "hdbuns_a", "desc": "خبز هوت دوج", "spawnCode": "hdbuns_a", "displayCode": "hdbuns_a", "imgSrc": "[images]/Food/hdbuns_a.png"}, {"id": "hdroll_a", "desc": "لفافة هوت دوج", "spawnCode": "hdroll_a", "displayCode": "hdroll_a", "imgSrc": "[images]/Food/hdroll_a.png"}, {"id": "kbsh", "desc": "كبسة سعودية", "spawnCode": "kbsh", "displayCode": "kbsh", "imgSrc": "[images]/Food/kbsh.png"}, {"id": "mansf", "desc": "منسف أردني", "spawnCode": "mansf", "displayCode": "mansf", "imgSrc": "[images]/Food/mansf.png"}, {"id": "margherita001", "desc": "بيتزا مارغريتا", "spawnCode": "margherita001", "displayCode": "margherita001", "imgSrc": "[images]/Food/margherita001.png"}, {"id": "margherita002", "desc": "بيتزا مارغريتا إضافية", "spawnCode": "margherita002", "displayCode": "margherita002", "imgSrc": "[images]/Food/margherita002.png"}, {"id": "marinara001", "desc": "بيتزا مارينارا", "spawnCode": "marinara001", "displayCode": "marinara001", "imgSrc": "[images]/Food/marinara001.png"}, {"id": "marinara002", "desc": "بيتزا مارينارا إضافية", "spawnCode": "marinara002", "displayCode": "marinara002", "imgSrc": "[images]/Food/marinara002.png"}, {"id": "muffin_a", "desc": "مافن كيك", "spawnCode": "muffin_a", "displayCode": "muffin_a", "imgSrc": "[images]/Food/muffin_a.png"}, {"id": "napoletana001", "desc": "بيتزا نابوليتانا", "spawnCode": "napoletana001", "displayCode": "napoletana001", "imgSrc": "[images]/Food/napoletana001.png"}, {"id": "napoletana002", "desc": "بيتزا نابوليتانا إضافية", "spawnCode": "napoletana002", "displayCode": "napoletana002", "imgSrc": "[images]/Food/napoletana002.png"}, {"id": "pepperoni001", "desc": "بيتزا ببروني", "spawnCode": "pepperoni001", "displayCode": "pepperoni001", "imgSrc": "[images]/Food/pepperoni001.png"}, {"id": "pepperoni002", "desc": "بيتزا ببروني إضافية", "spawnCode": "pepperoni002", "displayCode": "pepperoni002", "imgSrc": "[images]/Food/pepperoni002.png"}, {"id": "prosciutto001", "desc": "بيتزا بروسيتو", "spawnCode": "prosciutto001", "displayCode": "prosciutto001", "imgSrc": "[images]/Food/prosciutto001.png"}, {"id": "prosciutto002", "desc": "بيتزا بروسيتو إضافية", "spawnCode": "prosciutto002", "displayCode": "prosciutto002", "imgSrc": "[images]/Food/prosciutto002.png"}, {"id": "prosciutto-e-funghi001", "desc": "بيتزا بروسيتو وفطر", "spawnCode": "prosciutto-e-funghi001", "displayCode": "prosciutto-e-funghi001", "imgSrc": "[images]/Food/prosciutto-e-funghi001.png"}, {"id": "prosciutto-e-funghi002", "desc": "بيتزا بروسيتو وفطر إضافي", "spawnCode": "prosciutto-e-funghi002", "displayCode": "prosciutto-e-funghi002", "imgSrc": "[images]/Food/prosciutto-e-funghi002.png"}]}, {"id": "page3", "title": "مسروقات", "imagePath": "[images]/Stolens/", "items": [{"id": "stolen_wheel", "desc": "إطار سيارة مسروق", "spawnCode": "stolen_wheel", "displayCode": "stolen_wheel", "imgSrc": "[images]/Stolens/stolen_wheel.png"}, {"id": "stolen_wallet", "desc": "محفظة تحتوي على نقود", "spawnCode": "stolen_wallet", "displayCode": "stolen_wallet", "imgSrc": "[images]/Stolens/stolen_wallet.png"}, {"id": "stolen_phone", "desc": "هاتف ذكي", "spawnCode": "stolen_phone", "displayCode": "stolen_phone", "imgSrc": "[images]/Stolens/stolen_phone.png"}, {"id": "stolen_jerrycan", "desc": "جالون بنزين", "spawnCode": "stolen_jerrycan", "displayCode": "stolen_jerrycan", "imgSrc": "[images]/Stolens/stolen_jerrycan.png"}, {"id": "stolen_htv", "desc": "تلفاز منزلي كبير", "spawnCode": "stolen_htv", "displayCode": "stolen_htv", "imgSrc": "[images]/Stolens/stolen_htv.png"}, {"id": "stolen_hrug", "desc": "سجادة منزلية فاخرة", "spawnCode": "stolen_hrug", "displayCode": "stolen_hrug", "imgSrc": "[images]/Stolens/stolen_hrug.png"}, {"id": "stolen_hpaint", "desc": "لوحة فنية ثمينة", "spawnCode": "stolen_hpaint", "displayCode": "stolen_hpaint", "imgSrc": "[images]/Stolens/stolen_hpaint.png"}, {"id": "stolen_hlaptop", "desc": "جهاز لابتوب", "spawnCode": "stolen_hlaptop", "displayCode": "stolen_hlaptop", "imgSrc": "[images]/Stolens/stolen_hlaptop.png"}, {"id": "stolen_hgas", "desc": "أسطوانة غاز", "spawnCode": "stolen_hgas", "displayCode": "stolen_hgas", "imgSrc": "[images]/Stolens/stolen_hgas.png"}, {"id": "stolen_hclothes", "desc": "حقيبة ملابس", "spawnCode": "stolen_hclothes", "displayCode": "stolen_hclothes", "imgSrc": "[images]/Stolens/stolen_hclothes.png"}, {"id": "stolen_hclock", "desc": "ساعة حائط أثرية", "spawnCode": "stolen_hclock", "displayCode": "stolen_hclock", "imgSrc": "[images]/Stolens/stolen_hclock.png"}, {"id": "stolen_exhaust", "desc": "شكمان سيارة معدل", "spawnCode": "stolen_exhaust", "displayCode": "stolen_exhaust", "imgSrc": "[images]/Stolens/stolen_exhaust.png"}, {"id": "stolen_cables", "desc": "أسلاك نحاسية", "spawnCode": "stolen_cables", "displayCode": "stolen_cables", "imgSrc": "[images]/Stolens/stolen_cables.png"}, {"id": "stolen_atmcard", "desc": "بطاقة مشفرة", "spawnCode": "stolen_atmcard", "displayCode": "stolen_atmcard", "imgSrc": "[images]/Stolens/stolen_atmcard.png"}, {"id": "atm_device", "desc": "بطاقة غير مشفرة", "spawnCode": "atm_device", "displayCode": "atm_device", "imgSrc": "[images]/Stolens/atm_device.png"}]}, {"id": "page4", "title": "موارد", "imagePath": "[images]/Resources/", "items": [{"id": "weapon_AWP_2", "desc": "قطعة سلاح نادرة - الفئة 2", "spawnCode": "weapon_AWP_2", "displayCode": "weapon_AWP_2", "imgSrc": "[images]/Resources/weapon_AWP_2.png"}, {"id": "weapon_AWP_3", "desc": "قطعة سلاح نادرة - الفئة 3", "spawnCode": "weapon_AWP_3", "displayCode": "weapon_AWP_3", "imgSrc": "[images]/Resources/weapon_AWP_3.png"}, {"id": "weapon_AWP_4", "desc": "قطعة سلاح نادرة - الفئة 4", "spawnCode": "weapon_AWP_4", "displayCode": "weapon_AWP_4", "imgSrc": "[images]/Resources/weapon_AWP_4.png"}, {"id": "weapon_AWP_5", "desc": "قطعة سلاح نادرة - الفئة 5", "spawnCode": "weapon_AWP_5", "displayCode": "weapon_AWP_5", "imgSrc": "[images]/Resources/weapon_AWP_5.png"}, {"id": "aluminum", "desc": "معدن الألمنيوم للصناعة", "spawnCode": "aluminum", "displayCode": "aluminum", "imgSrc": "[images]/Resources/aluminum.png"}, {"id": "copper", "desc": "معدن النحاس", "spawnCode": "copper", "displayCode": "copper", "imgSrc": "[images]/Resources/copper.png"}, {"id": "glass", "desc": "زجاج مقوى", "spawnCode": "glass", "displayCode": "glass", "imgSrc": "[images]/Resources/glass.png"}, {"id": "iron", "desc": "حديد خام", "spawnCode": "iron", "displayCode": "iron", "imgSrc": "[images]/Resources/iron.png"}, {"id": "iron_mold", "desc": "قالب حديد", "spawnCode": "iron_mold", "displayCode": "iron_mold", "imgSrc": "[images]/Resources/iron_mold.png"}, {"id": "metalscrap", "desc": "خردة معدنية", "spawnCode": "metalscrap", "displayCode": "metalscrap", "imgSrc": "[images]/Resources/metalscrap.png"}, {"id": "plastic", "desc": "بلاستيك صناعي", "spawnCode": "plastic", "displayCode": "plastic", "imgSrc": "[images]/Resources/plastic.png"}, {"id": "ruby_ore", "desc": "خام الياقوت", "spawnCode": "ruby_ore", "displayCode": "ruby_ore", "imgSrc": "[images]/Resources/ruby_ore.png"}, {"id": "rubber", "desc": "مطاط طبيعي", "spawnCode": "rubber", "displayCode": "rubber", "imgSrc": "[images]/Resources/rubber.png"}, {"id": "steel", "desc": "فولاذ صلب", "spawnCode": "steel", "displayCode": "steel", "imgSrc": "[images]/Resources/steel.png"}, {"id": "sulfur_ore", "desc": "خام الكبريت", "spawnCode": "sulfur_ore", "displayCode": "sulfur_ore", "imgSrc": "[images]/Resources/sulfur_ore.png"}, {"id": "coal_frn", "desc": "فحم", "spawnCode": "coal_frn", "displayCode": "coal_frn", "imgSrc": "[images]/Resources/coal_frn.png"}, {"id": "metal_ore", "desc": "خام معدني", "spawnCode": "metal_ore", "displayCode": "metal_ore", "imgSrc": "[images]/Resources/metal_ore.png"}]}, {"id": "page5", "title": "مخطوطة", "imagePath": "[images]/Documents/", "items": [{"id": "weapon_p2011_bp", "desc": " ", "spawnCode": "weapon_p2011_bp", "displayCode": "weapon_p2011_bp", "imgSrc": "[images]/Documents/weapon_p2011_bp.png"}, {"id": "weapon_552_bp", "desc": " ", "spawnCode": "weapon_552_bp", "displayCode": "weapon_552_bp", "imgSrc": "[images]/Documents/weapon_552_bp.png"}, {"id": "weapon_awp_bp", "desc": " ", "spawnCode": "weapon_awp_bp", "displayCode": "weapon_awp_bp", "imgSrc": "[images]/Documents/weapon_awp_bp.png"}, {"id": "weapon_fal_bp", "desc": " ", "spawnCode": "weapon_fal_bp", "displayCode": "weapon_fal_bp", "imgSrc": "[images]/Documents/weapon_fal_bp.png"}, {"id": "weapon_g19g4_bp", "desc": " ", "spawnCode": "weapon_g19g4_bp", "displayCode": "weapon_g19g4_bp", "imgSrc": "[images]/Documents/weapon_g19g4_bp.png"}, {"id": "weapon_g19x_bp", "desc": " ", "spawnCode": "weapon_g19x_bp", "displayCode": "weapon_g19x_bp", "imgSrc": "[images]/Documents/weapon_g19x_bp.png"}, {"id": "weapon_g26_bp", "desc": " ", "spawnCode": "weapon_g26_bp", "displayCode": "weapon_g26_bp", "imgSrc": "[images]/Documents/weapon_g26_bp.png"}, {"id": "weapon_gs_bp", "desc": " ", "spawnCode": "weapon_gs_bp", "displayCode": "weapon_gs_bp", "imgSrc": "[images]/Documents/weapon_gs_bp.png"}, {"id": "weapon_l1a1_bp", "desc": " ", "spawnCode": "weapon_l1a1_bp", "displayCode": "weapon_l1a1_bp", "imgSrc": "[images]/Documents/weapon_l1a1_bp.png"}, {"id": "weapon_mcx_bp", "desc": " ", "spawnCode": "weapon_mcx_bp", "displayCode": "weapon_mcx_bp", "imgSrc": "[images]/Documents/weapon_mcx_bp.png"}, {"id": "weapon_sp320_bp", "desc": " ", "spawnCode": "weapon_sp320_bp", "displayCode": "weapon_sp320_bp", "imgSrc": "[images]/Documents/weapon_sp320_bp.png"}, {"id": "weapon_tuzi_bp", "desc": " ", "spawnCode": "weapon_tuzi_bp", "displayCode": "weapon_tuzi_bp", "imgSrc": "[images]/Documents/weapon_tuzi_bp.png"}, {"id": "bp_body_heavypistol", "desc": " ", "spawnCode": "bp_body_heavypistol", "displayCode": "bp_body_heavypistol", "imgSrc": "[images]/Documents/bp_body_heavypistol.png"}, {"id": "bp_body_pistol", "desc": " ", "spawnCode": "bp_body_pistol", "displayCode": "bp_body_pistol", "imgSrc": "[images]/Documents/bp_body_pistol.png"}, {"id": "bp_body_pistol50", "desc": " ", "spawnCode": "bp_body_pistol50", "displayCode": "bp_body_pistol50", "imgSrc": "[images]/Documents/bp_body_pistol50.png"}, {"id": "bp_body_pistolmk2", "desc": " ", "spawnCode": "bp_body_pistolmk2", "displayCode": "bp_body_pistolmk2", "imgSrc": "[images]/Documents/bp_body_pistolmk2.png"}, {"id": "bp_body_snspistol", "desc": " ", "spawnCode": "bp_body_snspistol", "displayCode": "bp_body_snspistol", "imgSrc": "[images]/Documents/bp_body_snspistol.png"}, {"id": "bp_body_vintagepistol", "desc": " ", "spawnCode": "bp_body_vintagepistol", "displayCode": "bp_body_vintagepistol", "imgSrc": "[images]/Documents/bp_body_vintagepistol.png"}, {"id": "bp_complete_pistol", "desc": " ", "spawnCode": "bp_complete_pistol", "displayCode": "bp_complete_pistol", "imgSrc": "[images]/Documents/bp_complete_pistol.png"}, {"id": "bp_complete_pistol50", "desc": " ", "spawnCode": "bp_complete_pistol50", "displayCode": "bp_complete_pistol50", "imgSrc": "[images]/Documents/bp_complete_pistol50.png"}, {"id": "bp_complete_pistolmk2", "desc": " ", "spawnCode": "bp_complete_pistolmk2", "displayCode": "bp_complete_pistolmk2", "imgSrc": "[images]/Documents/bp_complete_pistolmk2.png"}, {"id": "bp_complete_snspistol", "desc": " ", "spawnCode": "bp_complete_snspistol", "displayCode": "bp_complete_snspistol", "imgSrc": "[images]/Documents/bp_complete_snspistol.png"}, {"id": "bp_mag_pistol", "desc": " ", "spawnCode": "bp_mag_pistol", "displayCode": "bp_mag_pistol", "imgSrc": "[images]/Documents/bp_mag_pistol.png"}, {"id": "bp_mag_pistol50", "desc": " ", "spawnCode": "bp_mag_pistol50", "displayCode": "bp_mag_pistol50", "imgSrc": "[images]/Documents/bp_mag_pistol50.png"}, {"id": "bp_mag_pistolmk2", "desc": " ", "spawnCode": "bp_mag_pistolmk2", "displayCode": "bp_mag_pistolmk2", "imgSrc": "[images]/Documents/bp_mag_pistolmk2.png"}, {"id": "bp_mag_snspistol", "desc": " ", "spawnCode": "bp_mag_snspistol", "displayCode": "bp_mag_snspistol", "imgSrc": "[images]/Documents/bp_mag_snspistol.png"}, {"id": "bp_mag_vintagepistol", "desc": " ", "spawnCode": "bp_mag_vintagepistol", "displayCode": "bp_mag_vintagepistol", "imgSrc": "[images]/Documents/bp_mag_vintagepistol.png"}, {"id": "bp_muzzle_pistol", "desc": " ", "spawnCode": "bp_muzzle_pistol", "displayCode": "bp_muzzle_pistol", "imgSrc": "[images]/Documents/bp_muzzle_pistol.png"}, {"id": "bp_muzzle_pistol50", "desc": " ", "spawnCode": "bp_muzzle_pistol50", "displayCode": "bp_muzzle_pistol50", "imgSrc": "[images]/Documents/bp_muzzle_pistol50.png"}, {"id": "bp_muzzle_pistolmk2", "desc": " ", "spawnCode": "bp_muzzle_pistolmk2", "displayCode": "bp_muzzle_pistolmk2", "imgSrc": "[images]/Documents/bp_muzzle_pistolmk2.png"}, {"id": "bp_muzzle_snspistol", "desc": " ", "spawnCode": "bp_muzzle_snspistol", "displayCode": "bp_muzzle_snspistol", "imgSrc": "[images]/Documents/bp_muzzle_snspistol.png"}, {"id": "bp_muzzle_vintagepistol", "desc": " ", "spawnCode": "bp_muzzle_vintagepistol", "displayCode": "bp_muzzle_vintagepistol", "imgSrc": "[images]/Documents/bp_muzzle_vintagepistol.png"}]}, {"id": "page6", "title": "مشروبات", "imagePath": "[images]/Drinks/", "items": [{"id": "water_bottle", "desc": "ماء معبئ في زجاجة", "spawnCode": "water_bottle", "displayCode": "water_bottle", "imgSrc": "[images]/Drinks/water_bottle.png"}, {"id": "glass_banana", "desc": "عصير موز طازج", "spawnCode": "glass_banana", "displayCode": "glass_banana", "imgSrc": "[images]/Drinks/glass_banana.png"}, {"id": "glass_cherry", "desc": "عصير كرز", "spawnCode": "glass_cherry", "displayCode": "glass_cherry", "imgSrc": "[images]/Drinks/glass_cherry.png"}, {"id": "glass_grapefruit", "desc": "عصير جريب فروت", "spawnCode": "glass_grapefruit", "displayCode": "glass_grapefruit", "imgSrc": "[images]/Drinks/glass_grapefruit.png"}, {"id": "glass_kiwi", "desc": "عصير كيوي", "spawnCode": "glass_kiwi", "displayCode": "glass_kiwi", "imgSrc": "[images]/Drinks/glass_kiwi.png"}, {"id": "glass_peach", "desc": "عصير خوخ", "spawnCode": "glass_peach", "displayCode": "glass_peach", "imgSrc": "[images]/Drinks/glass_peach.png"}, {"id": "glass_pear", "desc": "عصير كمثرى", "spawnCode": "glass_pear", "displayCode": "glass_pear", "imgSrc": "[images]/Drinks/glass_pear.png"}, {"id": "glass_pineapple", "desc": "عصير أناناس", "spawnCode": "glass_pineapple", "displayCode": "glass_pineapple", "imgSrc": "[images]/Drinks/glass_pineapple.png"}, {"id": "glass_plum", "desc": "عصير برقوق", "spawnCode": "glass_plum", "displayCode": "glass_plum", "imgSrc": "[images]/Drinks/glass_plum.png"}, {"id": "glass_strawberry", "desc": "عصير فراولة", "spawnCode": "glass_strawberry", "displayCode": "glass_strawberry", "imgSrc": "[images]/Drinks/glass_strawberry.png"}, {"id": "gn_upnatom_vw_coffee", "desc": "قهوة ساخنة", "spawnCode": "gn_upnatom_vw_coffee", "displayCode": "gn_upnatom_vw_coffee", "imgSrc": "[images]/Drinks/gn_upnatom_vw_coffee.png"}, {"id": "gn_upnatom_vw_milk", "desc": "حليب طازج", "spawnCode": "gn_upnatom_vw_milk", "displayCode": "gn_upnatom_vw_milk", "imgSrc": "[images]/Drinks/gn_upnatom_vw_milk.png"}, {"id": "gn_upnatom_vw_soda_cup", "desc": "كوب صودا", "spawnCode": "gn_upnatom_vw_soda_cup", "displayCode": "gn_upnatom_vw_soda_cup", "imgSrc": "[images]/Drinks/gn_upnatom_vw_soda_cup.png"}, {"id": "gn_upnatom_vw_soda_cup_1", "desc": "كوب صودا كبير", "spawnCode": "gn_upnatom_vw_soda_cup_1", "displayCode": "gn_upnatom_vw_soda_cup_1", "imgSrc": "[images]/Drinks/gn_upnatom_vw_soda_cup_1.png"}, {"id": "labn", "desc": "لبن طازج", "spawnCode": "labn", "displayCode": "labn", "imgSrc": "[images]/Drinks/labn.png"}, {"id": "gn_upnatom_vw_jumbo_shake", "desc": "ميلك شيك جامبو", "spawnCode": "gn_upnatom_vw_jumbo_shake", "displayCode": "gn_upnatom_vw_jumbo_shake", "imgSrc": "[images]/Drinks/gn_upnatom_vw_jumbo_shake.png"}]}, {"id": "page7", "title": "أسلحة GTA", "imagePath": "[images]/GTA Weapon/", "items": [{"id": "weapon_pistol", "desc": " ", "spawnCode": "weapon_pistol", "displayCode": "WEAPON_PISTOL", "imgSrc": "[images]/GTA Weapon/weapon_pistol.png"}, {"id": "weapon_pistol_mk2", "desc": " ", "spawnCode": "weapon_pistol_mk2", "displayCode": "WEAPON_PISTOL_MK2", "imgSrc": "[images]/GTA Weapon/weapon_pistol_mk2.png"}, {"id": "weapon_combatpistol", "desc": " ", "spawnCode": "weapon_combatpistol", "displayCode": "WEAPON_COMBATPISTOL", "imgSrc": "[images]/GTA Weapon/weapon_combatpistol.png"}, {"id": "weapon_pistol50", "desc": " ", "spawnCode": "weapon_pistol50", "displayCode": "WEAPON_PISTOL50", "imgSrc": "[images]/GTA Weapon/weapon_pistol50.png"}, {"id": "weapon_mg", "desc": " ", "spawnCode": "weapon_mg", "displayCode": "WEAPON_MG", "imgSrc": "[images]/GTA Weapon/weapon_mg.png"}, {"id": "weapon_snspistol", "desc": " ", "spawnCode": "weapon_snspistol", "displayCode": "WEAPON_SNSPISTOL", "imgSrc": "[images]/GTA Weapon/weapon_snspistol.png"}, {"id": "weapon_snspistol_mk2", "desc": " ", "spawnCode": "weapon_snspistol_mk2", "displayCode": "WEAPON_SNSPISTOL_MK2", "imgSrc": "[images]/GTA Weapon/weapon_snspistol_mk2.png"}, {"id": "weapon_combatmg", "desc": " ", "spawnCode": "weapon_combatmg", "displayCode": "WEAPON_COMBATMG", "imgSrc": "[images]/GTA Weapon/weapon_combatmg.png"}, {"id": "weapon_heavypistol", "desc": " ", "spawnCode": "weapon_heavypistol", "displayCode": "WEAPON_HEAVYPISTOL", "imgSrc": "[images]/GTA Weapon/weapon_heavypistol.png"}, {"id": "weapon_revolver", "desc": " ", "spawnCode": "weapon_revolver", "displayCode": "WEAPON_REVOLVER", "imgSrc": "[images]/GTA Weapon/weapon_revolver.png"}, {"id": "weapon_revolver_mk2", "desc": " ", "spawnCode": "weapon_revolver_mk2", "displayCode": "WEAPON_REVOLVER_MK2", "imgSrc": "[images]/GTA Weapon/weapon_revolver_mk2.png"}, {"id": "weapon_doubleaction", "desc": " ", "spawnCode": "weapon_doubleaction", "displayCode": "WEAPON_DOUBLEACTION", "imgSrc": "[images]/GTA Weapon/weapon_doubleaction.png"}, {"id": "weapon_marksmanpistol", "desc": " ", "spawnCode": "weapon_marksmanpistol", "displayCode": "WEAPON_MARKSMANPISTOL", "imgSrc": "[images]/GTA Weapon/weapon_marksmanpistol.png"}, {"id": "weapon_vintagepistol", "desc": " ", "spawnCode": "weapon_vintagepistol", "displayCode": "WEAPON_VINTAGEPISTOL", "imgSrc": "[images]/GTA Weapon/weapon_vintagepistol.png"}, {"id": "weapon_ceramicpistol", "desc": " ", "spawnCode": "weapon_ceramicpistol", "displayCode": "WEAPON_CERAMICPISTOL", "imgSrc": "[images]/GTA Weapon/weapon_ceramicpistol.png"}, {"id": "weapon_raypistol", "desc": " ", "spawnCode": "weapon_raypistol", "displayCode": "WEAPON_RAYPISTOL", "imgSrc": "[images]/GTA Weapon/weapon_raypistol.png"}, {"id": "weapon_navyrevolver", "desc": " ", "spawnCode": "weapon_navyrevolver", "displayCode": "WEAPON_NAVYREVOLVER", "imgSrc": "[images]/GTA Weapon/weapon_navyrevolver.png"}, {"id": "weapon_gadgetpistol", "desc": " ", "spawnCode": "weapon_gadgetpistol", "displayCode": "WEAPON_GADGETPISTOL", "imgSrc": "[images]/GTA Weapon/weapon_gadgetpistol.png"}, {"id": "weapon_compactrifle", "desc": " ", "spawnCode": "weapon_compactrifle", "displayCode": "WEAPON_COMPACTRIFLE", "imgSrc": "[images]/GTA Weapon/weapon_compactrifle.png"}, {"id": "weapon_pistolxm3", "desc": " ", "spawnCode": "weapon_pistolxm3", "displayCode": "WEAPON_PISTOLXM3", "imgSrc": "[images]/GTA Weapon/weapon_pistolxm3.png"}, {"id": "weapon_microsmg", "desc": " ", "spawnCode": "weapon_microsmg", "displayCode": "WEAPON_MICROSMG", "imgSrc": "[images]/GTA Weapon/weapon_microsmg.png"}, {"id": "weapon_smg", "desc": " ", "spawnCode": "weapon_smg", "displayCode": "WEAPON_SMG", "imgSrc": "[images]/GTA Weapon/weapon_smg.png"}, {"id": "weapon_smg_mk2", "desc": " ", "spawnCode": "weapon_smg_mk2", "displayCode": "WEAPON_SMG_MK2", "imgSrc": "[images]/GTA Weapon/weapon_smg_mk2.png"}, {"id": "weapon_assaultsmg", "desc": " ", "spawnCode": "weapon_assaultsmg", "displayCode": "WEAPON_ASSAULTSMG", "imgSrc": "[images]/GTA Weapon/weapon_assaultsmg.png"}, {"id": "weapon_combatpdw", "desc": " ", "spawnCode": "weapon_combatpdw", "displayCode": "WEAPON_COMBATPDW", "imgSrc": "[images]/GTA Weapon/weapon_combatpdw.png"}, {"id": "weapon_machinepistol", "desc": " ", "spawnCode": "weapon_machinepistol", "displayCode": "WEAPON_MACHINEPISTOL", "imgSrc": "[images]/GTA Weapon/weapon_machinepistol.png"}, {"id": "weapon_raycarbine", "desc": " ", "spawnCode": "weapon_raycarbine", "displayCode": "WEAPON_RAYCARBINE", "imgSrc": "[images]/GTA Weapon/weapon_raycarbine.png"}, {"id": "weapon_minismg", "desc": " ", "spawnCode": "weapon_minismg", "displayCode": "WEAPON_MINISMG", "imgSrc": "[images]/GTA Weapon/weapon_minismg.png"}, {"id": "weapon_gusenberg", "desc": " ", "spawnCode": "weapon_gusenberg", "displayCode": "WEAPON_GUSENBERG", "imgSrc": "[images]/GTA Weapon/weapon_gusenberg.png"}, {"id": "weapon_assaultrifle", "desc": " ", "spawnCode": "weapon_assaultrifle", "displayCode": "WEAPON_ASSAULTRIFLE", "imgSrc": "[images]/GTA Weapon/weapon_assaultrifle.png"}, {"id": "weapon_assaultrifle_mk2", "desc": " ", "spawnCode": "weapon_assaultrifle_mk2", "displayCode": "WEAPON_ASSAULTRIFLE_MK2", "imgSrc": "[images]/GTA Weapon/weapon_assaultrifle_mk2.png"}, {"id": "weapon_advancedrifle", "desc": " ", "spawnCode": "weapon_advancedrifle", "displayCode": "WEAPON_ADVANCEDRIFLE", "imgSrc": "[images]/GTA Weapon/weapon_advancedrifle.png"}, {"id": "weapon_specialcarbine", "desc": " ", "spawnCode": "weapon_specialcarbine", "displayCode": "WEAPON_SPECIALCARBINE", "imgSrc": "[images]/GTA Weapon/weapon_specialcarbine.png"}, {"id": "weapon_specialcarbine_mk2", "desc": " ", "spawnCode": "weapon_specialcarbine_mk2", "displayCode": "WEAPON_SPECIALCARBINE_MK2", "imgSrc": "[images]/GTA Weapon/weapon_specialcarbine_mk2.png"}, {"id": "weapon_bullpuprifle", "desc": " ", "spawnCode": "weapon_bullpuprifle", "displayCode": "WEAPON_BULLPUPRIFLE", "imgSrc": "[images]/GTA Weapon/weapon_bullpuprifle.png"}, {"id": "weapon_bullpuprifle_mk2", "desc": " ", "spawnCode": "weapon_bullpuprifle_mk2", "displayCode": "WEAPON_BULLPUPRIFLE_MK2", "imgSrc": "[images]/GTA Weapon/weapon_bullpuprifle_mk2.png"}, {"id": "weapon_compactrifle", "desc": " ", "spawnCode": "weapon_compactrifle", "displayCode": "WEAPON_COMPACTRIFLE", "imgSrc": "[images]/GTA Weapon/weapon_compactrifle.png"}, {"id": "weapon_militaryrifle", "desc": " ", "spawnCode": "weapon_militaryrifle", "displayCode": "WEAPON_MILITARYRIFLE", "imgSrc": "[images]/GTA Weapon/weapon_militaryrifle.png"}, {"id": "weapon_heavyrifle", "desc": " ", "spawnCode": "weapon_heavyrifle", "displayCode": "WEAPON_HEAVYRIFLE", "imgSrc": "[images]/GTA Weapon/weapon_heavyrifle.png"}, {"id": "weapon_tacticalrifle", "desc": " ", "spawnCode": "weapon_tacticalrifle", "displayCode": "WEAPON_TACTICALRIFLE", "imgSrc": "[images]/GTA Weapon/weapon_tacticalrifle.png"}, {"id": "weapon_combatmg_mk2", "desc": " ", "spawnCode": "weapon_combatmg_mk2", "displayCode": "WEAPON_COMBATMG_MK2", "imgSrc": "[images]/GTA Weapon/weapon_combatmg_mk2.png"}, {"id": "weapon_sniperrifle", "desc": " ", "spawnCode": "weapon_sniperrifle", "displayCode": "WEAPON_SNIPERRIFLE", "imgSrc": "[images]/GTA Weapon/weapon_sniperrifle.png"}, {"id": "weapon_heavysniper", "desc": " ", "spawnCode": "weapon_heavysniper", "displayCode": "WEAPON_HEAVYSNIPER", "imgSrc": "[images]/GTA Weapon/weapon_heavysniper.png"}, {"id": "weapon_heavysniper_mk2", "desc": " ", "spawnCode": "weapon_heavysniper_mk2", "displayCode": "WEAPON_HEAVYSNIPER_MK2", "imgSrc": "[images]/GTA Weapon/weapon_heavysniper_mk2.png"}, {"id": "weapon_marksmanrifle", "desc": " ", "spawnCode": "weapon_marksmanrifle", "displayCode": "WEAPON_MARKSMANRIFLE", "imgSrc": "[images]/GTA Weapon/weapon_marksmanrifle.png"}, {"id": "weapon_marksmanrifle_mk2", "desc": " ", "spawnCode": "weapon_marksmanrifle_mk2", "displayCode": "WEAPON_MARKSMANRIFLE_MK2", "imgSrc": "[images]/GTA Weapon/weapon_marksmanrifle_mk2.png"}, {"id": "weapon_musket", "desc": " ", "spawnCode": "weapon_musket", "displayCode": "WEAPON_MUSKET", "imgSrc": "[images]/GTA Weapon/weapon_musket.png"}]}, {"id": "page8", "title": "عتاد عسكري", "imagePath": "[images]/Police/", "items": [{"id": "bodycam", "desc": "كاميرا الجسم", "spawnCode": "bodycam", "displayCode": "bodycam", "imgSrc": "[images]/Police/bodycam.png"}, {"id": "signalradar", "desc": "رادار الإشارة", "spawnCode": "signalradar", "displayCode": "signalradar", "imgSrc": "[images]/Police/signalradar.png"}, {"id": "locksystem", "desc": "نظام القفل", "spawnCode": "locksystem", "displayCode": "locksystem", "imgSrc": "[images]/Police/locksystem.png"}, {"id": "spikes", "desc": "مسامير إيقاف (سبايك)", "spawnCode": "spikes", "displayCode": "spikes", "imgSrc": "[images]/Police/spikes.png"}, {"id": "handcuffs", "desc": "أصفاد (كلبشات)", "spawnCode": "handcuffs", "displayCode": "handcuffs", "imgSrc": "[images]/Police/handcuffs.png"}, {"id": "nightvision", "desc": "منظار رؤية ليلية", "spawnCode": "nightvision", "displayCode": "nightvision", "imgSrc": "[images]/Police/nightvision.png"}, {"id": "heavyarmor", "desc": "درع واقي ثقيل", "spawnCode": "heavyarmor", "displayCode": "heavyarmor", "imgSrc": "[images]/Police/heavyarmor.png"}, {"id": "armor", "desc": "درع واقي خفيف", "spawnCode": "armor", "displayCode": "armor", "imgSrc": "[images]/Police/armor.png"}, {"id": "parachute", "desc": "مظلة هبوط", "spawnCode": "parachute", "displayCode": "parachute", "imgSrc": "[images]/Police/parachute.png"}, {"id": "diving_gear", "desc": "عدة غوص", "spawnCode": "diving_gear", "displayCode": "diving_gear", "imgSrc": "[images]/Police/diving_gear.png"}, {"id": "empty_evidence_bag", "desc": "كيس أدلة فارغ", "spawnCode": "empty_evidence_bag", "displayCode": "empty_evidence_bag", "imgSrc": "[images]/Police/empty_evidence_bag.png"}, {"id": "ifaks", "desc": "إسعافات أولية (IFAK)", "spawnCode": "ifaks", "displayCode": "ifaks", "imgSrc": "[images]/Police/ifaks.png"}, {"id": "repairkit", "desc": "عدة إصلاح", "spawnCode": "repairkit", "displayCode": "repairkit", "imgSrc": "[images]/Police/repairkit.png"}, {"id": "pistol_ammo", "desc": "ذخيرة مسدس", "spawnCode": "pistol_ammo", "displayCode": "pistol_ammo", "imgSrc": "[images]/Police/pistol_ammo.png"}, {"id": "rifle_ammo", "desc": "ذخيرة رشاش", "spawnCode": "rifle_ammo", "displayCode": "rifle_ammo", "imgSrc": "[images]/Police/rifle_ammo.png"}, {"id": "smg_ammo", "desc": "ذخيرة SMG", "spawnCode": "smg_ammo", "displayCode": "smg_ammo", "imgSrc": "[images]/Police/smg_ammo.png"}, {"id": "shotgun_ammo", "desc": "ذخيرة شوزن", "spawnCode": "shotgun_ammo", "displayCode": "shotgun_ammo", "imgSrc": "[images]/Police/shotgun_ammo.png"}, {"id": "mg_ammo", "desc": "ذخيرة سلاح ثقيل", "spawnCode": "mg_ammo", "displayCode": "mg_ammo", "imgSrc": "[images]/Police/mg_ammo.png"}, {"id": "snp_ammo", "desc": "ذخيرة قناص", "spawnCode": "snp_ammo", "displayCode": "snp_ammo", "imgSrc": "[images]/Police/snp_ammo.png"}, {"id": "radio", "desc": "جهاز لاسلكي", "spawnCode": "radio", "displayCode": "radio", "imgSrc": "[images]/Police/radio.png"}, {"id": "weapon_stungun", "desc": "صاعق كهربائي (تيزر)", "spawnCode": "weapon_stungun", "displayCode": "weapon_stungun", "imgSrc": "[images]/Police/weapon_stungun.png"}, {"id": "weapon_nightstick", "desc": "هراوة الشرطة", "spawnCode": "weapon_nightstick", "displayCode": "weapon_nightstick", "imgSrc": "[images]/Police/weapon_nightstick.png"}, {"id": "pdkeys_2", "desc": "مفاتيح المركز (الرتب العليا)", "spawnCode": "pdkeys_2", "displayCode": "pdkeys_2", "imgSrc": "[images]/Police/pdkeys_2.png"}, {"id": "weapon_glock22", "desc": "مسدس Glock 22", "spawnCode": "weapon_glock22", "displayCode": "weapon_glock22", "imgSrc": "[images]/Police/weapon_glock22.png"}, {"id": "weapon_mp7", "desc": "سلاح MP7", "spawnCode": "weapon_mp7", "displayCode": "weapon_mp7", "imgSrc": "[images]/Police/weapon_mp7.png"}, {"id": "weapon_combatpdw", "desc": "سلاح Combat PDW", "spawnCode": "weapon_combatpdw", "displayCode": "weapon_combatpdw", "imgSrc": "[images]/Police/weapon_combatpdw.png"}, {"id": "weapon_m4", "desc": "سلاح M4", "spawnCode": "weapon_m4", "displayCode": "weapon_m4", "imgSrc": "[images]/Police/weapon_m4.png"}, {"id": "weapon_specialcarbine_mk2", "desc": "سلاح Special Carbine MK2", "spawnCode": "weapon_specialcarbine_mk2", "displayCode": "weapon_specialcarbine_mk2", "imgSrc": "[images]/Police/weapon_specialcarbine_mk2.png"}, {"id": "weapon_mk14", "desc": "سلاح MK14 (قناص)", "spawnCode": "weapon_mk14", "displayCode": "weapon_mk14", "imgSrc": "[images]/Police/weapon_mk14.png"}, {"id": "we", "desc": "سلاح إضافي", "spawnCode": "we", "displayCode": "we", "imgSrc": "[images]/Police/we.png"}, {"id": "emp_ammo", "desc": "ذخيرة جهاز EMP", "spawnCode": "emp_ammo", "displayCode": "emp_ammo", "imgSrc": "[images]/Police/emp_ammo.png"}, {"id": "newpdbadge", "desc": "شارة الشرطة الجديدة", "spawnCode": "newpdbadge", "displayCode": "newpdbadge", "imgSrc": "[images]/Police/newpdbadge.png"}, {"id": "cctv1", "desc": "كاميرا مراقبة 1", "spawnCode": "cctv1", "displayCode": "cctv1", "imgSrc": "[images]/Police/cctv1.png"}, {"id": "cctv2", "desc": "كاميرا مراقبة 2", "spawnCode": "cctv2", "displayCode": "cctv2", "imgSrc": "[images]/Police/cctv2.png"}, {"id": "cctv3", "desc": "كاميرا مراقبة 3", "spawnCode": "cctv3", "displayCode": "cctv3", "imgSrc": "[images]/Police/cctv3.png"}, {"id": "binoculars", "desc": "دربيل (منظار)", "spawnCode": "binoculars", "displayCode": "binoculars", "imgSrc": "[images]/Police/binoculars.png"}, {"id": "pistol_flashlight", "desc": "كشاف المسدس", "spawnCode": "pistol_flashlight", "displayCode": "pistol_flashlight", "imgSrc": "[images]/Police/pistol_flashlight.png"}, {"id": "pistol_extendedclip", "desc": "مخزن مسدس موسع", "spawnCode": "pistol_extendedclip", "displayCode": "pistol_extendedclip", "imgSrc": "[images]/Police/pistol_extendedclip.png"}, {"id": "pistol_suppressor", "desc": "كاتم صوت للمسدس", "spawnCode": "pistol_suppressor", "displayCode": "pistol_suppressor", "imgSrc": "[images]/Police/pistol_suppressor.png"}, {"id": "assaultrifle_mk2_mk2_flashlight", "desc": "كشاف سلاح Assault MK2", "spawnCode": "assaultrifle_mk2_mk2_flashlight", "displayCode": "assaultrifle_mk2_mk2_flashlight", "imgSrc": "[images]/Police/assaultrifle_mk2_mk2_flashlight.png"}, {"id": "assaultrifle_mk2_scope", "desc": "دربيل سلاح Assault MK2", "spawnCode": "assaultrifle_mk2_scope", "displayCode": "assaultrifle_mk2_scope", "imgSrc": "[images]/Police/assaultrifle_mk2_scope.png"}, {"id": "assaultrifle_mk2_suppressor", "desc": "كاتم صوت سلاح Assault MK2", "spawnCode": "assaultrifle_mk2_suppressor", "displayCode": "assaultrifle_mk2_suppressor", "imgSrc": "[images]/Police/assaultrifle_mk2_suppressor.png"}, {"id": "assaultrifle_mk2_grip", "desc": "قبضة سلاح (Grip) Assault MK2", "spawnCode": "assaultrifle_mk2_grip", "displayCode": "assaultrifle_mk2_grip", "imgSrc": "[images]/Police/assaultrifle_mk2_grip.png"}, {"id": "assaultrifle_mk2_extendedclip", "desc": "مخزن Assault MK2 موسع", "spawnCode": "assaultrifle_mk2_extendedclip", "displayCode": "assaultrifle_mk2_extendedclip", "imgSrc": "[images]/Police/assaultrifle_mk2_extendedclip.png"}, {"id": "gasmask", "desc": "قناع واقي من الغاز", "spawnCode": "gasmask", "displayCode": "gasmask", "imgSrc": "[images]/Police/gasmask.png"}, {"id": "weapon_pistol50", "desc": "مسدس Pistol .50", "spawnCode": "weapon_pistol50", "displayCode": "weapon_pistol50", "imgSrc": "[images]/Police/weapon_pistol50.png"}, {"id": "weapon_machinepistol", "desc": "سلاح Machine Pistol", "spawnCode": "weapon_machinepistol", "displayCode": "weapon_machinepistol", "imgSrc": "[images]/Police/weapon_machinepistol.png"}, {"id": "bandage", "desc": "ضمادات طبية", "spawnCode": "bandage", "displayCode": "bandage", "imgSrc": "[images]/Police/bandage.png"}, {"id": "legcuffs", "desc": "أصفاد القدمين", "spawnCode": "legcuffs", "displayCode": "legcuffs", "imgSrc": "[images]/Police/legcuffs.png"}, {"id": "drone_lspd", "desc": "طائرة درون الشرطة", "spawnCode": "drone_lspd", "displayCode": "drone_lspd", "imgSrc": "[images]/Police/drone_lspd.png"}, {"id": "police_stormram", "desc": "أداة اقتحام الأبواب (رام)", "spawnCode": "police_stormram", "displayCode": "police_stormram", "imgSrc": "[images]/Police/police_stormram.png"}, {"id": "weapon_flashlight", "desc": "كشاف يدوي", "spawnCode": "weapon_flashlight", "displayCode": "weapon_flashlight", "imgSrc": "[images]/Police/weapon_flashlight.png"}, {"id": "camera", "desc": "كاميرا تصوير", "spawnCode": "camera", "displayCode": "camera", "imgSrc": "[images]/Police/camera.png"}, {"id": "payment_terminal", "desc": "جهاز دفع غرامات (متحرك)", "spawnCode": "payment_terminal", "displayCode": "payment_terminal", "imgSrc": "[images]/Police/payment_terminal.png"}, {"id": "jammer", "desc": "جهاز تشويش", "spawnCode": "jammer", "displayCode": "jammer", "imgSrc": "[images]/Police/jammer.png"}, {"id": "diving_tube", "desc": "تعبئة أكسجين الغوص", "spawnCode": "diving_tube", "displayCode": "diving_tube", "imgSrc": "[images]/Police/diving_tube.png"}, {"id": "diving_fill", "desc": "أسطوانة تعبئة أكسجين", "spawnCode": "diving_fill", "displayCode": "diving_fill", "imgSrc": "[images]/Police/diving_fill.png"}, {"id": "mg_notfull", "desc": "ذخيرة MG (غير ممتلئة)", "spawnCode": "mg_notfull", "displayCode": "mg_notfull", "imgSrc": "[images]/Police/mg_notfull.png"}, {"id": "smg_notfull", "desc": "ذخيرة SMG (غير ممتلئة)", "spawnCode": "smg_notfull", "displayCode": "smg_notfull", "imgSrc": "[images]/Police/smg_notfull.png"}, {"id": "pistol_notfull", "desc": "ذخيرة مسدس (غير ممتلئة)", "spawnCode": "pistol_notfull", "displayCode": "pistol_notfull", "imgSrc": "[images]/Police/pistol_notfull.png"}, {"id": "rifle_notfull", "desc": "ذخيرة رشاش (غير ممتلئة)", "spawnCode": "rifle_notfull", "displayCode": "rifle_notfull", "imgSrc": "[images]/Police/rifle_notfull.png"}, {"id": "shotgun_notfull", "desc": "ذخيرة شوزن (غير ممتلئة)", "spawnCode": "shotgun_notfull", "displayCode": "shotgun_notfull", "imgSrc": "[images]/Police/shotgun_notfull.png"}, {"id": "sniper_notfull", "desc": "ذخيرة قناص (غير ممتلئة)", "spawnCode": "sniper_notfull", "displayCode": "sniper_notfull", "imgSrc": "[images]/Police/sniper_notfull.png"}, {"id": "policeradar", "desc": "جهاز رادار الشرطة", "spawnCode": "policeradar", "displayCode": "policeradar", "imgSrc": "[images]/Police/policeradar.png"}]}, {"id": "page9", "title": "تنجيم", "imagePath": "[images]/Jobs/Mining/", "items": [{"id": "phone", "desc": "قطعة سلاح نادرة - الفئة 2", "spawnCode": "phone", "displayCode": "phone", "imgSrc": "[images]/Jobs/Mining/phone.png"}, {"id": "mininglaser", "desc": "قطعة سلاح نادرة - الفئة 3", "spawnCode": "mininglaser", "displayCode": "mininglaser", "imgSrc": "[images]/Jobs/Mining/mininglaser.png"}, {"id": "miningdrill", "desc": "قطعة سلاح نادرة - الفئة 4", "spawnCode": "miningdrill", "displayCode": "miningdrill", "imgSrc": "[images]/Jobs/Mining/miningdrill.png"}, {"id": "pickaxe", "desc": "قطعة سلاح نادرة - الفئة 5", "spawnCode": "pickaxe", "displayCode": "pickaxe", "imgSrc": "[images]/Jobs/Mining/pickaxe.png"}, {"id": "weapon_flashlight", "desc": "معدن الألمنيوم للصناعة", "spawnCode": "weapon_flashlight", "displayCode": "weapon_flashlight", "imgSrc": "[images]/Jobs/Mining/weapon_flashlight.png"}, {"id": "bandage", "desc": "معدن النحاس", "spawnCode": "bandage", "displayCode": "bandage", "imgSrc": "[images]/Jobs/Mining/bandage.png"}, {"id": "sandwich", "desc": "زجاج مقوى", "spawnCode": "sandwich", "displayCode": "sandwich", "imgSrc": "[images]/Jobs/Mining/sandwich.png"}, {"id": "water_bottle", "desc": "حديد خام", "spawnCode": "water_bottle", "displayCode": "water_bottle", "imgSrc": "[images]/Jobs/Mining/water_bottle.png"}, {"id": "iron_mold", "desc": "قالب حديد", "spawnCode": "iron_mold", "displayCode": "iron_mold", "imgSrc": "[images]/Jobs/Mining/iron_mold.png"}, {"id": "metalscrap", "desc": "خردة معدنية", "spawnCode": "metalscrap", "displayCode": "metalscrap", "imgSrc": "[images]/Jobs/Mining/metalscrap.png"}, {"id": "plastic", "desc": "بلاستيك صناعي", "spawnCode": "plastic", "displayCode": "plastic", "imgSrc": "[images]/Jobs/Mining/plastic.png"}, {"id": "ruby_ore", "desc": "خام الياقوت", "spawnCode": "ruby_ore", "displayCode": "ruby_ore", "imgSrc": "[images]/Jobs/Mining/ruby_ore.png"}, {"id": "rubber", "desc": "مطاط طبيعي", "spawnCode": "rubber", "displayCode": "rubber", "imgSrc": "[images]/Jobs/Mining/rubber.png"}, {"id": "steel", "desc": "فولاذ صلب", "spawnCode": "steel", "displayCode": "steel", "imgSrc": "[images]/Jobs/Mining/steel.png"}]}, {"id": "page10", "title": "اخرى", "imagePath": "[images]/Other/", "items": [{"id": "phone", "desc": "هاتف قديم", "spawnCode": "phone", "displayCode": "phone", "imgSrc": "[images]/Other/phone.png"}, {"id": "radio", "desc": "راديو قديم", "spawnCode": "radio", "displayCode": "radio", "imgSrc": "[images]/Other/radio.png"}, {"id": "lockpick", "desc": "عدة فتح الأقفال", "spawnCode": "lockpick", "displayCode": "lockpick", "imgSrc": "[images]/Other/lockpick.png"}]}];
+
+        let currentCategoryIdx = 0;
+        let currentItemIdx = 0;
+        let currentQuantity = 1;
+        let activeItems = [];
+        let focusArea = 'grid'; // 'grid' or 'sidebar'
+
+        const gridEl = document.getElementById('itemsGrid');
+        const catListEl = document.getElementById('categoryList');
+        const searchInput = document.getElementById('searchInput');
+        const qtyDisplay = document.getElementById('qtyDisplay');
+        const previewTitle = document.getElementById('previewTitle');
+        const previewCode = document.getElementById('previewCode');
+        const previewImg = document.getElementById('previewImg');
+        const toastEl = document.getElementById('toastMsg');
+        const totalBadge = document.getElementById('totalItemsCountBadge');
+
+        // Initialize Categories Sidebar
+        function renderCategories() {
+            catListEl.innerHTML = '';
+            let total = 0;
+            categories.forEach((cat, idx) => {
+                total += cat.items.length;
+                const div = document.createElement('div');
+                div.className = 'category-item' + (idx === currentCategoryIdx ? ' active' : '');
+                div.innerHTML = `
+                    <span>${cat.title}</span>
+                    <span class="category-count">${cat.items.length}</span>
+                `;
+                div.onclick = () => selectCategory(idx);
+                catListEl.appendChild(div);
+            });
+            totalBadge.innerText = total;
+        }
+
+        function selectCategory(idx) {
+            currentCategoryIdx = idx;
+            currentItemIdx = 0;
+            renderCategories();
+            searchInput.value = '';
+            filterAndDisplayItems();
+        }
+
+        function filterAndDisplayItems() {
+            const query = searchInput.value.trim().toLowerCase();
+            const currentCat = categories[currentCategoryIdx];
+
+            if (!query) {
+                activeItems = currentCat ? currentCat.items : [];
+            } else {
+                // Search across all categories if query entered, or prioritize current
+                let matches = [];
+                categories.forEach(c => {
+                    c.items.forEach(itm => {
+                        if (itm.id.toLowerCase().includes(query) || (itm.desc && itm.desc.toLowerCase().includes(query)) || (itm.spawnCode && itm.spawnCode.toLowerCase().includes(query))) {
+                            matches.push(itm);
+                        }
+                    });
+                });
+                activeItems = matches;
+            }
+
+            renderGrid();
+        }
+
+        function renderGrid() {
+            gridEl.innerHTML = '';
+            if (activeItems.length === 0) {
+                gridEl.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: #64748b; padding: 40px; font-weight: 700;">لا توجد أيتمات مطابقة للبحث</div>';
+                updatePreview(null);
+                return;
+            }
+
+            if (currentItemIdx >= activeItems.length) currentItemIdx = 0;
+
+            activeItems.forEach((item, idx) => {
+                const card = document.createElement('div');
+                card.className = 'item-card' + (idx === currentItemIdx ? ' selected' : '');
+                card.innerHTML = `
+                    <div class="card-img-box">
+                        <img src="${item.imgSrc}" alt="${item.displayCode}" onerror="this.src='https://via.placeholder.com/90x90/11131a/475569?text=IMG'">
+                    </div>
+                    <div class="card-info">
+                        <div class="card-title">${item.desc && item.desc.trim() !== '' ? item.desc : item.displayCode}</div>
+                        <div class="card-code">${item.spawnCode}</div>
+                    </div>
+                `;
+                card.onclick = () => {
+                    currentItemIdx = idx;
+                    renderGrid();
+                };
+                card.ondblclick = () => {
+                    currentItemIdx = idx;
+                    triggerSpawn();
+                };
+                gridEl.appendChild(card);
+            });
+
+            updatePreview(activeItems[currentItemIdx]);
+            scrollSelectedItemIntoView();
+        }
+
+        function updatePreview(item) {
+            if (!item) {
+                previewTitle.innerText = '---';
+                previewCode.innerText = '---';
+                previewImg.style.display = 'none';
+                return;
+            }
+            previewTitle.innerText = item.desc && item.desc.trim() !== '' ? item.desc : item.displayCode;
+            previewCode.innerText = item.spawnCode;
+            previewImg.src = item.imgSrc;
+            previewImg.style.display = 'block';
+        }
+
+        function scrollSelectedItemIntoView() {
+            const selected = gridEl.querySelector('.item-card.selected');
+            if (selected) {
+                selected.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+            }
+        }
+
+        function changeQty(delta) {
+            currentQuantity = Math.max(1, Math.min(250, currentQuantity + delta));
+            qtyDisplay.innerText = currentQuantity;
+        }
+
+        function handleSearch() {
+            currentItemIdx = 0;
+            filterAndDisplayItems();
+        }
+
+        function showToast(msg) {
+            toastEl.innerText = msg;
+            toastEl.classList.add('show');
+            setTimeout(() => toastEl.classList.remove('show'), 1600);
+        }
+
+        function triggerSpawn() {
+            if (!activeItems || activeItems.length === 0) return;
+            const item = activeItems[currentItemIdx];
+            if (!item) return;
+
+            const spawnData = {
+                action: 'spawnItem',
+                item: item.spawnCode,
+                amount: currentQuantity,
+                rawId: item.id
+            };
+
+            // 1. Post to FiveM NUI callback if in standard resource
+            if (window.GetParentResourceName) {
+                try {
+                    fetch(`https://${GetParentResourceName()}/spawnItem`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json; charset=UTF-8' },
+                        body: JSON.stringify(spawnData)
+                    }).catch(() => {});
+                } catch (e) {}
+            }
+
+            // 2. Hash & Console signal for FiveM DUI bridge
+            window.location.hash = `spawn:${item.spawnCode}:${currentQuantity}:${Date.now()}`;
+            console.log(`VOID_SPAWN:${item.spawnCode}:${currentQuantity}`);
+
+            // 3. Fallback Clipboard Copy
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(item.spawnCode).catch(() => {});
+            }
+
+            showToast(`تم طلب رسبنة: ${currentQuantity}x ${item.spawnCode}`);
+        }
+
+        // Full Keyboard Navigation (Arrows, Enter, Q, E, Esc, F)
+        document.addEventListener('keydown', (e) => {
+            const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+            if (activeTag === 'input' && e.key !== 'Escape' && e.key !== 'Enter') return;
+
+            if (e.key === 'Escape') {
+                if (document.activeElement === searchInput) {
+                    searchInput.blur();
+                } else {
+                    // Close UI
+                    window.location.hash = `close:${Date.now()}`;
+                    console.log('VOID_CLOSE_UI');
+                    if (window.GetParentResourceName) {
+                        fetch(`https://${GetParentResourceName()}/closeUI`, { method: 'POST' }).catch(() => {});
+                    }
+                }
+                return;
+            }
+
+            if (e.key === 'f' || e.key === 'F' || e.key === 'ب') {
+                if (document.activeElement !== searchInput) {
+                    e.preventDefault();
+                    searchInput.focus();
+                    searchInput.select();
+                    return;
+                }
+            }
+
+            if (e.key === 'q' || e.key === 'Q' || e.key === 'ض') {
+                changeQty(-1);
+                return;
+            }
+
+            if (e.key === 'e' || e.key === 'E' || e.key === 'ث') {
+                changeQty(1);
+                return;
+            }
+
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                if (document.activeElement === searchInput) {
+                    searchInput.blur();
+                }
+                triggerSpawn();
+                return;
+            }
+
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                focusArea = (focusArea === 'grid') ? 'sidebar' : 'grid';
+                if (focusArea === 'sidebar') {
+                    const activeCat = catListEl.querySelector('.category-item.active');
+                    if (activeCat) activeCat.scrollIntoView({ block: 'nearest' });
+                }
+                return;
+            }
+
+            // Navigation via Arrows
+            if (focusArea === 'sidebar') {
+                if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (currentCategoryIdx > 0) selectCategory(currentCategoryIdx - 1);
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (currentCategoryIdx < categories.length - 1) selectCategory(currentCategoryIdx + 1);
+                } else if (e.key === 'ArrowLeft' || e.key === 'Enter') {
+                    e.preventDefault();
+                    focusArea = 'grid';
+                }
+            } else {
+                // Grid Focus
+                const cols = Math.max(1, Math.floor(gridEl.clientWidth / 190));
+                if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    if (currentItemIdx % cols === 0) {
+                        // Switch focus to category sidebar on the right!
+                        focusArea = 'sidebar';
+                    } else if (currentItemIdx > 0) {
+                        currentItemIdx--;
+                        renderGrid();
+                    }
+                } else if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    if (currentItemIdx < activeItems.length - 1) {
+                        currentItemIdx++;
+                        renderGrid();
+                    }
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (currentItemIdx + cols < activeItems.length) {
+                        currentItemIdx += cols;
+                        renderGrid();
+                    }
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (currentItemIdx - cols >= 0) {
+                        currentItemIdx -= cols;
+                        renderGrid();
+                    }
+                }
+            }
+        });
+
+        // FiveM DUI Message Listener
+        window.addEventListener('message', (event) => {
+            const data = event.data;
+            if (!data) return;
+            if (data.action === 'setCategory' && typeof data.categoryIndex === 'number') {
+                selectCategory(data.categoryIndex);
+            } else if (data.action === 'spawnSelected') {
+                triggerSpawn();
+            } else if (data.action === 'changeQty') {
+                changeQty(data.delta || 1);
+            }
+        });
+
+        // Initial render
+        renderCategories();
+        filterAndDisplayItems();
+    </script>
+</body>
+</html>
