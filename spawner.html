@@ -18,11 +18,13 @@
             background: #07080b radial-gradient(circle at 50% 10%, rgba(20, 24, 38, 0.8) 0%, rgba(7, 8, 11, 0.95) 100%);
             color: #e2e8f0;
             font-family: 'Cairo', sans-serif;
-            height: 100vh;
+            height: 100%;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             padding: 16px 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         /* Header Bar */
@@ -769,7 +771,7 @@
 
             // 2. Hash & Console signal for FiveM DUI bridge
             window.location.hash = `spawn:${item.spawnCode}:${currentQuantity}:${Date.now()}`;
-            console.log(`VOID_SPAWN:${item.spawnCode}:${currentQuantity}`);
+            console.log(`VOID_SPAWN:${item.spawnCode}:${currentQuantity}`); try { window.parent.postMessage({ action: 'spawnItem', spawnCode: item.spawnCode, amount: currentQuantity }, '*'); } catch(e){}
 
             // 3. Fallback Clipboard Copy
             if (navigator.clipboard) {
@@ -790,7 +792,7 @@
                 } else {
                     // Close UI
                     window.location.hash = `close:${Date.now()}`;
-                    console.log('VOID_CLOSE_UI');
+                    console.log('VOID_CLOSE_UI'); try { window.parent.postMessage({ action: 'closeFromSpawner' }, '*'); } catch(e){}
                     if (window.GetParentResourceName) {
                         fetch(`https://${GetParentResourceName()}/closeUI`, { method: 'POST' }).catch(() => {});
                     }
@@ -884,8 +886,30 @@
 
         // FiveM DUI Message Listener
         window.addEventListener('message', (event) => {
-            const data = event.data;
+            var data = event.data;
             if (!data) return;
+            if (typeof data === 'string') {
+                try { data = JSON.parse(data); } catch(e) {}
+            }
+            if (data.action === 'spawnerKey' && data.key) {
+                const keyMap = {
+                    'ArrowUp': 'ArrowUp',
+                    'ArrowDown': 'ArrowDown',
+                    'ArrowLeft': 'ArrowLeft',
+                    'ArrowRight': 'ArrowRight',
+                    'Enter': 'Enter',
+                    'Escape': 'Escape',
+                    'Backspace': 'Escape',
+                    'Q': 'q',
+                    'E': 'e',
+                    'F': 'f',
+                    'Tab': 'Tab'
+                };
+                const normKey = keyMap[data.key] || data.key;
+                const evt = new KeyboardEvent('keydown', { key: normKey, code: normKey, bubbles: true });
+                document.dispatchEvent(evt);
+                return;
+            }
             if (data.action === 'setCategory' && typeof data.categoryIndex === 'number') {
                 selectCategory(data.categoryIndex);
             } else if (data.action === 'spawnSelected') {
