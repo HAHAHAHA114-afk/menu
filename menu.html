@@ -18032,8 +18032,8 @@ bodyfocus-sidebar .item-card.selected #spawnerModal, #spawnerModalfocus-sidebar 
             <span class="key-badge"><kbd>F</kbd> بحث</span>
             <span class="key-badge"><kbd>Enter</kbd> سبون</span>
             <span class="key-badge"><kbd>Q</kbd> <kbd>E</kbd> الكمية</span>
-            <span class="key-badge"><kbd>◄</kbd> <kbd>►</kbd> العناصر</span>
-            <span class="key-badge"><kbd>▲</kbd> <kbd>▼</kbd> الأقسام</span>
+            <span class="key-badge"><kbd>▲</kbd> <kbd>▼</kbd> <kbd>◄</kbd> <kbd>►</kbd> العناصر</span>
+            <span class="key-badge"><kbd>Tab</kbd> الأقسام</span>
         </div>
 
         <div class="header-title-box">
@@ -18372,65 +18372,42 @@ bodyfocus-sidebar .item-card.selected #spawnerModal, #spawnerModalfocus-sidebar 
 
             if (e.key === 'Tab') {
                 e.preventDefault();
-                focusArea = (focusArea === 'grid') ? 'sidebar' : 'grid';
+                const nextCat = (currentCategoryIdx + 1) % categories.length;
+                selectCategory(nextCat);
+                focusArea = 'grid';
                 updateFocusVisuals();
-                renderGrid();
                 return;
             }
 
-            // Navigation via Arrows
-            if (focusArea === 'sidebar') {
-                if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    if (currentCategoryIdx > 0) selectCategory(currentCategoryIdx - 1);
-                } else if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    if (currentCategoryIdx < categories.length - 1) selectCategory(currentCategoryIdx + 1);
-                } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
-                    // Moving right towards the items grid
-                    e.preventDefault();
-                    focusArea = 'grid';
-                    updateFocusVisuals();
+            // Navigation via Arrows directly inside items grid
+            const cols = getGridCols();
+
+            if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                if (currentItemIdx < activeItems.length - 1) {
+                    currentItemIdx++;
                     renderGrid();
                 }
-            } else {
-                // Grid Focus (RTL layout: Sidebar is on the LEFT, Grid on the RIGHT)
-                const cols = getGridCols();
-                const isLeftmostCol = (currentItemIdx % cols === cols - 1);
-                const isLastItem = (currentItemIdx >= activeItems.length - 1);
-
-                if (e.key === 'ArrowLeft') {
-                    e.preventDefault();
-                    if (isLeftmostCol || isLastItem) {
-                        // Reached the leftmost boundary towards categories sidebar -> switch focus to sidebar
-                        focusArea = 'sidebar';
-                        updateFocusVisuals();
-                    } else {
-                        currentItemIdx++;
-                        renderGrid();
-                    }
-                } else if (e.key === 'ArrowRight') {
-                    e.preventDefault();
-                    const isRightmostCol = (currentItemIdx % cols === 0);
-                    if (!isRightmostCol && currentItemIdx > 0) {
-                        currentItemIdx--;
-                        renderGrid();
-                    }
-                } else if (e.key === 'ArrowDown') {
-                    e.preventDefault();
-                    if (currentItemIdx + cols < activeItems.length) {
-                        currentItemIdx += cols;
-                        renderGrid();
-                    } else if (currentItemIdx < activeItems.length - 1) {
-                        currentItemIdx = activeItems.length - 1;
-                        renderGrid();
-                    }
-                } else if (e.key === 'ArrowUp') {
-                    e.preventDefault();
-                    if (currentItemIdx - cols >= 0) {
-                        currentItemIdx -= cols;
-                        renderGrid();
-                    }
+            } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
+                if (currentItemIdx > 0) {
+                    currentItemIdx--;
+                    renderGrid();
+                }
+            } else if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                if (currentItemIdx + cols < activeItems.length) {
+                    currentItemIdx += cols;
+                    renderGrid();
+                } else if (currentItemIdx < activeItems.length - 1) {
+                    currentItemIdx = activeItems.length - 1;
+                    renderGrid();
+                }
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                if (currentItemIdx - cols >= 0) {
+                    currentItemIdx -= cols;
+                    renderGrid();
                 }
             }
         });
