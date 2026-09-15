@@ -18308,13 +18308,19 @@ bodyfocus-sidebar .item-card.selected #spawnerModal, #spawnerModalfocus-sidebar 
             const item = activeItems[currentItemIdx];
             if (!item) return;
 
-            const spawnPayload = "VOID_SPAWN:" + item.spawnCode + ":" + currentQuantity + ":" + Date.now();
-            copyTextToClipboard(spawnPayload);
-
-            window.location.hash = `spawn:${item.spawnCode}:${currentQuantity}:${Date.now()}`;
-            console.log(`VOID_SPAWN:${item.spawnCode}:${currentQuantity}`);
-
             showToast(`تم طلب رسبنة: ${currentQuantity}x ${item.spawnCode}`);
+
+            const res = (typeof GetParentResourceName === 'function') ? GetParentResourceName() : window._parentResName;
+            if (res) {
+                try {
+                    fetch(`https://${res}/spawnItem`, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ item: item.spawnCode, amount: currentQuantity })
+                    }).catch(function(){});
+                } catch(e) {}
+            }
         }
 
         // Full Keyboard Navigation (Arrows, Enter, Q, E, Esc, F)
@@ -18458,11 +18464,31 @@ bodyfocus-sidebar .item-card.selected #spawnerModal, #spawnerModalfocus-sidebar 
             if (!data || typeof data !== 'object') return;
 
             if (data.action === 'openSpawner') {
+                if (data.resource) window._parentResName = data.resource;
                 window.openSpawner();
             } else if (data.action === 'closeSpawner' || data.action === 'closeFromSpawner') {
                 window.closeSpawner();
             } else if (data.action === 'toggleSpawner') {
                 window.toggleSpawner();
+            } else if (data.action === 'syncSpawner') {
+                if (typeof data.catIdx === 'number' && data.catIdx !== currentCategoryIdx) {
+                    selectCategory(data.catIdx);
+                }
+                if (typeof data.itemIdx === 'number') {
+                    currentItemIdx = data.itemIdx;
+                    renderGrid();
+                    const cards = gridEl ? gridEl.querySelectorAll('.item-card') : [];
+                    if (cards[currentItemIdx]) {
+                        cards[currentItemIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                    }
+                }
+                if (typeof data.qty === 'number') {
+                    currentQuantity = data.qty;
+                    if (qtyDisplay) qtyDisplay.textContent = currentQuantity;
+                    if (previewQty) previewQty.textContent = currentQuantity;
+                }
+            } else if (data.action === 'showToast' && data.message) {
+                showToast(data.message);
             } else if (data.action === 'spawnerKey' && data.key) {
                 var keyMap = {
                     'ArrowUp': 'ArrowUp',
