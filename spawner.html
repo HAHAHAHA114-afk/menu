@@ -849,7 +849,7 @@
 
             // 3. Fallback Clipboard Copy
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(VOID_SPAWN:::).catch(() => {});
+                navigator.clipboard.writeText("VOID_SPAWN:" + item.spawnCode + ":" + currentQuantity + ":" + Date.now()).catch(() => {});
             }
 
             showToast(`تم طلب رسبنة: ${currentQuantity}x ${item.spawnCode}`);
