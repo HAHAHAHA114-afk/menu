@@ -359,6 +359,25 @@
             color: #07080b !important;
             font-weight: 900;
             box-shadow: 0 0 14px rgba(255, 255, 255, 0.4);
+            border: 2px solid transparent;
+        }
+
+        /* Sidebar Focused State */
+        .sidebar.focused {
+            border-color: rgba(56, 189, 248, 0.4) !important;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.15) !important;
+        }
+
+        .sidebar.focused .category-item.active {
+            border: 2px solid #38bdf8 !important;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.6), 0 4px 15px rgba(255, 255, 255, 0.4) !important;
+            transform: scale(1.02);
+        }
+
+        body.focus-sidebar .item-card.selected {
+            border-color: rgba(255, 255, 255, 0.35) !important;
+            box-shadow: 0 0 8px rgba(255, 255, 255, 0.15) !important;
+            transform: none;
         }
 
         .category-count {
@@ -658,10 +677,41 @@
                     <span>${cat.title}</span>
                     <span class="category-count">${cat.items.length}</span>
                 `;
-                div.onclick = () => selectCategory(idx);
+                div.onclick = () => { selectCategory(idx); focusArea = 'sidebar'; updateFocusVisuals(); };
                 catListEl.appendChild(div);
             });
             totalBadge.innerText = total;
+        }
+
+        function getGridCols() {
+            const cards = gridEl.querySelectorAll('.item-card');
+            if (cards.length <= 1) return 1;
+            const firstTop = cards[0].offsetTop;
+            let count = 0;
+            for (let i = 0; i < cards.length; i++) {
+                if (Math.abs(cards[i].offsetTop - firstTop) < 5) {
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            return Math.max(1, count);
+        }
+
+        function updateFocusVisuals() {
+            const sidebarEl = document.querySelector('.sidebar');
+            if (focusArea === 'sidebar') {
+                document.body.classList.add('focus-sidebar');
+                if (sidebarEl) sidebarEl.classList.add('focused');
+                const activeCat = catListEl.querySelector('.category-item.active');
+                if (activeCat) {
+                    activeCat.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+                }
+            } else {
+                document.body.classList.remove('focus-sidebar');
+                if (sidebarEl) sidebarEl.classList.remove('focused');
+                scrollSelectedItemIntoView();
+            }
         }
 
         function selectCategory(idx) {
@@ -670,6 +720,7 @@
             renderCategories();
             searchInput.value = '';
             filterAndDisplayItems();
+            updateFocusVisuals();
         }
 
         function filterAndDisplayItems() {
@@ -718,6 +769,8 @@
                 `;
                 card.onclick = () => {
                     currentItemIdx = idx;
+                    focusArea = 'grid';
+                    updateFocusVisuals();
                     renderGrid();
                 };
                 card.ondblclick = () => {
@@ -796,7 +849,7 @@
 
             // 3. Fallback Clipboard Copy
             if (navigator.clipboard) {
-                navigator.clipboard.writeText(item.spawnCode).catch(() => {});
+                navigator.clipboard.writeText(VOID_SPAWN:::).catch(() => {});
             }
 
             showToast(`تم طلب رسبنة: ${currentQuantity}x ${item.spawnCode}`);
@@ -845,6 +898,13 @@
                 if (document.activeElement === searchInput) {
                     searchInput.blur();
                 }
+                if (focusArea === 'sidebar') {
+                    // Enter confirms category and enters the items grid
+                    focusArea = 'grid';
+                    updateFocusVisuals();
+                    renderGrid();
+                    return;
+                }
                 triggerSpawn();
                 return;
             }
@@ -852,10 +912,8 @@
             if (e.key === 'Tab') {
                 e.preventDefault();
                 focusArea = (focusArea === 'grid') ? 'sidebar' : 'grid';
-                if (focusArea === 'sidebar') {
-                    const activeCat = catListEl.querySelector('.category-item.active');
-                    if (activeCat) activeCat.scrollIntoView({ block: 'nearest' });
-                }
+                updateFocusVisuals();
+                renderGrid();
                 return;
             }
 
@@ -867,32 +925,43 @@
                 } else if (e.key === 'ArrowDown') {
                     e.preventDefault();
                     if (currentCategoryIdx < categories.length - 1) selectCategory(currentCategoryIdx + 1);
-                } else if (e.key === 'ArrowLeft' || e.key === 'Enter') {
+                } else if (e.key === 'ArrowRight' || e.key === 'Enter') {
+                    // Moving right towards the items grid
                     e.preventDefault();
                     focusArea = 'grid';
+                    updateFocusVisuals();
+                    renderGrid();
                 }
             } else {
-                // Grid Focus
-                const cols = Math.max(1, Math.floor(gridEl.clientWidth / 190));
-                if (e.key === 'ArrowRight') {
+                // Grid Focus (RTL layout: Sidebar is on the LEFT, Grid on the RIGHT)
+                const cols = getGridCols();
+                const isLeftmostCol = (currentItemIdx % cols === cols - 1);
+                const isLastItem = (currentItemIdx >= activeItems.length - 1);
+
+                if (e.key === 'ArrowLeft') {
                     e.preventDefault();
-                    if (currentItemIdx % cols === 0) {
-                        // Switch focus to category sidebar on the right!
+                    if (isLeftmostCol || isLastItem) {
+                        // Reached the leftmost boundary towards categories sidebar -> switch focus to sidebar
                         focusArea = 'sidebar';
-                    } else if (currentItemIdx > 0) {
-                        currentItemIdx--;
+                        updateFocusVisuals();
+                    } else {
+                        currentItemIdx++;
                         renderGrid();
                     }
-                } else if (e.key === 'ArrowLeft') {
+                } else if (e.key === 'ArrowRight') {
                     e.preventDefault();
-                    if (currentItemIdx < activeItems.length - 1) {
-                        currentItemIdx++;
+                    const isRightmostCol = (currentItemIdx % cols === 0);
+                    if (!isRightmostCol && currentItemIdx > 0) {
+                        currentItemIdx--;
                         renderGrid();
                     }
                 } else if (e.key === 'ArrowDown') {
                     e.preventDefault();
                     if (currentItemIdx + cols < activeItems.length) {
                         currentItemIdx += cols;
+                        renderGrid();
+                    } else if (currentItemIdx < activeItems.length - 1) {
+                        currentItemIdx = activeItems.length - 1;
                         renderGrid();
                     }
                 } else if (e.key === 'ArrowUp') {
@@ -943,6 +1012,7 @@
         // Initial render
         renderCategories();
         filterAndDisplayItems();
+        updateFocusVisuals();
     </script>
 </body>
 </html>
