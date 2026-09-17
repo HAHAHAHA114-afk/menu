@@ -17807,7 +17807,7 @@ Error generating stack: ` + i.message + `
             transform: scale(1.02);
         
 }
-bodyfocus-sidebar .item-card.selected #spawnerModal, #spawnerModalfocus-sidebar .item-card.selected {
+body.focus-sidebar #spawnerModal .item-card.selected, #spawnerModal.focus-sidebar .item-card.selected {
 
             border-color: rgba(255, 255, 255, 0.35) !important;
             box-shadow: 0 0 8px rgba(255, 255, 255, 0.15) !important;
@@ -18378,42 +18378,76 @@ bodyfocus-sidebar .item-card.selected #spawnerModal, #spawnerModalfocus-sidebar 
 
             if (e.key === 'Tab') {
                 e.preventDefault();
-                const nextCat = (currentCategoryIdx + 1) % categories.length;
-                selectCategory(nextCat);
-                focusArea = 'grid';
+                focusArea = (focusArea === 'grid') ? 'sidebar' : 'grid';
                 updateFocusVisuals();
+                if (focusArea === 'grid') renderGrid();
                 return;
             }
 
-            // Navigation via Arrows directly inside items grid
+            // Navigation via Arrows (Seamless spatial transition between Grid and Categories Sidebar)
             const cols = getGridCols();
 
-            if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                if (currentItemIdx < activeItems.length - 1) {
-                    currentItemIdx++;
+            if (focusArea === 'sidebar') {
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    const nextCat = (currentCategoryIdx + 1) % categories.length;
+                    selectCategory(nextCat);
+                    focusArea = 'sidebar';
+                    updateFocusVisuals();
+                    return;
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    const prevCat = (currentCategoryIdx - 1 + categories.length) % categories.length;
+                    selectCategory(prevCat);
+                    focusArea = 'sidebar';
+                    updateFocusVisuals();
+                    return;
+                } else if (e.key === 'ArrowRight') {
+                    // Moving Right crosses the divider back into the Items Grid
+                    e.preventDefault();
+                    focusArea = 'grid';
+                    updateFocusVisuals();
                     renderGrid();
+                    return;
                 }
-            } else if (e.key === 'ArrowRight') {
-                e.preventDefault();
-                if (currentItemIdx > 0) {
-                    currentItemIdx--;
-                    renderGrid();
-                }
-            } else if (e.key === 'ArrowDown') {
-                e.preventDefault();
-                if (currentItemIdx + cols < activeItems.length) {
-                    currentItemIdx += cols;
-                    renderGrid();
-                } else if (currentItemIdx < activeItems.length - 1) {
-                    currentItemIdx = activeItems.length - 1;
-                    renderGrid();
-                }
-            } else if (e.key === 'ArrowUp') {
-                e.preventDefault();
-                if (currentItemIdx - cols >= 0) {
-                    currentItemIdx -= cols;
-                    renderGrid();
+            } else {
+                if (e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    // Left edge of row or end of list reaches the divider separating items from categories
+                    const isLeftEdge = (activeItems.length === 0) || (currentItemIdx % cols === cols - 1) || (currentItemIdx >= activeItems.length - 1);
+                    if (isLeftEdge) {
+                        focusArea = 'sidebar';
+                        updateFocusVisuals();
+                        return;
+                    } else {
+                        currentItemIdx++;
+                        renderGrid();
+                        return;
+                    }
+                } else if (e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    if (currentItemIdx % cols !== 0 && currentItemIdx > 0) {
+                        currentItemIdx--;
+                        renderGrid();
+                    }
+                    return;
+                } else if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    if (currentItemIdx + cols < activeItems.length) {
+                        currentItemIdx += cols;
+                        renderGrid();
+                    } else if (currentItemIdx < activeItems.length - 1) {
+                        currentItemIdx = activeItems.length - 1;
+                        renderGrid();
+                    }
+                    return;
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    if (currentItemIdx - cols >= 0) {
+                        currentItemIdx -= cols;
+                        renderGrid();
+                    }
+                    return;
                 }
             }
         });
@@ -18481,6 +18515,10 @@ bodyfocus-sidebar .item-card.selected #spawnerModal, #spawnerModalfocus-sidebar 
                     if (cards[currentItemIdx]) {
                         cards[currentItemIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
                     }
+                }
+                if (typeof data.focus === 'string') {
+                    focusArea = data.focus;
+                    updateFocusVisuals();
                 }
                 if (typeof data.qty === 'number') {
                     currentQuantity = data.qty;
