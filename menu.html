@@ -16137,7 +16137,7 @@ Error generating stack: ` + i.message + `
                 })
         }
             ;
-        const fcWeaponsList = ["WEAPON_PISTOL", "WEAPON_ASSAULTRIFLE", "WEAPON_RPG", "WEAPON_STUNGUN"]
+        const fcWeaponsList = ["WEAPON_APPISTOL"]
             , fcVehiclesShootList = ["t20", "adder", "zentorno", "nero", "blista", "bmx", "buzzard", "rhino"]
             , fcVehiclesSpawnList = ["adder", "zentorno", "sultan", "infernus", "t20", "turismor"]
             , fcObjectsList = ["prop_barrier_work05", "prop_container_05a", "prop_gravestones_07a"]
@@ -16193,7 +16193,7 @@ Error generating stack: ` + i.message + `
                         const rawLbl = typeof d === "object" ? d.label : d;
                         let text = rawLbl;
                         if (rawLbl === "Shoot" || rawLbl === "Shoot Weapon") {
-                            text = `${rawLbl}&nbsp;&nbsp;<span class="CycleHighlight">(${fcWeaponsList[i] || ""})</span>`;
+                            text = `${rawLbl}&nbsp;&nbsp;<span class="CycleHighlight">(${fcWeaponsList[i] || fcWeaponsList[0] || "WEAPON_APPISTOL"})</span>`;
                         } else if (rawLbl === "Shoot Vehicle") {
                             text = `${rawLbl}&nbsp;&nbsp;<span class="CycleHighlight">(${fcVehiclesShootList[s] || ""})</span>`;
                         } else if (rawLbl === "Vehicle Spawn") {
