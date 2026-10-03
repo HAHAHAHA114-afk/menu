@@ -143,10 +143,10 @@
             text-rendering: optimizeLegibility !important;
         }
 
-        @keyframes sharkSubmenuEnter {
+        @keyframes sharkItemEnter {
             0% {
-                opacity: 0.35;
-                transform: translateY(-8px);
+                opacity: 0.20;
+                transform: translateY(-5px);
             }
             100% {
                 opacity: 1;
@@ -154,8 +154,8 @@
             }
         }
 
-        .PWrapper .PTabs {
-            animation: sharkSubmenuEnter 0.20s cubic-bezier(0.22, 1, 0.36, 1) !important;
+        .PWrapper .PTabs .PTab {
+            animation: sharkItemEnter 0.16s cubic-bezier(0.22, 1, 0.36, 1) both;
         }
 
         .SliderValText {
@@ -15458,11 +15458,19 @@ Error generating stack: ` + i.message + `
                         const { offsetTop: K, offsetHeight: S } = I
                             , F = te => `${te / window.innerWidth * 100}vw`;
                         P(F(K)),
-                            c(F(S)),
-                            I.scrollIntoView({
-                                block: "nearest",
-                                behavior: "smooth"
-                            })
+                            c(F(S));
+                        const parent = I.parentElement;
+                        if (parent) {
+                            const pTop = parent.scrollTop;
+                            const pHeight = parent.clientHeight;
+                            const iTop = I.offsetTop;
+                            const iHeight = I.offsetHeight;
+                            if (iTop < pTop) {
+                                parent.scrollTop = iTop;
+                            } else if (iTop + iHeight > pTop + pHeight) {
+                                parent.scrollTop = iTop + iHeight - pHeight;
+                            }
+                        }
                     }
                     prevTabIndex.current = i
                 }
@@ -15661,7 +15669,6 @@ Error generating stack: ` + i.message + `
                                                 children: "Main Menu"
                                             })
                                         }), U("div", {
-                                            key: `${m}_${r ? r.length : 0}`,
                                             className: "PTabs",
                                             style: {
                                                 transform: "none"
@@ -15677,21 +15684,17 @@ Error generating stack: ` + i.message + `
                                                     borderRadius: "0",
                                                     background: `linear-gradient(
                                                             90deg,
-                                                            rgba(var(--menu-color), 0.28) 0%,
-                                                            rgba(var(--menu-color), 0.12) 55%,
-                                                            rgba(var(--menu-color), 0.03) 100%
+                                                            rgba(var(--menu-color), 0.22) 0%,
+                                                            rgba(var(--menu-color), 0.08) 50%,
+                                                            rgba(var(--menu-color), 0.02) 100%
                                                         )`,
-                                                    borderTop: "1.5px solid rgba(var(--menu-color), 0.9)",
-                                                    borderBottom: "1.5px solid rgba(var(--menu-color), 0.9)",
-                                                    borderLeft: "0.22vw solid rgb(var(--menu-color))",
-                                                    borderRight: "none",
-                                                    boxShadow: "0 0 12px rgba(var(--menu-color), 0.35), inset 0 1px 0 0 rgba(var(--menu-color), 0.8), inset 0 -1px 0 0 rgba(var(--menu-color), 0.8)",
+                                                    border: "none",
+                                                    borderTop: "1.2px solid rgba(var(--menu-color), 0.95)",
+                                                    borderBottom: "1.2px solid rgba(var(--menu-color), 0.95)",
+                                                    boxShadow: "inset 0 1px 0 0 rgba(var(--menu-color), 0.9), inset 0 -1px 0 0 rgba(var(--menu-color), 0.9), 0 0 10px rgba(var(--menu-color), 0.25)",
                                                     boxSizing: "border-box",
                                                     zIndex: 0,
-                                                    transition: `
-                                                            top .13s cubic-bezier(.22,1,.36,1),
-                                                            height .13s cubic-bezier(.22,1,.36,1)
-                                                        `,
+                                                    transition: "top 0.16s cubic-bezier(0.4, 0, 0.2, 1), height 0.16s cubic-bezier(0.4, 0, 0.2, 1)",
                                                     willChange: "top, height",
                                                     pointerEvents: "none"
                                                 }
