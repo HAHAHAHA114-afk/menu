@@ -143,10 +143,10 @@
             text-rendering: optimizeLegibility !important;
         }
 
-        @keyframes sharkItemEnter {
+        @keyframes aryaMenuTabEnter {
             0% {
-                opacity: 0.20;
-                transform: translateY(-5px);
+                opacity: 0.25;
+                transform: translateY(-10px);
             }
             100% {
                 opacity: 1;
@@ -154,8 +154,28 @@
             }
         }
 
+        .menu-items-anim {
+            position: static;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .menu-items-anim.is-entering {
+            animation: aryaMenuTabEnter 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+
         .PWrapper .PTabs .PTab {
-            animation: sharkItemEnter 0.16s cubic-bezier(0.22, 1, 0.36, 1) both;
+            cursor: pointer;
+            transition: background 0.15s ease, color 0.15s ease;
+        }
+
+        .SharkHighlightBar {
+            box-shadow: inset 0 1.2px 0 0 rgba(var(--menu-color), 0.95), inset 0 -1.2px 0 0 rgba(var(--menu-color), 0.95) !important;
+            border: none !important;
+            transition: transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), height 0.15s cubic-bezier(0.4, 0, 0.2, 1) !important;
+            will-change: transform, height !important;
         }
 
         .SliderValText {
@@ -15459,7 +15479,7 @@ Error generating stack: ` + i.message + `
                             , F = te => `${te / window.innerWidth * 100}vw`;
                         P(F(K)),
                             c(F(S));
-                        const parent = I.parentElement;
+                        const parent = (I.closest && I.closest(".PTabs")) || I.parentElement;
                         if (parent) {
                             const pTop = parent.scrollTop;
                             const pHeight = parent.clientHeight;
@@ -15539,67 +15559,90 @@ Error generating stack: ` + i.message + `
                     , [r, i]),
                 L.useEffect(() => {
                     const I = K => {
-                        if (!!e)
+                        if (!!e) {
                             switch (K.key) {
                                 case "ArrowUp":
+                                    K.preventDefault();
                                     l(S => (S - 1 + r.length) % r.length);
                                     break;
                                 case "ArrowDown":
+                                    K.preventDefault();
                                     l(S => (S + 1) % r.length);
                                     break;
                                 case "Enter":
                                     {
+                                        K.preventDefault();
                                         const S = r[i];
-                                        S != null && S.categories && (u(F => [...F, {
-                                            tabs: r,
-                                            categories: a,
-                                            categoryIndex: m
-                                        }]),
-                                            h(S.categories),
-                                            d(0),
-                                            o(S.categories[0].tabs),
-                                            l(0));
-                                        break
+                                        if (S != null && S.categories) {
+                                            u(F => [...F, {
+                                                tabs: r,
+                                                categories: a,
+                                                categoryIndex: m
+                                            }]);
+                                            h(S.categories);
+                                            d(0);
+                                            o(S.categories[0].tabs);
+                                            l(0);
+                                        } else if (S != null && S.type === "checkbox") {
+                                            S.checked = !S.checked;
+                                            o([...r]);
+                                        }
+                                        break;
                                     }
                                 case "Backspace":
                                     {
+                                        K.preventDefault();
                                         if (s.length > 0) {
                                             const S = s[s.length - 1];
-                                            u(F => F.slice(0, -1)),
-                                                o(S.tabs),
-                                                h(S.categories),
-                                                d(S.categoryIndex),
-                                                l(0)
+                                            u(F => F.slice(0, -1));
+                                            o(S.tabs);
+                                            h(S.categories);
+                                            d(S.categoryIndex);
+                                            l(0);
                                         }
-                                        break
+                                        break;
                                     }
                                 case "q":
                                 case "ArrowLeft":
                                     {
-                                        if (a) {
-                                            const S = (m - 1 + a.length) % a.length;
-                                            d(S),
-                                                o(a[S].tabs),
-                                                l(0)
+                                        K.preventDefault();
+                                        const S = r[i];
+                                        if (S && S.type === "slider") {
+                                            const minVal = typeof S.min === "number" ? S.min : 0;
+                                            const step = typeof S.step === "number" ? S.step : 1;
+                                            S.value = Math.max(minVal, (S.value || 0) - step);
+                                            o([...r]);
+                                        } else if (a) {
+                                            const catIdx = (m - 1 + a.length) % a.length;
+                                            d(catIdx);
+                                            o(a[catIdx].tabs);
+                                            l(0);
                                         }
-                                        break
+                                        break;
                                     }
                                 case "e":
                                 case "ArrowRight":
                                     {
-                                        if (a) {
-                                            const S = (m + 1) % a.length;
-                                            d(S),
-                                                o(a[S].tabs),
-                                                l(0)
+                                        K.preventDefault();
+                                        const S = r[i];
+                                        if (S && S.type === "slider") {
+                                            const maxVal = typeof S.max === "number" ? S.max : 100;
+                                            const step = typeof S.step === "number" ? S.step : 1;
+                                            S.value = Math.min(maxVal, (S.value || 0) + step);
+                                            o([...r]);
+                                        } else if (a) {
+                                            const catIdx = (m + 1) % a.length;
+                                            d(catIdx);
+                                            o(a[catIdx].tabs);
+                                            l(0);
                                         }
-                                        break
+                                        break;
                                     }
                             }
-                    }
-                        ;
+                        }
+                    };
                     return window.addEventListener("keydown", I),
-                        () => window.removeEventListener("keydown", I)
+                        () => window.removeEventListener("keydown", I);
                 }
                     , [r, i, a, m, s, e]),
                 U(On, {
@@ -15661,6 +15704,11 @@ Error generating stack: ` + i.message + `
                                             className: "PCategories",
                                             children: a ? a.map((S, F) => x("div", {
                                                 className: `PCategory ${F === m ? "active" : ""}`,
+                                                onClick: () => {
+                                                    d(F);
+                                                    o(S.tabs);
+                                                    l(0);
+                                                },
                                                 children: x("span", {
                                                     children: S.label
                                                 })
@@ -15679,7 +15727,8 @@ Error generating stack: ` + i.message + `
                                                     position: "absolute",
                                                     width: "100%",
                                                     left: "0%",
-                                                    top: v,
+                                                    top: 0,
+                                                    transform: `translateY(${v})`,
                                                     height: f,
                                                     borderRadius: "0",
                                                     background: `linear-gradient(
@@ -15689,19 +15738,40 @@ Error generating stack: ` + i.message + `
                                                             rgba(var(--menu-color), 0.02) 100%
                                                         )`,
                                                     border: "none",
-                                                    borderTop: "1.2px solid rgba(var(--menu-color), 0.95)",
-                                                    borderBottom: "1.2px solid rgba(var(--menu-color), 0.95)",
-                                                    boxShadow: "inset 0 1px 0 0 rgba(var(--menu-color), 0.9), inset 0 -1px 0 0 rgba(var(--menu-color), 0.9), 0 0 10px rgba(var(--menu-color), 0.25)",
+                                                    boxShadow: "inset 0 1.2px 0 0 rgba(var(--menu-color), 0.95), inset 0 -1.2px 0 0 rgba(var(--menu-color), 0.95)",
                                                     boxSizing: "border-box",
                                                     zIndex: 0,
-                                                    transition: "top 0.16s cubic-bezier(0.4, 0, 0.2, 1), height 0.16s cubic-bezier(0.4, 0, 0.2, 1)",
-                                                    willChange: "top, height",
+                                                    transition: "transform 0.15s cubic-bezier(0.4, 0, 0.2, 1), height 0.15s cubic-bezier(0.4, 0, 0.2, 1)",
+                                                    willChange: "transform, height",
                                                     pointerEvents: "none"
                                                 }
-                                            }), r.map((S, F) => U("div", {
-                                                ref: te => V.current[F] = te,
-                                                className: `PTab ${F === i ? "active" : ""}`,
-                                                children: [S.icon && x(ep, { icon: S.icon, width: "1vw", height: "1vw", style: { position: "absolute", left: ".65vw", color: F === i ? "#fff" : "rgba(200, 200, 200, 0.8)", display: "flex", alignItems: "center", justifyContent: "center" } }), S.type != "divider" && U("span", {
+                                            }), x("div", {
+                                                className: "menu-items-anim is-entering",
+                                                key: "tabanim_" + (a ? (a[m] ? a[m].label : m) : "main") + "_" + s.length,
+                                                style: {
+                                                    position: "static",
+                                                    width: "100%",
+                                                    display: "flex",
+                                                    flexDirection: "column",
+                                                    alignItems: "center"
+                                                },
+                                                children: r.map((S, F) => U("div", {
+                                                    ref: te => V.current[F] = te,
+                                                    className: `PTab ${F === i ? "active" : ""}`,
+                                                    onClick: () => {
+                                                        l(F);
+                                                        if (S.categories) {
+                                                            u(prev => [...prev, { tabs: r, categories: a, categoryIndex: m }]);
+                                                            h(S.categories);
+                                                            d(0);
+                                                            o(S.categories[0].tabs);
+                                                            l(0);
+                                                        } else if (S.type === "checkbox") {
+                                                            S.checked = !S.checked;
+                                                            o([...r]);
+                                                        }
+                                                    },
+                                                    children: [S.icon && x(ep, { icon: S.icon, width: "1vw", height: "1vw", style: { position: "absolute", left: ".65vw", color: F === i ? "#fff" : "rgba(200, 200, 200, 0.8)", display: "flex", alignItems: "center", justifyContent: "center" } }), S.type != "divider" && U("span", {
                                                     className: "PTLabel",
                                                     style: S.icon ? { left: "2vw" } : {},
                                                     children: [S.label, S.hazardous && x("span", {
@@ -15891,7 +15961,8 @@ Error generating stack: ` + i.message + `
                                                         })
                                                     ]
                                                 })]
-                                            }, F))]
+                                            }, F))
+                                            })]
                                         }), U("div", {
                                             className: "PFooter",
                                             children: [U("span", {
@@ -18404,8 +18475,13 @@ body.focus-sidebar #spawnerModal .item-card.selected, #spawnerModal.focus-sideba
         }
 
         // Full Keyboard Navigation (Arrows, Enter, Q, E, Esc, F)
-        document.addEventListener('keydown', (e) => {
-            if (focusArea === 'grid' || focusArea === 'sidebar') { e.stopPropagation(); }
+        // Full Keyboard Navigation (Arrows, Enter, Q, E, Esc, F)
+document.addEventListener('keydown', (e) => {
+    const spawnerCont = document.getElementById('spawnerContainer');
+    if (!spawnerCont || spawnerCont.style.display !== 'flex') {
+        return; // Closed spawner: do not stop propagation or intercept keys!
+    }
+    if (focusArea === 'grid' || focusArea === 'sidebar') { e.stopPropagation(); }
             const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
             if (activeTag === 'input' && e.key !== 'Escape' && e.key !== 'Enter') return;
 
